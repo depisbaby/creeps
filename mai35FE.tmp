@@ -1,0 +1,499 @@
+[gd_scene load_steps=18 format=3 uid="uid://dymch6s50vt1a"]
+
+[ext_resource type="Script" path="res://Scripts/GameManager.gd" id="1_irwr6"]
+[ext_resource type="Script" path="res://MainMenu.gd" id="2_hskbr"]
+[ext_resource type="Script" path="res://Scripts/BuyMenu.gd" id="3_3ua15"]
+[ext_resource type="Texture2D" uid="uid://b3dljmrvj76xe" path="res://Sprites/Blocks/block_default.png" id="4_qm448"]
+[ext_resource type="Script" path="res://Scripts/HUD.gd" id="5_7y0pw"]
+[ext_resource type="Script" path="res://Console.gd" id="6_06fpj"]
+[ext_resource type="Script" path="res://Scripts/EnemyManager.gd" id="6_h14xs"]
+[ext_resource type="Script" path="res://Scripts/MouseManager.gd" id="6_k07q1"]
+[ext_resource type="Texture2D" uid="uid://dkp053r4rsid0" path="res://Sprites/Blocks/conveyor_blue.png" id="6_squwm"]
+[ext_resource type="Texture2D" uid="uid://dxfiya6kkeayd" path="res://Sprites/Blocks/conveyor_up.png" id="7_ckhyh"]
+[ext_resource type="Texture2D" uid="uid://d3jnnfrk2alqs" path="res://Sprites/debugGrid.png" id="7_wjkcl"]
+[ext_resource type="Texture2D" uid="uid://dmhar7rs255dl" path="res://Sprites/Blocks/conveyor_right.png" id="8_g4taj"]
+[ext_resource type="Texture2D" uid="uid://bkcfwu5lif80a" path="res://Sprites/Blocks/conveyor_down.png" id="9_r7d8h"]
+[ext_resource type="Texture2D" uid="uid://bjsoxyekarux1" path="res://Sprites/Blocks/conveyor_left.png" id="10_vcy2y"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_w5dbb"]
+font_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_y7f5y"]
+font_size = 25
+font_color = Color(0, 0, 0, 1)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_u75ml"]
+
+[node name="main" type="Node2D"]
+script = ExtResource("1_irwr6")
+gridSize = 100
+blockSize = 32
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="HUD" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("5_7y0pw")
+
+[node name="StartWave" type="Button" parent="CanvasLayer/HUD"]
+layout_mode = 0
+offset_left = 1031.0
+offset_top = 21.0
+offset_right = 1121.0
+offset_bottom = 52.0
+text = "Start wave"
+
+[node name="Reward" type="Button" parent="CanvasLayer/HUD"]
+layout_mode = 0
+offset_left = 1031.0
+offset_top = 60.0
+offset_right = 1121.0
+offset_bottom = 91.0
+text = "Reward"
+
+[node name="UtilityShop" type="Button" parent="CanvasLayer/HUD"]
+layout_mode = 0
+offset_left = 1031.0
+offset_top = 99.0
+offset_right = 1121.0
+offset_bottom = 130.0
+text = "Utility shop"
+
+[node name="MainMenu" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 627.0
+offset_top = 302.0
+offset_right = 667.0
+offset_bottom = 342.0
+script = ExtResource("2_hskbr")
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/MainMenu"]
+layout_mode = 0
+offset_left = -59.0
+offset_top = -118.0
+offset_right = -19.0
+offset_bottom = -78.0
+scale = Vector2(2.8, 4.16)
+
+[node name="Play" type="Button" parent="CanvasLayer/MainMenu"]
+layout_mode = 0
+offset_left = -20.0
+offset_top = -95.0
+offset_right = 21.0
+offset_bottom = -64.0
+text = "Play"
+
+[node name="Seed" type="LineEdit" parent="CanvasLayer/MainMenu"]
+layout_mode = 0
+offset_left = -32.0
+offset_top = -56.0
+offset_right = 35.0625
+offset_bottom = -25.0
+placeholder_text = "seed"
+
+[node name="BuyMenu" type="Control" parent="CanvasLayer" node_paths=PackedStringArray("rewardIcons")]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 598.0
+offset_top = 326.0
+offset_right = 638.0
+offset_bottom = 366.0
+script = ExtResource("3_3ua15")
+rewardIcons = [NodePath("Rewards/block1"), NodePath("Rewards/block2"), NodePath("Rewards/block3")]
+
+[node name="Rewards" type="Control" parent="CanvasLayer/BuyMenu"]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/BuyMenu/Rewards"]
+layout_mode = 0
+offset_left = -157.0
+offset_top = -96.0
+offset_right = -117.0
+offset_bottom = -56.0
+scale = Vector2(8.11, 4.88)
+
+[node name="block1" type="TextureRect" parent="CanvasLayer/BuyMenu/Rewards"]
+texture_filter = 1
+layout_mode = 0
+offset_left = -111.0
+offset_top = -44.0
+offset_right = -71.0
+offset_bottom = -4.0
+texture = ExtResource("4_qm448")
+
+[node name="block2" type="TextureRect" parent="CanvasLayer/BuyMenu/Rewards"]
+texture_filter = 1
+layout_mode = 0
+offset_left = -11.0
+offset_top = -43.0
+offset_right = 29.0
+offset_bottom = -3.0
+texture = ExtResource("4_qm448")
+
+[node name="block3" type="TextureRect" parent="CanvasLayer/BuyMenu/Rewards"]
+texture_filter = 1
+layout_mode = 0
+offset_left = 86.0
+offset_top = -42.0
+offset_right = 126.0
+offset_bottom = -2.0
+texture = ExtResource("4_qm448")
+
+[node name="pick1" type="Button" parent="CanvasLayer/BuyMenu/Rewards"]
+layout_mode = 0
+offset_left = -115.0
+offset_top = 20.0
+offset_right = -75.0
+offset_bottom = 51.0
+text = "Pick"
+
+[node name="pick2" type="Button" parent="CanvasLayer/BuyMenu/Rewards"]
+layout_mode = 0
+offset_left = -11.0
+offset_top = 19.0
+offset_right = 29.0
+offset_bottom = 50.0
+text = "Pick"
+
+[node name="pick3" type="Button" parent="CanvasLayer/BuyMenu/Rewards"]
+layout_mode = 0
+offset_left = 87.0
+offset_top = 18.0
+offset_right = 127.0
+offset_bottom = 49.0
+text = "Pick"
+
+[node name="Label" type="Label" parent="CanvasLayer/BuyMenu/Rewards"]
+layout_mode = 0
+offset_left = -71.0
+offset_top = -85.0
+offset_right = 85.0
+offset_bottom = -62.0
+text = "Pick a block to place"
+label_settings = SubResource("LabelSettings_w5dbb")
+
+[node name="UtilityShop" type="Control" parent="CanvasLayer/BuyMenu"]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/BuyMenu/UtilityShop"]
+layout_mode = 0
+offset_left = -459.0
+offset_top = -286.0
+offset_right = 403.0
+offset_bottom = 273.0
+
+[node name="block_panel" type="Control" parent="CanvasLayer/BuyMenu/UtilityShop"]
+anchors_preset = 0
+offset_left = -414.0
+offset_top = -219.0
+offset_right = -374.0
+offset_bottom = -179.0
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/BuyMenu/UtilityShop/block_panel"]
+layout_mode = 0
+offset_right = 128.0
+offset_bottom = 161.0
+color = Color(0.605274, 0.605274, 0.605274, 1)
+
+[node name="block1" type="TextureRect" parent="CanvasLayer/BuyMenu/UtilityShop/block_panel"]
+texture_filter = 1
+offset_left = 44.0
+offset_top = 33.0
+offset_right = 84.0
+offset_bottom = 73.0
+texture = ExtResource("6_squwm")
+
+[node name="Button" type="Button" parent="CanvasLayer/BuyMenu/UtilityShop/block_panel"]
+layout_mode = 0
+offset_left = 43.0
+offset_top = 115.0
+offset_right = 80.0
+offset_bottom = 146.0
+text = "buy"
+
+[node name="cost" type="Label" parent="CanvasLayer/BuyMenu/UtilityShop/block_panel"]
+layout_mode = 0
+offset_left = 29.0
+offset_top = 82.0
+offset_right = 69.0
+offset_bottom = 105.0
+text = "Cost:"
+
+[node name="name" type="Label" parent="CanvasLayer/BuyMenu/UtilityShop/block_panel"]
+layout_mode = 0
+offset_left = 6.0
+offset_top = 3.0
+offset_right = 124.0
+offset_bottom = 26.0
+text = "Conveyor Multi"
+
+[node name="block_panel2" type="Control" parent="CanvasLayer/BuyMenu/UtilityShop"]
+anchors_preset = 0
+offset_left = -269.0
+offset_top = -219.0
+offset_right = -229.0
+offset_bottom = -179.0
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/BuyMenu/UtilityShop/block_panel2"]
+layout_mode = 0
+offset_right = 128.0
+offset_bottom = 161.0
+color = Color(0.605274, 0.605274, 0.605274, 1)
+
+[node name="block1" type="TextureRect" parent="CanvasLayer/BuyMenu/UtilityShop/block_panel2"]
+texture_filter = 1
+offset_left = 44.0
+offset_top = 33.0
+offset_right = 84.0
+offset_bottom = 73.0
+texture = ExtResource("7_ckhyh")
+
+[node name="Button" type="Button" parent="CanvasLayer/BuyMenu/UtilityShop/block_panel2"]
+layout_mode = 0
+offset_left = 43.0
+offset_top = 115.0
+offset_right = 80.0
+offset_bottom = 146.0
+text = "buy"
+
+[node name="cost" type="Label" parent="CanvasLayer/BuyMenu/UtilityShop/block_panel2"]
+layout_mode = 0
+offset_left = 29.0
+offset_top = 82.0
+offset_right = 69.0
+offset_bottom = 105.0
+text = "Cost:"
+
+[node name="name" type="Label" parent="CanvasLayer/BuyMenu/UtilityShop/block_panel2"]
+layout_mode = 0
+offset_left = 6.0
+offset_top = 3.0
+offset_right = 124.0
+offset_bottom = 26.0
+text = "Conveyor Up"
+horizontal_alignment = 1
+
+[node name="block_panel3" type="Control" parent="CanvasLayer/BuyMenu/UtilityShop"]
+anchors_preset = 0
+offset_left = -125.0
+offset_top = -219.0
+offset_right = -85.0
+offset_bottom = -179.0
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/BuyMenu/UtilityShop/block_panel3"]
+layout_mode = 0
+offset_right = 128.0
+offset_bottom = 161.0
+color = Color(0.605274, 0.605274, 0.605274, 1)
+
+[node name="block1" type="TextureRect" parent="CanvasLayer/BuyMenu/UtilityShop/block_panel3"]
+texture_filter = 1
+offset_left = 44.0
+offset_top = 33.0
+offset_right = 84.0
+offset_bottom = 73.0
+texture = ExtResource("8_g4taj")
+
+[node name="Button" type="Button" parent="CanvasLayer/BuyMenu/UtilityShop/block_panel3"]
+layout_mode = 0
+offset_left = 43.0
+offset_top = 115.0
+offset_right = 80.0
+offset_bottom = 146.0
+text = "buy"
+
+[node name="cost" type="Label" parent="CanvasLayer/BuyMenu/UtilityShop/block_panel3"]
+layout_mode = 0
+offset_left = 29.0
+offset_top = 82.0
+offset_right = 69.0
+offset_bottom = 105.0
+text = "Cost:"
+
+[node name="name" type="Label" parent="CanvasLayer/BuyMenu/UtilityShop/block_panel3"]
+layout_mode = 0
+offset_left = 6.0
+offset_top = 3.0
+offset_right = 124.0
+offset_bottom = 26.0
+text = "Conveyor Right"
+horizontal_alignment = 1
+
+[node name="block_panel4" type="Control" parent="CanvasLayer/BuyMenu/UtilityShop"]
+anchors_preset = 0
+offset_left = 18.0
+offset_top = -219.0
+offset_right = 58.0
+offset_bottom = -179.0
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/BuyMenu/UtilityShop/block_panel4"]
+layout_mode = 0
+offset_right = 128.0
+offset_bottom = 161.0
+color = Color(0.605274, 0.605274, 0.605274, 1)
+
+[node name="block1" type="TextureRect" parent="CanvasLayer/BuyMenu/UtilityShop/block_panel4"]
+texture_filter = 1
+offset_left = 44.0
+offset_top = 33.0
+offset_right = 84.0
+offset_bottom = 73.0
+texture = ExtResource("9_r7d8h")
+
+[node name="Button" type="Button" parent="CanvasLayer/BuyMenu/UtilityShop/block_panel4"]
+layout_mode = 0
+offset_left = 43.0
+offset_top = 115.0
+offset_right = 80.0
+offset_bottom = 146.0
+text = "buy"
+
+[node name="cost" type="Label" parent="CanvasLayer/BuyMenu/UtilityShop/block_panel4"]
+layout_mode = 0
+offset_left = 29.0
+offset_top = 82.0
+offset_right = 69.0
+offset_bottom = 105.0
+text = "Cost:"
+
+[node name="name" type="Label" parent="CanvasLayer/BuyMenu/UtilityShop/block_panel4"]
+layout_mode = 0
+offset_left = 3.0
+offset_top = 3.0
+offset_right = 126.0
+offset_bottom = 26.0
+text = "Conveyor Down"
+horizontal_alignment = 1
+
+[node name="block_panel5" type="Control" parent="CanvasLayer/BuyMenu/UtilityShop"]
+anchors_preset = 0
+offset_left = 161.0
+offset_top = -220.0
+offset_right = 201.0
+offset_bottom = -180.0
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/BuyMenu/UtilityShop/block_panel5"]
+layout_mode = 0
+offset_right = 128.0
+offset_bottom = 161.0
+color = Color(0.605274, 0.605274, 0.605274, 1)
+
+[node name="block1" type="TextureRect" parent="CanvasLayer/BuyMenu/UtilityShop/block_panel5"]
+texture_filter = 1
+offset_left = 44.0
+offset_top = 33.0
+offset_right = 84.0
+offset_bottom = 73.0
+texture = ExtResource("10_vcy2y")
+
+[node name="Button" type="Button" parent="CanvasLayer/BuyMenu/UtilityShop/block_panel5"]
+layout_mode = 0
+offset_left = 43.0
+offset_top = 115.0
+offset_right = 80.0
+offset_bottom = 146.0
+text = "buy"
+
+[node name="cost" type="Label" parent="CanvasLayer/BuyMenu/UtilityShop/block_panel5"]
+layout_mode = 0
+offset_left = 29.0
+offset_top = 82.0
+offset_right = 69.0
+offset_bottom = 105.0
+text = "Cost:"
+
+[node name="name" type="Label" parent="CanvasLayer/BuyMenu/UtilityShop/block_panel5"]
+layout_mode = 0
+offset_left = 3.0
+offset_top = 3.0
+offset_right = 126.0
+offset_bottom = 26.0
+text = "Conveyor Left"
+horizontal_alignment = 1
+
+[node name="Label" type="Label" parent="CanvasLayer/BuyMenu/UtilityShop"]
+layout_mode = 0
+offset_left = -440.0
+offset_top = -274.0
+offset_right = -211.0
+offset_bottom = -222.0
+text = "Utility shop"
+label_settings = SubResource("LabelSettings_y7f5y")
+
+[node name="close" type="Button" parent="CanvasLayer/BuyMenu/UtilityShop"]
+layout_mode = 0
+offset_left = 340.0
+offset_top = -271.0
+offset_right = 388.0
+offset_bottom = -240.0
+text = "close"
+
+[node name="DevConsole" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("6_06fpj")
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/DevConsole"]
+layout_mode = 0
+offset_top = 466.0
+offset_right = 298.475
+offset_bottom = 639.88
+color = Color(0, 0, 0, 1)
+
+[node name="LineEdit" type="LineEdit" parent="CanvasLayer/DevConsole"]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 520.0
+offset_right = 293.918
+offset_bottom = 555.305
+
+[node name="Button" type="Button" parent="CanvasLayer/DevConsole"]
+layout_mode = 0
+offset_left = 36.0
+offset_top = 579.0
+offset_right = 72.0
+offset_bottom = 610.0
+text = "run
+"
+
+[node name="Managers" type="Node" parent="."]
+
+[node name="MouseManager" type="CharacterBody2D" parent="Managers"]
+collision_layer = 0
+collision_mask = 0
+script = ExtResource("6_k07q1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Managers/MouseManager"]
+shape = SubResource("CircleShape2D_u75ml")
+
+[node name="EnemyManager" type="Node2D" parent="Managers"]
+script = ExtResource("6_h14xs")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+offset = Vector2(1600, 1600)
+zoom = Vector2(2, 2)
+
+[node name="DebugGrid" type="Sprite2D" parent="."]
+z_index = -1
+texture_filter = 1
+position = Vector2(1584, 1584)
+texture = ExtResource("7_wjkcl")
+
+[connection signal="button_down" from="CanvasLayer/HUD/StartWave" to="CanvasLayer/HUD" method="_on_button_button_down"]
+[connection signal="button_down" from="CanvasLayer/HUD/Reward" to="CanvasLayer/BuyMenu" method="_on_reward_button_down"]
+[connection signal="button_down" from="CanvasLayer/HUD/UtilityShop" to="CanvasLayer/BuyMenu" method="_on_utility_shop_button_down"]
+[connection signal="button_down" from="CanvasLayer/MainMenu/Play" to="CanvasLayer/MainMenu" method="_on_play_button_down"]
+[connection signal="button_down" from="CanvasLayer/BuyMenu/Rewards/pick1" to="CanvasLayer/BuyMenu" method="_on_pick_1_button_down"]
+[connection signal="button_down" from="CanvasLayer/BuyMenu/Rewards/pick2" to="CanvasLayer/BuyMenu" method="_on_pick_2_button_down"]
+[connection signal="button_down" from="CanvasLayer/BuyMenu/Rewards/pick3" to="CanvasLayer/BuyMenu" method="_on_pick_3_button_down"]
+[connection signal="button_down" from="CanvasLayer/DevConsole/Button" to="CanvasLayer/DevConsole" method="_on_button_button_down"]

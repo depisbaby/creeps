@@ -1,0 +1,29 @@
+[gd_scene load_steps=4 format=3 uid="uid://cl76o0vfawd5q"]
+
+[ext_resource type="Script" path="res://Scripts/Creep.gd" id="1_846mg"]
+[ext_resource type="Texture2D" uid="uid://bi7j7qdhp0cbm" path="res://Sprites/Creeps/mite.png" id="1_qxpds"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_bwcmh"]
+radius = 7.0
+
+[node name="Mite" type="Node2D"]
+script = ExtResource("1_846mg")
+speed = 30.0
+damage = 1
+attackSpeed = 1.0
+hp = 5
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+texture = ExtResource("1_qxpds")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0, -3)
+shape = SubResource("CircleShape2D_bwcmh")
+
+[node name="Timer" type="Timer" parent="."]
+
+[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]

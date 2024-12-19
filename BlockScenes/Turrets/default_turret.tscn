@@ -1,0 +1,55 @@
+[gd_scene load_steps=9 format=3 uid="uid://cjg0awwxqr3gk"]
+
+[ext_resource type="Script" path="res://Scripts/BlockSubClasses/Turret.gd" id="1_h64xm"]
+[ext_resource type="Texture2D" uid="uid://b3dljmrvj76xe" path="res://Sprites/Blocks/block_default.png" id="1_hqii0"]
+[ext_resource type="Texture2D" uid="uid://cv6je87boterc" path="res://Sprites/BlockWidgets/turret1.png" id="2_60aqy"]
+[ext_resource type="Texture2D" uid="uid://hldifqpg5is0" path="res://Sprites/BlockIcons/default_turret.png" id="2_xn2b7"]
+[ext_resource type="Script" path="res://Scripts/ProjectilePool.gd" id="5_qqe8g"]
+[ext_resource type="PackedScene" uid="uid://c6a365pkb1yce" path="res://ProjectileScenes/default_projectile.tscn" id="6_gftlo"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_isbxr"]
+size = Vector2(32, 32)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_esky0"]
+radius = 200.0
+
+[node name="DefaultTurret" type="Node2D" node_paths=PackedStringArray("projectilePool", "turretHead", "visualsNode")]
+script = ExtResource("1_h64xm")
+damage = 5
+attackSpeed = 0.5
+projectileSpeed = 100.0
+accuracy = 5.0
+projectilePool = NodePath("ProjectilePool")
+turretHead = NodePath("block/turret")
+hp = 5
+menuIcon = ExtResource("2_xn2b7")
+resourceHolding = true
+visualsNode = NodePath("block")
+
+[node name="block" type="Sprite2D" parent="."]
+texture_filter = 1
+texture = ExtResource("1_hqii0")
+
+[node name="turret" type="Sprite2D" parent="block"]
+texture_filter = 1
+texture = ExtResource("2_60aqy")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_isbxr")
+
+[node name="Radar" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Radar"]
+shape = SubResource("CircleShape2D_esky0")
+
+[node name="ProjectilePool" type="Node2D" parent="."]
+script = ExtResource("5_qqe8g")
+baseProjectile = ExtResource("6_gftlo")
+poolSize = 10
+
+[connection signal="area_entered" from="Radar" to="." method="_on_radar_area_entered"]

@@ -1,0 +1,25 @@
+[gd_scene load_steps=4 format=3 uid="uid://c6a365pkb1yce"]
+
+[ext_resource type="Script" path="res://Scripts/Projectile.gd" id="1_iynqw"]
+[ext_resource type="Texture2D" uid="uid://b33qhxpycf1k3" path="res://Sprites/Projectiles/projectile1.png" id="2_dirq1"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_y1tfr"]
+radius = 4.0
+
+[node name="DefaultProjectile" type="Node2D" node_paths=PackedStringArray("sprite")]
+script = ExtResource("1_iynqw")
+sprite = NodePath("Sprite2D")
+colors = Array[Color]([Color(1, 0.454902, 0, 1), Color(1, 1, 1, 1), Color(1, 1, 0, 1)])
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+texture = ExtResource("2_dirq1")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_y1tfr")
+
+[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
