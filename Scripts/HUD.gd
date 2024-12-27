@@ -17,7 +17,7 @@ func _process(delta):
 func _on_button_button_down():
 	if Global.gameManager.placingBlock:
 		return
-	Global.enemyManager.StartWave(0)
+	Global.gameManager.StartWave()
 	pass # Replace with function body.
 
 

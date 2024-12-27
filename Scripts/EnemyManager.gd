@@ -56,8 +56,8 @@ func StartWave(waveNumberOverride: int):
 		instance.name = enemies[pick]._bundled.get("names")[0]
 		
 		#adjust stats according to wave
-		instance.speed = instance.speed + waveNumber * 0.2 + randf_range(-3.0, 3.0)
-		instance.hp = instance.hp + floor(waveNumber * 0.1)
+		instance.speed = instance.speed + waveNumber * 1 + randf_range(-3.0, 3.0)
+		instance.hp = instance.hp + floor(waveNumber * 1)
 		
 		#spawn position
 		var randomVector = Vector2(randf_range(-1.0, 1.0), randf_range(-1.0, 1.0)).normalized()
@@ -92,5 +92,6 @@ func WaveCompleted():
 	Global.gameManager.WaveCompleted(currentWave)
 	currentWave = currentWave + 1
 	waveInProgress = false
+	#print("hep")
 	pass
 	

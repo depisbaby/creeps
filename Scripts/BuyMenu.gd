@@ -16,7 +16,10 @@ var selectingReward: bool
 	#turrets
 	preload("res://BlockScenes/Turrets/default_turret.tscn"),
 	preload("res://BlockScenes/Turrets/twin_fire.tscn"),
-	preload("res://BlockScenes/Turrets/little_purr.tscn")
+	preload("res://BlockScenes/Turrets/little_purr.tscn"),
+	
+	#resource production
+	preload("res://BlockScenes/ResourceProduction/miner_block.tscn")
 	
 ]
 @export var uncommonBlocks: Array[PackedScene] = [
@@ -24,7 +27,10 @@ var selectingReward: bool
 	#turrets
 	preload("res://BlockScenes/Turrets/default_turret.tscn"),
 	preload("res://BlockScenes/Turrets/twin_fire.tscn"),
-	preload("res://BlockScenes/Turrets/little_purr.tscn")
+	preload("res://BlockScenes/Turrets/little_purr.tscn"),
+	
+	#resource production
+	preload("res://BlockScenes/ResourceProduction/miner_block.tscn")
 	
 ]
 @export var rareBlocks: Array[PackedScene] = [
@@ -32,7 +38,10 @@ var selectingReward: bool
 	#turrets
 	preload("res://BlockScenes/Turrets/default_turret.tscn"),
 	preload("res://BlockScenes/Turrets/twin_fire.tscn"),
-	preload("res://BlockScenes/Turrets/little_purr.tscn")
+	preload("res://BlockScenes/Turrets/little_purr.tscn"),
+	
+	#resource production
+	preload("res://BlockScenes/ResourceProduction/miner_block.tscn")
 	
 ]
 

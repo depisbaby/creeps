@@ -8,3 +8,4 @@ var enemyManager: EnemyManager
 var hud: HUD
 var gridSelect: GridSelect
 var console: Console
+var resourceManager: ResourceManager

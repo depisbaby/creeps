@@ -18,12 +18,11 @@ script = ExtResource("1_h64xm")
 damage = 5
 attackSpeed = 0.5
 projectileSpeed = 100.0
-accuracy = 5.0
+accuracy = 0.01
 projectilePool = NodePath("ProjectilePool")
 turretHead = NodePath("block/turret")
 hp = 5
 menuIcon = ExtResource("2_xn2b7")
-resourceHolding = true
 visualsNode = NodePath("block")
 
 [node name="block" type="Sprite2D" parent="."]

@@ -9,9 +9,10 @@ size = Vector2(32, 32)
 [node name="ConveyorDown" type="Node2D"]
 script = ExtResource("1_rjhew")
 directions = Array[int]([2])
+blockName = "Conveyor block (down)"
 hp = 10
 menuIcon = ExtResource("3_70jer")
-resourceHolding = true
+canHoldResources = true
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1

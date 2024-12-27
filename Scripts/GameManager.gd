@@ -1,4 +1,4 @@
-extends Node
+extends Node2D
 class_name GameManager
 
 @export var devMode: bool
@@ -11,6 +11,8 @@ var heartBlock: Block
 @onready var heartBlockScene =preload("res://BlockScenes/heart_block.tscn")
 var waveInProgress: bool
 var coins:int
+var tick:int = 1
+var placedBlocks: Array[Block]
 
 #placing blocks
 var placingBlock: bool
@@ -23,6 +25,8 @@ var blockBeingPlacedAmount: int
 @export var blockSize: int
 var grid: Array[GridNode]
 
+@onready var miningDebug = preload("res://BlockScenes/mining_debug.tscn")
+
 func _enter_tree():
 	Global.gameManager = self
 
@@ -31,6 +35,10 @@ func _ready():
 	InitializeGrid()
 	pass # Replace with function body.
 
+func _physics_process(delta: float) -> void:
+	if waveInProgress == true:
+		tick = tick + 1
+	pass
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -60,8 +68,13 @@ func StartNewGame(seed: String):
 	
 	gameActive = true	
 	
+	if seed == "":
+		seed = str(randf_range(-100000.0, 100000.0))
+	
 	rng = RandomNumberGenerator.new()
 	rng.seed = hash(seed)
+	
+	SetMiningValues(seed)
 	
 	var newHeartBlock = heartBlockScene.instantiate()
 	newHeartBlock.name = "heart_block"
@@ -83,9 +96,18 @@ func StartWave():
 	waveInProgress = true
 	Global.buyMenu.WaveStarted()
 	Global.enemyManager.StartWave(0)	
+	Global.resourceManager.WaveStarted()
+	
+	for block in placedBlocks:
+		block.WaveStarted()
 
 func WaveCompleted(waveNumber: int):
 	Global.buyMenu.NewRewards()
+	Global.resourceManager.WaveCompleted()
+	
+	for block in placedBlocks:
+		block.WaveCompleted()
+	
 	waveInProgress = false
 	pass
 	
@@ -127,10 +149,11 @@ func PlaceBlock():
 	
 	var worldPosition = GridToWorld(gridPosition[0], gridPosition[1])
 	add_child(block)
-	block.name = block._name
+	block.name = block.blockName
 	block.global_position = worldPosition
 	block.OnPlace()
 	block.placed = true
+	placedBlocks.push_back(block)
 	
 	Global.enemyManager.PlayerExpanded((worldPosition - heartBlock.global_position).length())
 	
@@ -155,11 +178,13 @@ func ForcePlaceBlock(block:Block, x:int, y:int):
 	block.yGridPos = y
 	block.global_position = worldPosition
 	block.OnPlace()
+	placedBlocks.push_back(block)
 	
 	pass
 
 func RemoveBlockFromGrid(x:int, y:int):
 	var node = GetNodeAt(x,y)
+	placedBlocks.erase(node.block)
 	node.block = null
 	
 
@@ -176,7 +201,33 @@ func InitializeGrid():
 			grid[i].y = y
 	
 	pass
+
+func SetMiningValues(seed: String):
+	var miningNoise: FastNoiseLite = FastNoiseLite.new()
+	miningNoise.seed = hash(seed)
+	for y in gridSize:
+		for x in gridSize:
+			var i = x + y*gridSize
+			var value = miningNoise.get_noise_2d(x*6, y*6)
+			#
+			#var debug:Node2D = miningDebug.instantiate()
+			#add_child(debug)
+			#debug.global_position = GridToWorld(x,y)
+			#if value < -0.15:
+			#	debug.modulate = Color.GREEN
+			#elif value > -0.01 && value < 0.01:
+			#	debug.modulate = Color.AQUA
+			#elif value < 0.15:
+			#	debug.modulate = Color.NAVY_BLUE
+				
+			#else:
+			#	debug.modulate = Color.RED
+				
+			grid[i].miningValue = value
 	
+	
+	pass
+
 func SetBlockAt(block:Block, x: int, y: int):
 	var i = x + y*gridSize
 	

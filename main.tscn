@@ -1,11 +1,11 @@
-[gd_scene load_steps=21 format=4 uid="uid://dymch6s50vt1a"]
+[gd_scene load_steps=23 format=4 uid="uid://dymch6s50vt1a"]
 
 [ext_resource type="Script" path="res://Scripts/GameManager.gd" id="1_irwr6"]
 [ext_resource type="Script" path="res://MainMenu.gd" id="2_hskbr"]
 [ext_resource type="Script" path="res://Scripts/BuyMenu.gd" id="3_3ua15"]
 [ext_resource type="Texture2D" uid="uid://b3dljmrvj76xe" path="res://Sprites/Blocks/block_default.png" id="4_qm448"]
 [ext_resource type="Script" path="res://Scripts/HUD.gd" id="5_7y0pw"]
-[ext_resource type="Script" path="res://Console.gd" id="6_06fpj"]
+[ext_resource type="Script" path="res://Scripts/Console.gd" id="6_06fpj"]
 [ext_resource type="Script" path="res://Scripts/EnemyManager.gd" id="6_h14xs"]
 [ext_resource type="Script" path="res://Scripts/MouseManager.gd" id="6_k07q1"]
 [ext_resource type="Texture2D" uid="uid://dkp053r4rsid0" path="res://Sprites/Blocks/conveyor_blue.png" id="6_squwm"]
@@ -13,10 +13,12 @@
 [ext_resource type="Texture2D" uid="uid://dmhar7rs255dl" path="res://Sprites/Blocks/conveyor_right.png" id="8_g4taj"]
 [ext_resource type="Texture2D" uid="uid://bkcfwu5lif80a" path="res://Sprites/Blocks/conveyor_down.png" id="9_r7d8h"]
 [ext_resource type="Texture2D" uid="uid://bjsoxyekarux1" path="res://Sprites/Blocks/conveyor_left.png" id="10_vcy2y"]
+[ext_resource type="Script" path="res://Scripts/ResourceManager.gd" id="14_him1i"]
 [ext_resource type="Script" path="res://Scripts/CameraManager.gd" id="14_ow38m"]
 [ext_resource type="Script" path="res://Scripts/GridSelect.gd" id="15_bhvh3"]
 [ext_resource type="Texture2D" uid="uid://cq5wp5enfb4gu" path="res://Sprites/Icons/grid_select.png" id="15_y11kx"]
 [ext_resource type="TileSet" uid="uid://di36wojtt8hvd" path="res://TileSets/ground.tres" id="17_c3uvw"]
+[ext_resource type="PackedScene" uid="uid://fycfr5or2tfg" path="res://MiscScenes/resource.tscn" id="19_t0gox"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_w5dbb"]
 font_color = Color(0, 0, 0, 1)
@@ -504,6 +506,11 @@ shape = SubResource("CircleShape2D_u75ml")
 
 [node name="EnemyManager" type="Node2D" parent="Managers"]
 script = ExtResource("6_h14xs")
+
+[node name="ResourceManager" type="Node2D" parent="Managers"]
+script = ExtResource("14_him1i")
+baseScene = ExtResource("19_t0gox")
+poolSize = 100
 
 [node name="Camera2D" type="Camera2D" parent="."]
 offset = Vector2(1600, 1600)

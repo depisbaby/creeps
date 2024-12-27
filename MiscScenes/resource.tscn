@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://fycfr5or2tfg"]
+
+[ext_resource type="Texture2D" uid="uid://3w4fe351uagm" path="res://Sprites/Resources/brass_ore.png" id="1_3yix1"]
+[ext_resource type="Script" path="res://Scripts/_Resource.gd" id="1_mhl8i"]
+
+[node name="Resource" type="Sprite2D"]
+z_index = 5
+texture_filter = 1
+texture = ExtResource("1_3yix1")
+script = ExtResource("1_mhl8i")

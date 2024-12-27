@@ -1,17 +1,18 @@
 extends Node2D
 class_name Block
 
+@export var blockName: String
+@export var desc: String
 @export var hp: int
 @export var menuIcon: Texture2D
-@export var resourceHolding: bool
-@export var visualsNode: Node2D
+@export var canHoldResources: bool
+@export var visualsNode: Node2D #used for shaking
 @export var bundleAmount: int
 
 var placed:bool
 var xGridPos:int
 var yGridPos:int
-var _name: String
-var resourceStorage: ResourceStorage
+var resourcesHeld: Array[_Resource]
 
 #shake
 var shakeMagnitude: float
@@ -22,8 +23,6 @@ func _init():
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	if resourceHolding:
-		resourceStorage = ResourceStorage.new()
 	pass # Replace with function body.
 
 func _physics_process(delta):
@@ -55,11 +54,13 @@ func OnDestroy():
 	for neighbor in neighbors:
 		if neighbor.block != null:
 			neighbor.block.NeighborLeft(self)
+	
+	for resource in resourcesHeld:
+		Global.resourceManager.ReturnToPool(resource)
+	
 	queue_free()
 	
 func CreepDamage(damage: int):
-	
-	#print(name, ": Damage taken")
 	
 	hp = hp - damage
 	
@@ -68,17 +69,24 @@ func CreepDamage(damage: int):
 	
 	pass
 
-func ReceiveResources(resources:Array[int], source:Block):
-	var i:int = 0
-	for resource in resources:
-		resourceStorage.storage[i] = resourceStorage.storage[i] + resource
-		i=i+1
-	Shake()
+func ReceiveResource(resource: _Resource, source:Block):
+	resource.ChangeHolder(self)
+	resourcesHeld.push_back(resource)
+	
 		
 func NeighborEntered(neighbor: Block): 
 	pass
 	
 func NeighborLeft(neighbor: Block):
+	pass
+
+func WaveStarted():
+	
+	pass
+
+func WaveCompleted():
+	if resourcesHeld.size() > 0:
+		resourcesHeld.clear()
 	pass
 
 func Shake():
