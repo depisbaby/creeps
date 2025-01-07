@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="ResourceTuple" load_steps=3 format=3 uid="uid://bw4lwntkibcnd"]
+
+[ext_resource type="Script" path="res://Scripts/Resources/ResourceTuple.gd" id="1_2e33r"]
+[ext_resource type="Texture2D" uid="uid://bjvihwu0aea3l" path="res://Sprites/Resources/drill_bit.png" id="2_e0b0m"]
+
+[resource]
+script = ExtResource("1_2e33r")
+resourceName = "Drill Bit"
+amount = 0
+texture = ExtResource("2_e0b0m")

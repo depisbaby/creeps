@@ -13,14 +13,17 @@ size = Vector2(32, 32)
 [sub_resource type="CircleShape2D" id="CircleShape2D_esky0"]
 radius = 150.0
 
-[node name="LittlePurr" type="Node2D" node_paths=PackedStringArray("projectilePool", "turretHead", "visualsNode")]
+[node name="LittlePurr" type="Node2D" node_paths=PackedStringArray("projectilePool", "turretHead", "rangeCollider", "visualsNode")]
 script = ExtResource("1_grhqj")
 damage = 2
 attackSpeed = 0.1
 projectileSpeed = 120.0
 accuracy = 0.15
+range = 150
+multiHit = 1
 projectilePool = NodePath("ProjectilePool")
 turretHead = NodePath("block/turret")
+rangeCollider = NodePath("Radar/CollisionShape2D")
 hp = 5
 menuIcon = ExtResource("2_24o33")
 visualsNode = NodePath("block")

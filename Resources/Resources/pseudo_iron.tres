@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="ResourceTuple" load_steps=3 format=3 uid="uid://dsng4qmf1y4yu"]
+
+[ext_resource type="Script" path="res://Scripts/Resources/ResourceTuple.gd" id="1_iklcu"]
+[ext_resource type="Texture2D" uid="uid://66ydu38686bx" path="res://Sprites/Resources/pseudo_iron.png" id="2_cirf4"]
+
+[resource]
+script = ExtResource("1_iklcu")
+resourceName = "Pseudo Iron"
+amount = 0
+texture = ExtResource("2_cirf4")

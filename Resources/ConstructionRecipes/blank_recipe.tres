@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="ConstructionRecipe" load_steps=2 format=3 uid="uid://dhkelt03s4bln"]
+
+[ext_resource type="Script" path="res://Scripts/Misc/ConstructionRecipe.gd" id="1_0f7ly"]
+
+[resource]
+script = ExtResource("1_0f7ly")
+inputResources = Array[String]([])
+outputResources = Array[String]([])
+constructorBlock = ""

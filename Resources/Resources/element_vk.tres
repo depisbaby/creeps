@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="ResourceTuple" load_steps=3 format=3 uid="uid://bcuxja3bqynpr"]
+
+[ext_resource type="Script" path="res://Scripts/Resources/ResourceTuple.gd" id="1_7arws"]
+[ext_resource type="Texture2D" uid="uid://bcfeciivpouwe" path="res://Sprites/Resources/element_vk.png" id="2_cor34"]
+
+[resource]
+script = ExtResource("1_7arws")
+resourceName = "Element-VK"
+amount = 0
+texture = ExtResource("2_cor34")

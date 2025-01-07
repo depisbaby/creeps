@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="ResourceTuple" load_steps=3 format=3 uid="uid://cq5jemn6pxs7o"]
+
+[ext_resource type="Script" path="res://Scripts/Resources/ResourceTuple.gd" id="1_moyi4"]
+[ext_resource type="Texture2D" uid="uid://c2nd47yn8x42l" path="res://Sprites/Resources/mean_looking_crystals.png" id="2_4qsg0"]
+
+[resource]
+script = ExtResource("1_moyi4")
+resourceName = "Mean Looking Crystals"
+amount = 0
+texture = ExtResource("2_4qsg0")

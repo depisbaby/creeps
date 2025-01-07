@@ -1,0 +1,30 @@
+[gd_scene load_steps=4 format=3 uid="uid://dnq0dgc200n3s"]
+
+[ext_resource type="Script" path="res://Scripts/BlockSubClasses/MinerBlock.gd" id="1_m7ei7"]
+[ext_resource type="Texture2D" uid="uid://b3igr32cqbq8o" path="res://Sprites/Blocks/mine.png" id="2_8sv0l"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_45fbg"]
+size = Vector2(32, 32)
+
+[node name="MinerBlock" type="Node2D" node_paths=PackedStringArray("resourceIcon", "visualsNode")]
+z_index = 1
+script = ExtResource("1_m7ei7")
+resourceIcon = NodePath("Sprite2D/Sprite2D")
+directions = Array[int]([0, 1, 2, 3])
+blockName = "Miner block"
+hp = 10
+menuIcon = ExtResource("2_8sv0l")
+visualsNode = NodePath("Sprite2D")
+immovable = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+texture = ExtResource("2_8sv0l")
+
+[node name="Sprite2D" type="Sprite2D" parent="Sprite2D"]
+position = Vector2(6, 6)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+shape = SubResource("RectangleShape2D_45fbg")

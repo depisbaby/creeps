@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="ResourceTuple" load_steps=3 format=3 uid="uid://bktxdndd7ppbu"]
+
+[ext_resource type="Script" path="res://Scripts/Resources/ResourceTuple.gd" id="1_mrouy"]
+[ext_resource type="Texture2D" uid="uid://biud8dpqptnve" path="res://Sprites/Resources/smooth_stuff.png" id="2_nnuoh"]
+
+[resource]
+script = ExtResource("1_mrouy")
+resourceName = "Smooth Stuff"
+amount = 0
+texture = ExtResource("2_nnuoh")

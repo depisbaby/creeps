@@ -1,0 +1,32 @@
+[gd_scene load_steps=3 format=3 uid="uid://d2msm66f3mx82"]
+
+[ext_resource type="Texture2D" uid="uid://b3dljmrvj76xe" path="res://Sprites/Blocks/block_default.png" id="1_36gyy"]
+[ext_resource type="Script" path="res://Scripts/UI/BlockPanel.gd" id="1_phocu"]
+
+[node name="BlockPanel" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(2, 2)
+script = ExtResource("1_phocu")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+texture_filter = 1
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 2
+texture = ExtResource("1_36gyy")
+
+[node name="Button" type="Button" parent="."]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 39.0
+
+[connection signal="button_down" from="Button" to="." method="_on_button_button_down"]
+[connection signal="mouse_entered" from="Button" to="." method="_on_button_mouse_entered"]
+[connection signal="mouse_exited" from="Button" to="." method="_on_button_mouse_exited"]

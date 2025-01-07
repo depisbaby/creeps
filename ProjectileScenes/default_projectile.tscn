@@ -12,6 +12,7 @@ sprite = NodePath("Sprite2D")
 colors = Array[Color]([Color(1, 0.454902, 0, 1), Color(1, 1, 1, 1), Color(1, 1, 0, 1)])
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+z_index = 10
 texture_filter = 1
 texture = ExtResource("2_dirq1")
 

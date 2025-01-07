@@ -14,6 +14,7 @@ attackSpeed = 1.0
 hp = 5
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+z_index = 6
 texture_filter = 1
 texture = ExtResource("1_qxpds")
 

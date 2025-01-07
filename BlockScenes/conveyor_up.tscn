@@ -1,25 +1,43 @@
-[gd_scene load_steps=4 format=3 uid="uid://bjerqqknvyt6h"]
+[gd_scene load_steps=6 format=3 uid="uid://bjerqqknvyt6h"]
 
 [ext_resource type="Script" path="res://Scripts/BlockSubClasses/ConveyorBlock.gd" id="1_21vbo"]
-[ext_resource type="Texture2D" uid="uid://dxfiya6kkeayd" path="res://Sprites/Blocks/conveyor_up.png" id="2_vv8ee"]
+[ext_resource type="Texture2D" uid="uid://bvu8wngf2pj77" path="res://Sprites/Blocks/Conveyors/up/1.png" id="2_5t0j4"]
+[ext_resource type="Texture2D" uid="uid://c11yk1s1e8oco" path="res://Sprites/Blocks/Conveyors/up/2.png" id="3_yob7s"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_ekxdm"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_upqil"]
 size = Vector2(32, 32)
 
-[node name="ConveyorUp" type="Node2D"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_h7qsp"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_5t0j4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_yob7s")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="ConveyorUp" type="Node2D" node_paths=PackedStringArray("visualsNode")]
 script = ExtResource("1_21vbo")
 directions = Array[int]([0])
-blockName = "Conveyor block (up)"
+blockName = "Conveyor Block (up)"
+desc = "One-directional conveyor block (Direction indicated by the yellow arrows). Resources put into this block are moved into the neighboring block at the end of the conveyor."
 hp = 10
-menuIcon = ExtResource("2_vv8ee")
+menuIcon = ExtResource("2_5t0j4")
 canHoldResources = true
+visualsNode = NodePath("AnimatedSprite2D")
+components = Array[String](["Conveyor kit"])
+componentAmounts = Array[int]([1])
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+shape = SubResource("RectangleShape2D_upqil")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
-texture = ExtResource("2_vv8ee")
-
-[node name="Area2D" type="Area2D" parent="."]
-collision_mask = 0
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-shape = SubResource("RectangleShape2D_ekxdm")
+sprite_frames = SubResource("SpriteFrames_h7qsp")

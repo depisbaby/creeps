@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="ResourceTuple" load_steps=3 format=3 uid="uid://c8o27n5sff5yv"]
+
+[ext_resource type="Script" path="res://Scripts/Resources/ResourceTuple.gd" id="1_0lvgo"]
+[ext_resource type="Texture2D" uid="uid://cvggraoyl8jyu" path="res://Sprites/Resources/simple_circuit.png" id="2_ydgue"]
+
+[resource]
+script = ExtResource("1_0lvgo")
+resourceName = "Simple Circuit"
+amount = 0
+texture = ExtResource("2_ydgue")

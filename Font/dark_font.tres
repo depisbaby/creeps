@@ -1,0 +1,8 @@
+[gd_resource type="LabelSettings" load_steps=2 format=3 uid="uid://c5qiax01qkybc"]
+
+[ext_resource type="FontFile" uid="uid://dd70jga2dy2qg" path="res://Font/EXEPixelPerfect.ttf" id="1_p8dge"]
+
+[resource]
+font = ExtResource("1_p8dge")
+font_color = Color(0.188235, 0.172549, 0.180392, 1)
+outline_color = Color(0.87451, 0.964706, 0.960784, 1)

@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://drdi7yntcxbcn"]
+
+[ext_resource type="Texture2D" uid="uid://b3dljmrvj76xe" path="res://Sprites/Blocks/block_default.png" id="1_1857n"]
+
+[node name="MiningDebug" type="Sprite2D"]
+texture = ExtResource("1_1857n")

@@ -1,25 +1,51 @@
-[gd_scene load_steps=4 format=3 uid="uid://bkajmpyeav8rn"]
+[gd_scene load_steps=7 format=3 uid="uid://bkajmpyeav8rn"]
 
 [ext_resource type="Script" path="res://Scripts/BlockSubClasses/ConveyorBlock.gd" id="1_bqnjd"]
-[ext_resource type="Texture2D" uid="uid://dkp053r4rsid0" path="res://Sprites/Blocks/conveyor_blue.png" id="2_pg82s"]
+[ext_resource type="Texture2D" uid="uid://f4t8tbx65c0j" path="res://Sprites/BlockWidgets/conveyor_multi_indicator.png" id="3_s084r"]
+[ext_resource type="Texture2D" uid="uid://dorgxeoxy0tel" path="res://Sprites/Blocks/Conveyors/multi/1.png" id="4_86ke6"]
+[ext_resource type="Texture2D" uid="uid://bjwpxte817t6d" path="res://Sprites/Blocks/Conveyors/multi/2.png" id="5_dr62k"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_ekxdm"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_db3gq"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_86ke6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_dr62k")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lykm4"]
 size = Vector2(32, 32)
 
-[node name="ConveyorMulti" type="Node2D"]
+[node name="ConveyorMulti" type="Node2D" node_paths=PackedStringArray("indicatorSprite", "visualsNode")]
 script = ExtResource("1_bqnjd")
 directions = Array[int]([0, 1, 2, 3])
-blockName = "Conveyor block (multi)"
+indicatorSprite = NodePath("indicator")
+blockName = "Conveyor Block (multi)"
+desc = "Multi-directional conveyor block. The side from which a resource is moved into this block is marked as an \"input side\". Resources in this block are moved into the neighboring blocks in \"merry-go-round\"-style, ignoring the \"input sides\". "
 hp = 10
-menuIcon = ExtResource("2_pg82s")
+menuIcon = ExtResource("4_86ke6")
 canHoldResources = true
+visualsNode = NodePath("AnimatedSprite2D")
+components = Array[String](["Simple computer", "Conveyor kit"])
+componentAmounts = Array[int]([1, 1])
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="indicator" type="Sprite2D" parent="."]
 texture_filter = 1
-texture = ExtResource("2_pg82s")
+rotation = -1.5708
+texture = ExtResource("3_s084r")
 
-[node name="Area2D" type="Area2D" parent="."]
-collision_mask = 0
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_db3gq")
+frame_progress = 0.455941
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-shape = SubResource("RectangleShape2D_ekxdm")
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+shape = SubResource("RectangleShape2D_lykm4")

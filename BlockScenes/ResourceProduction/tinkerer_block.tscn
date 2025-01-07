@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=3 uid="uid://cc5vvwlbnq2u5"]
+
+[ext_resource type="Script" path="res://Scripts/BlockSubClasses/TinkererBlock.gd" id="1_tjd3q"]
+[ext_resource type="Texture2D" uid="uid://dcjhjwpjvphp7" path="res://Sprites/Blocks/tinkerer_block.png" id="3_to2v6"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_45fbg"]
+size = Vector2(32, 32)
+
+[node name="TinkererBlock" type="Node2D" node_paths=PackedStringArray("visualsNode")]
+z_index = 1
+script = ExtResource("1_tjd3q")
+directions = Array[int]([0, 1, 2, 3])
+blockName = "Tinkerer Block"
+desc = "Takes in any resources and combines them into a random low level resources.isplay."
+hp = 10
+menuIcon = ExtResource("3_to2v6")
+canHoldResources = true
+visualsNode = NodePath("Sprite2D")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+texture = ExtResource("3_to2v6")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+shape = SubResource("RectangleShape2D_45fbg")

@@ -1,0 +1,10 @@
+
+
+
+
+
+-5= ground
+0= blocks
+6= enemies
+10= projectiles
+15= effects

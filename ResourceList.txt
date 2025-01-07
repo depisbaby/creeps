@@ -1,0 +1,15 @@
+0 = Element-VK
+1 = Mean Looking Crystals
+2 = Oil
+3 = Pseudo Iron
+4 = Purplutide
+5 = Smooth Stuff
+6 = Volcanite
+7 = Wonksten
+8 = Log
+9 = Rock
+10 = Conveyor kit
+11 = Drill bit
+12 = Simple motor
+13 = Simple components
+14 = Simple computer

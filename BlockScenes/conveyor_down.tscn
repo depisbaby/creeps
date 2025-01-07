@@ -1,25 +1,44 @@
-[gd_scene load_steps=4 format=3 uid="uid://dfd4ym1qvpj26"]
+[gd_scene load_steps=6 format=3 uid="uid://dfd4ym1qvpj26"]
 
 [ext_resource type="Script" path="res://Scripts/BlockSubClasses/ConveyorBlock.gd" id="1_rjhew"]
-[ext_resource type="Texture2D" uid="uid://bkcfwu5lif80a" path="res://Sprites/Blocks/conveyor_down.png" id="3_70jer"]
+[ext_resource type="Texture2D" uid="uid://dbumsy4pkvcp3" path="res://Sprites/Blocks/Conveyors/down/1.png" id="3_f71f0"]
+[ext_resource type="Texture2D" uid="uid://sj2yxvkvawc3" path="res://Sprites/Blocks/Conveyors/down/2.png" id="4_lrvvu"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_ekxdm"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_y1sxd"]
 size = Vector2(32, 32)
 
-[node name="ConveyorDown" type="Node2D"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_7bf7v"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_f71f0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_lrvvu")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
+[node name="ConveyorDown" type="Node2D" node_paths=PackedStringArray("visualsNode")]
 script = ExtResource("1_rjhew")
 directions = Array[int]([2])
-blockName = "Conveyor block (down)"
+blockName = "Conveyor Block (down)"
+desc = "One-directional conveyor block (Direction indicated by the yellow arrows). Resources put into this block are moved into the neighboring block at the end of the conveyor."
 hp = 10
-menuIcon = ExtResource("3_70jer")
+menuIcon = ExtResource("3_f71f0")
 canHoldResources = true
+visualsNode = NodePath("AnimatedSprite2D")
+components = Array[String](["Conveyor kit"])
+componentAmounts = Array[int]([1])
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+shape = SubResource("RectangleShape2D_y1sxd")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
-texture = ExtResource("3_70jer")
-
-[node name="Area2D" type="Area2D" parent="."]
-collision_mask = 0
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-shape = SubResource("RectangleShape2D_ekxdm")
+sprite_frames = SubResource("SpriteFrames_7bf7v")
+frame_progress = 0.869501

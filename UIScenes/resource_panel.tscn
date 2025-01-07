@@ -1,0 +1,40 @@
+[gd_scene load_steps=3 format=3 uid="uid://btt81r7jqk7ix"]
+
+[ext_resource type="Script" path="res://Scripts/UI/ResourcePanel.gd" id="1_hti7n"]
+[ext_resource type="LabelSettings" uid="uid://67w0qhprsbdf" path="res://Font/light_outlined_font.tres" id="2_40sys"]
+
+[node name="ResourcePanel" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_hti7n")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+texture_filter = 1
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Label" type="Label" parent="."]
+texture_filter = 1
+layout_mode = 0
+offset_top = 21.0
+offset_right = 32.0
+offset_bottom = 36.0
+scale = Vector2(1.2, 1.2)
+label_settings = ExtResource("2_40sys")
+horizontal_alignment = 2
+vertical_alignment = 2
+
+[node name="Button" type="Button" parent="."]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 0
+offset_left = 4.0
+offset_top = 2.0
+offset_right = 37.0
+offset_bottom = 41.0
+
+[connection signal="button_down" from="Button" to="." method="_on_button_button_down"]

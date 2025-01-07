@@ -1,25 +1,44 @@
-[gd_scene load_steps=4 format=3 uid="uid://dsutb1sy00j1g"]
+[gd_scene load_steps=6 format=3 uid="uid://dsutb1sy00j1g"]
 
 [ext_resource type="Script" path="res://Scripts/BlockSubClasses/ConveyorBlock.gd" id="1_aaxy1"]
-[ext_resource type="Texture2D" uid="uid://bjsoxyekarux1" path="res://Sprites/Blocks/conveyor_left.png" id="2_iurqw"]
+[ext_resource type="Texture2D" uid="uid://bj348ropw6lno" path="res://Sprites/Blocks/Conveyors/left/1.png" id="3_3rdlo"]
+[ext_resource type="Texture2D" uid="uid://48rcjse12ijp" path="res://Sprites/Blocks/Conveyors/left/2.png" id="4_jtocj"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_ekxdm"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_4w34a"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_3rdlo")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_jtocj")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_14dcf"]
 size = Vector2(32, 32)
 
-[node name="ConveyorLeft" type="Node2D"]
+[node name="ConveyorLeft" type="Node2D" node_paths=PackedStringArray("visualsNode")]
 script = ExtResource("1_aaxy1")
 directions = Array[int]([3])
-blockName = "Conveyor block (left)"
+blockName = "Conveyor Block (left)"
+desc = "One-directional conveyor block (Direction indicated by the yellow arrows). Resources put into this block are moved into the neighboring block at the end of the conveyor."
 hp = 10
-menuIcon = ExtResource("2_iurqw")
+menuIcon = ExtResource("3_3rdlo")
 canHoldResources = true
+visualsNode = NodePath("AnimatedSprite2D")
+_tags = Array[String](["conveyor"])
+components = Array[String](["Conveyor kit"])
+componentAmounts = Array[int]([1])
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
-texture = ExtResource("2_iurqw")
+sprite_frames = SubResource("SpriteFrames_4w34a")
 
-[node name="Area2D" type="Area2D" parent="."]
-collision_mask = 0
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-shape = SubResource("RectangleShape2D_ekxdm")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+shape = SubResource("RectangleShape2D_14dcf")

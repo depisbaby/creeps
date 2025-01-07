@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="ResourceTuple" load_steps=3 format=3 uid="uid://bub2tqles5xm2"]
+
+[ext_resource type="Script" path="res://Scripts/Resources/ResourceTuple.gd" id="1_kb5lf"]
+[ext_resource type="Texture2D" uid="uid://codd8qvl5dinq" path="res://Sprites/Resources/volcanite.png" id="2_t7lps"]
+
+[resource]
+script = ExtResource("1_kb5lf")
+resourceName = "Volcanite"
+amount = 0
+texture = ExtResource("2_t7lps")

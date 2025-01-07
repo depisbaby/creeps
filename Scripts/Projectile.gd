@@ -48,7 +48,7 @@ sizeMod:float):
 	damage = _damage
 	lifeTick = 180
 	shot = true
-	
+	global_scale = Vector2(1+sizeMod,1+sizeMod)
 	pass
 
 func Move(delta):
@@ -57,13 +57,9 @@ func Move(delta):
 	pass
 
 func HitCreep(target: Creep):
-	shot = false
+	
 	target.DamageThis(damage)
-	visible = false
-	if pool != null:
-		pool.ReturnToPool(self)
-	else :
-		queue_free()
+	Expire()
 	
 	pass
 
@@ -72,6 +68,7 @@ func Expire():
 		return
 	visible = false
 	if pool != null:
+		global_scale = Vector2(1,1)
 		pool.ReturnToPool(self)
 	else :
 		queue_free()

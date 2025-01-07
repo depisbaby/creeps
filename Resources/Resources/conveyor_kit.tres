@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="ResourceTuple" load_steps=3 format=3 uid="uid://b6fygc84g86ic"]
+
+[ext_resource type="Script" path="res://Scripts/Resources/ResourceTuple.gd" id="1_k7l4o"]
+[ext_resource type="Texture2D" uid="uid://bwgf8yrfw72n3" path="res://Sprites/Resources/conveyor_kit.png" id="2_kqya1"]
+
+[resource]
+script = ExtResource("1_k7l4o")
+resourceName = "Conveyor Kit"
+amount = 0
+texture = ExtResource("2_kqya1")

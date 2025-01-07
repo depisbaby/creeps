@@ -6,6 +6,18 @@ class_name MinerBlock
 var produceName: String
 var spriteId:int
 
+func _init():
+	Global.constructionManual.CreateRecipe([],["Element-VK"],"Miner Block")
+	Global.constructionManual.CreateRecipe([],["Mean Looking Crystals"],"Miner Block")
+	Global.constructionManual.CreateRecipe([],["Pseudo Iron"],"Miner Block")
+	Global.constructionManual.CreateRecipe([],["Purplutide"],"Miner Block")
+	Global.constructionManual.CreateRecipe([],["Smooth Stuff"],"Miner Block")
+	Global.constructionManual.CreateRecipe([],["Volcanite"],"Miner Block")
+	Global.constructionManual.CreateRecipe([],["Wonksten"],"Miner Block")
+	Global.constructionManual.CreateRecipe([],["Oil"],"Miner Block")
+	
+	
+
 func _process(delta: float) -> void:
 	pass
 
@@ -17,39 +29,44 @@ func _physics_process(delta: float) -> void:
 	#print(Global.gameManager.tick)
 	#print(connectedBlocks.size())
 	#print("wave: ",Global.gameManager.waveInProgress)
-	if Global.gameManager.tick % 60 == 0 && connectedBlocks.size()!= 0 && Global.resourceManager.waveInProgress:
-		ProduceResource()
+	if Global.gameManager.tick % (60*5) == 0 && connectedBlocks.size()!= 0:
+		CreateResource(produceName)
 
 func OnPlace():
 	super.OnPlace()
-	var node = Global.gameManager.GetNodeAt(xGridPos,yGridPos)
-	var miningValue = node.miningValue
+	var node = Global.worldManager.GetNodeAt(xGridPos,yGridPos)
+	var value = node.miningValue
 	
-	print(miningValue)
 	
-	if miningValue < -0.15:
-		SetProducedResource("oil", 2)
-		return
-	if miningValue < 0.15:
-		SetProducedResource("brass", 0)
-		return
+	if value < -0.30:
+		#debug.modulate = Color.WHITE
+		SetProducedResource("Oil", 2)
+	elif value < -0.20:
+		#debug.modulate = Color.RED
+		SetProducedResource("Element-VK", 0)
+	elif value < -0.10:
+		#debug.modulate = Color.DARK_BLUE
+		SetProducedResource("Pseudo Iron", 3)
+	elif value < 0.00:
+		#debug.modulate = Color.YELLOW
+		SetProducedResource("Purplutide", 4)
+	elif value < 0.10:
+		#debug.modulate = Color.CORAL
+		SetProducedResource("Smooth Stuff", 5)
+	elif value < 0.20:
+		#debug.modulate = Color.PURPLE
+		SetProducedResource("Mean Looking Crystals", 1)
+	elif value < 0.30:
+		#debug.modulate = Color.PURPLE
+		SetProducedResource("Volcanite", 6)
 	else:
-		SetProducedResource("gun_powder", 1)
-		return
-	
-
-func ProduceResource():
-	#print("hep")
-	var resource = Global.resourceManager.PopFromPool(produceName,spriteId)
-	resource.global_position = global_position
-	ReceiveResource(resource,self)
-	
-	pass
+		#debug.modulate = Color.GREEN
+		SetProducedResource("Wonksten", 7)
 	
 func SetProducedResource(name:String, _spriteId):
 	produceName = name
 	spriteId = _spriteId
-	
-	resourceIcon.texture = Global.resourceManager.sprites[spriteId]
+	var resource = Global.resourceManager.GetResourceByName(name)
+	resourceIcon.texture = resource.texture
 	
 	pass

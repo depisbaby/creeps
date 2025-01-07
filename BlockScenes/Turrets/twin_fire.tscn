@@ -1,43 +1,47 @@
-[gd_scene load_steps=9 format=3 uid="uid://fvjxg1j1fhr2"]
+[gd_scene load_steps=8 format=3 uid="uid://fvjxg1j1fhr2"]
 
 [ext_resource type="Script" path="res://Scripts/BlockSubClasses/Turret.gd" id="1_1fneb"]
-[ext_resource type="Texture2D" uid="uid://mcqjgy7xfgwn" path="res://Sprites/BlockIcons/twin_fire.png" id="2_q5j6h"]
-[ext_resource type="Texture2D" uid="uid://b3dljmrvj76xe" path="res://Sprites/Blocks/block_default.png" id="3_0fixw"]
+[ext_resource type="Texture2D" uid="uid://b4da0v8q16hb4" path="res://Sprites/Blocks/turret_base.png" id="3_6ui4v"]
 [ext_resource type="Texture2D" uid="uid://cplojnnv3g5u0" path="res://Sprites/BlockWidgets/turret2.png" id="4_f28l8"]
 [ext_resource type="Script" path="res://Scripts/ProjectilePool.gd" id="5_vysr3"]
 [ext_resource type="PackedScene" uid="uid://c6a365pkb1yce" path="res://ProjectileScenes/default_projectile.tscn" id="6_hev26"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_isbxr"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6ieh8"]
 size = Vector2(32, 32)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_esky0"]
 radius = 200.0
 
-[node name="TwinFire" type="Node2D" node_paths=PackedStringArray("projectilePool", "turretHead", "visualsNode")]
+[node name="TwinFire" type="Node2D" node_paths=PackedStringArray("projectilePool", "turretHead", "rangeCollider", "visualsNode")]
 script = ExtResource("1_1fneb")
 damage = 2
 attackSpeed = 0.25
 projectileSpeed = 120.0
 accuracy = 0.1
+range = 200
 projectilePool = NodePath("ProjectilePool")
 turretHead = NodePath("block/turret")
+rangeCollider = NodePath("Radar/CollisionShape2D")
+blockName = "\"Twin Fire\" Turret block"
+desc = "A turret which will shoot at detected enemies. Requires a supply of ammunition to operate."
 hp = 5
-menuIcon = ExtResource("2_q5j6h")
+menuIcon = ExtResource("4_f28l8")
 visualsNode = NodePath("block")
+components = Array[String](["Rifled barrel", "AI module", "Advanced components", "Advanced computer"])
+componentAmounts = Array[int]([2, 1, 1, 1])
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+shape = SubResource("RectangleShape2D_6ieh8")
 
 [node name="block" type="Sprite2D" parent="."]
 texture_filter = 1
-texture = ExtResource("3_0fixw")
+texture = ExtResource("3_6ui4v")
 
 [node name="turret" type="Sprite2D" parent="block"]
 texture_filter = 1
 texture = ExtResource("4_f28l8")
-
-[node name="Area2D" type="Area2D" parent="."]
-collision_mask = 0
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-shape = SubResource("RectangleShape2D_isbxr")
 
 [node name="Radar" type="Area2D" parent="."]
 collision_layer = 0

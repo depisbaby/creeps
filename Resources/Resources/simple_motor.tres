@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="ResourceTuple" load_steps=3 format=3 uid="uid://bn772jsdxqhkx"]
+
+[ext_resource type="Script" path="res://Scripts/Resources/ResourceTuple.gd" id="1_wy1kf"]
+[ext_resource type="Texture2D" uid="uid://crgb0bmlxfxlu" path="res://Sprites/Resources/simple_motor.png" id="2_do2xd"]
+
+[resource]
+script = ExtResource("1_wy1kf")
+resourceName = "Simple Motor"
+amount = 0
+texture = ExtResource("2_do2xd")
