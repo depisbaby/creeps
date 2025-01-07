@@ -110,6 +110,48 @@ label_settings = ExtResource("20_e8xyc")
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="ExitGame" type="Control" parent="CanvasLayer/HUD"]
+anchors_preset = 0
+offset_top = 258.0
+offset_right = 40.0
+offset_bottom = 298.0
+
+[node name="MoveBlock_button" type="Button" parent="CanvasLayer/HUD/ExitGame"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 0
+offset_left = -209.0
+offset_top = 34.0
+offset_right = -14.0
+offset_bottom = 90.0
+
+[node name="NinePatchRect" type="NinePatchRect" parent="CanvasLayer/HUD/ExitGame"]
+texture_filter = 1
+layout_mode = 0
+offset_left = -210.0
+offset_top = 34.0
+offset_right = -171.0
+offset_bottom = 45.0
+scale = Vector2(5, 5)
+texture = ExtResource("3_fd8gm")
+region_rect = Rect2(0, 0, 10, 10)
+patch_margin_left = 3
+patch_margin_top = 3
+patch_margin_right = 3
+patch_margin_bottom = 3
+
+[node name="Label" type="Label" parent="CanvasLayer/HUD/ExitGame"]
+texture_filter = 1
+layout_mode = 0
+offset_left = -199.0
+offset_top = 37.0
+offset_right = -135.0
+offset_bottom = 54.0
+scale = Vector2(2.7, 2.7)
+text = "Exit game"
+label_settings = ExtResource("20_e8xyc")
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="BuildMenu" type="Control" parent="CanvasLayer/HUD"]
 anchors_preset = 0
 offset_right = 40.0
@@ -238,6 +280,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="MainMenu" type="Control" parent="CanvasLayer"]
+visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -403,7 +446,7 @@ offset_top = 427.0
 offset_right = 700.0
 offset_bottom = 444.0
 scale = Vector2(2.7, 2.7)
-text = "Empty slot"
+text = "Slot 1"
 label_settings = ExtResource("20_e8xyc")
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -414,28 +457,15 @@ anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="info" type="Label" parent="CanvasLayer/MainMenu/SaveSelect/Slot1/LoadView"]
-texture_filter = 1
-layout_mode = 0
-offset_left = 627.0
-offset_top = 483.0
-offset_right = 725.0
-offset_bottom = 596.0
-scale = Vector2(2, 2)
-text = "info"
-label_settings = ExtResource("20_e8xyc")
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="PlayButton2" type="Control" parent="CanvasLayer/MainMenu/SaveSelect/Slot1/LoadView"]
+[node name="playbutton" type="Control" parent="CanvasLayer/MainMenu/SaveSelect/Slot1/LoadView"]
 layout_mode = 3
 anchors_preset = 0
 offset_left = 821.0
-offset_top = 706.0
+offset_top = 457.0
 offset_right = 861.0
-offset_bottom = 746.0
+offset_bottom = 497.0
 
-[node name="slot1_load" type="Button" parent="CanvasLayer/MainMenu/SaveSelect/Slot1/LoadView/PlayButton2"]
+[node name="slot1_load" type="Button" parent="CanvasLayer/MainMenu/SaveSelect/Slot1/LoadView/playbutton"]
 modulate = Color(1, 1, 1, 0)
 layout_mode = 0
 offset_left = -152.0
@@ -443,7 +473,7 @@ offset_top = 34.0
 offset_right = -46.0
 offset_bottom = 90.0
 
-[node name="NinePatchRect" type="NinePatchRect" parent="CanvasLayer/MainMenu/SaveSelect/Slot1/LoadView/PlayButton2"]
+[node name="NinePatchRect" type="NinePatchRect" parent="CanvasLayer/MainMenu/SaveSelect/Slot1/LoadView/playbutton"]
 texture_filter = 1
 layout_mode = 0
 offset_left = -151.0
@@ -458,7 +488,7 @@ patch_margin_top = 3
 patch_margin_right = 3
 patch_margin_bottom = 3
 
-[node name="Label" type="Label" parent="CanvasLayer/MainMenu/SaveSelect/Slot1/LoadView/PlayButton2"]
+[node name="Label" type="Label" parent="CanvasLayer/MainMenu/SaveSelect/Slot1/LoadView/playbutton"]
 texture_filter = 1
 layout_mode = 0
 offset_left = -183.0
@@ -471,13 +501,56 @@ label_settings = ExtResource("20_e8xyc")
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="deletebutton" type="Control" parent="CanvasLayer/MainMenu/SaveSelect/Slot1/LoadView"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 821.0
+offset_top = 706.0
+offset_right = 861.0
+offset_bottom = 746.0
+
+[node name="slot1_load" type="Button" parent="CanvasLayer/MainMenu/SaveSelect/Slot1/LoadView/deletebutton"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 0
+offset_left = -152.0
+offset_top = 34.0
+offset_right = -46.0
+offset_bottom = 90.0
+
+[node name="NinePatchRect" type="NinePatchRect" parent="CanvasLayer/MainMenu/SaveSelect/Slot1/LoadView/deletebutton"]
+texture_filter = 1
+layout_mode = 0
+offset_left = -183.0
+offset_top = 34.0
+offset_right = -149.0
+offset_bottom = 45.0
+scale = Vector2(5, 5)
+texture = ExtResource("6_7vh5w")
+region_rect = Rect2(0, 0, 10, 10)
+patch_margin_left = 3
+patch_margin_top = 3
+patch_margin_right = 3
+patch_margin_bottom = 3
+
+[node name="Label" type="Label" parent="CanvasLayer/MainMenu/SaveSelect/Slot1/LoadView/deletebutton"]
+texture_filter = 1
+layout_mode = 0
+offset_left = -183.0
+offset_top = 36.0
+offset_right = -119.0
+offset_bottom = 53.0
+scale = Vector2(2.7, 2.7)
+text = "Delete"
+label_settings = ExtResource("20_e8xyc")
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="NewGameView" type="Control" parent="CanvasLayer/MainMenu/SaveSelect/Slot1"]
-visible = false
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="name_input_field" type="NinePatchRect" parent="CanvasLayer/MainMenu/SaveSelect/Slot1/NewGameView"]
+[node name="seed_input_field" type="NinePatchRect" parent="CanvasLayer/MainMenu/SaveSelect/Slot1/NewGameView"]
 texture_filter = 1
 offset_left = 632.0
 offset_top = 543.0
@@ -491,41 +564,14 @@ patch_margin_top = 3
 patch_margin_right = 3
 patch_margin_bottom = 3
 
-[node name="name" type="LineEdit" parent="CanvasLayer/MainMenu/SaveSelect/Slot1/NewGameView"]
-modulate = Color(0.188235, 0.172549, 0.180392, 1)
-texture_filter = 1
-offset_left = 642.0
-offset_top = 544.0
-offset_right = 707.0
-offset_bottom = 565.0
-scale = Vector2(2.5, 2.5)
-theme_override_fonts/font = ExtResource("4_wdh8o")
-placeholder_text = "name"
-flat = true
-caret_blink = true
-
-[node name="seed_input_field" type="NinePatchRect" parent="CanvasLayer/MainMenu/SaveSelect/Slot1/NewGameView"]
-texture_filter = 1
-offset_left = 632.0
-offset_top = 602.0
-offset_right = 668.0
-offset_bottom = 613.0
-scale = Vector2(5, 5)
-texture = ExtResource("10_hxpg7")
-region_rect = Rect2(0, 0, 10, 10)
-patch_margin_left = 3
-patch_margin_top = 3
-patch_margin_right = 3
-patch_margin_bottom = 3
-
 [node name="Seed" type="LineEdit" parent="CanvasLayer/MainMenu/SaveSelect/Slot1/NewGameView"]
 modulate = Color(0.188235, 0.172549, 0.180392, 1)
 texture_filter = 1
 layout_mode = 0
 offset_left = 641.0
-offset_top = 603.0
+offset_top = 544.0
 offset_right = 706.0
-offset_bottom = 624.0
+offset_bottom = 565.0
 scale = Vector2(2.5, 2.5)
 theme_override_fonts/font = ExtResource("4_wdh8o")
 placeholder_text = "seed"
@@ -1907,6 +1953,34 @@ offset_right = 1329.0
 offset_bottom = 169.0
 text = "close"
 
+[node name="LoadingScreen" type="Control" parent="CanvasLayer"]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/LoadingScreen"]
+texture_filter = 1
+layout_mode = 0
+offset_right = 387.0
+offset_bottom = 220.0
+scale = Vector2(5, 5)
+texture = ExtResource("19_287u7")
+stretch_mode = 1
+
+[node name="Label" type="Label" parent="CanvasLayer/LoadingScreen"]
+texture_filter = 1
+offset_left = 81.0001
+offset_top = 945.0
+offset_right = 145.0
+offset_bottom = 962.0
+scale = Vector2(5, 5)
+text = "Loading..."
+label_settings = ExtResource("20_e8xyc")
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="Managers" type="Node" parent="."]
 
 [node name="MouseManager" type="CharacterBody2D" parent="Managers"]
@@ -1969,11 +2043,15 @@ script = ExtResource("14_ow38m")
 texture = ExtResource("23_uw5lm")
 
 [connection signal="button_down" from="CanvasLayer/HUD/MoveBlock/MoveBlock_button" to="CanvasLayer/HUD" method="_on_move_block_button_down"]
+[connection signal="button_down" from="CanvasLayer/HUD/ExitGame/MoveBlock_button" to="CanvasLayer/HUD" method="_on_exit_button_down"]
 [connection signal="button_down" from="CanvasLayer/HUD/BuildMenu/BuildMenu_button" to="CanvasLayer/HUD" method="_on_build_menu_button_down"]
 [connection signal="button_down" from="CanvasLayer/HUD/Inventory/Inventory_button" to="CanvasLayer/HUD" method="_on_inventory_button_down"]
 [connection signal="button_down" from="CanvasLayer/HUD/ConstructionMenu/ConstructionManual_button" to="CanvasLayer/HUD" method="_on_construction_manual_button_down"]
 [connection signal="button_down" from="CanvasLayer/MainMenu/PlayButton/Play" to="CanvasLayer/MainMenu" method="_on_play_button_down"]
 [connection signal="button_down" from="CanvasLayer/MainMenu/DevMode/dev_mode_button" to="CanvasLayer/MainMenu" method="_on_dev_mode_button_down"]
+[connection signal="button_down" from="CanvasLayer/MainMenu/SaveSelect/Slot1/LoadView/playbutton/slot1_load" to="CanvasLayer/MainMenu" method="_on_slot_load_button_down" binds= [0]]
+[connection signal="button_down" from="CanvasLayer/MainMenu/SaveSelect/Slot1/LoadView/deletebutton/slot1_load" to="CanvasLayer/MainMenu" method="_on_slot_delete_button_down" binds= [0]]
+[connection signal="button_down" from="CanvasLayer/MainMenu/SaveSelect/Slot1/NewGameView/PlayButton/slot1_new" to="CanvasLayer/MainMenu" method="_on_slot_new_button_down" binds= [0]]
 [connection signal="button_down" from="CanvasLayer/BuyMenu/UtilityShop/utility_shop_close" to="CanvasLayer/BuyMenu" method="_on_utility_shop_close_button_down"]
 [connection signal="button_down" from="CanvasLayer/BuyMenu/BlockShop/blockShop_close" to="CanvasLayer/BuyMenu" method="_on_block_shop_close_button_down"]
 [connection signal="button_down" from="CanvasLayer/BuyMenu/BlockShop/reroll_button" to="CanvasLayer/BuyMenu" method="_on_reroll_button_button_down"]

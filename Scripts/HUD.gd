@@ -55,3 +55,8 @@ func _on_construction_manual_button_down():
 	await get_tree().create_timer(0.1).timeout	
 	Global.constructionManual.OpenView()
 	pass # Replace with function body.
+
+
+func _on_exit_button_down():
+	Global.gameManager.ReturnToMainMenu()
+	pass # Replace with function body.

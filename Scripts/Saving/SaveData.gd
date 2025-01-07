@@ -1,7 +1,12 @@
 extends Resource
 class_name SaveData
 
-var seed: String
+@export var slotNumber: int
+@export var seed: String
 
 #world
-var worldChanges: Array[SessionWorldChange]
+@export var worldChanges: Array
+
+#player
+@export var playerPosition: Vector2
+@export var playerInventory: Array

@@ -30,13 +30,8 @@ func _enter_tree():
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	InitializeGrid()
-	Global.saveManager.Subscribe(self)
+	#Global.saveManager.Subscribe(self)
 	pass # Replace with function body.
-
-func LoadWorld(seed):
-	await get_tree().create_timer(0.1).timeout
-	SetMiningValues(seed)
-	GenerateNaturalBlocks(seed)
 
 func LoadDevMode(seed):
 	await get_tree().create_timer(0.1).timeout
@@ -83,7 +78,7 @@ func _process(delta):
 					return
 				NewSessionWorldChange(blockLifted.xGridPos, blockLifted.yGridPos,"")
 				RemoveBlock(blockLifted.xGridPos, blockLifted.yGridPos)
-				blockLifted.OnRemove()
+				blockLifted.Remove()
 				ForcePlaceBlock(blockLifted, array[0], array[1])
 				NewSessionWorldChange(array[0], array[1],blockLifted.blockName)
 				blockLifted = null
@@ -168,8 +163,9 @@ func PlaceBlock(block:Block, x:int, y:int):
 	pass
 
 func ForcePlaceBlock(block:Block, x:int, y:int):
-	if GetNodeAt(x, y).block != null: #position already occupied
-		#TODO remove block
+	var node = GetNodeAt(x, y)
+	if node.block != null: #position already occupied
+		node.block.Destroy()
 		return
 	
 	PlaceBlock(block, x, y)
@@ -283,7 +279,7 @@ func SetMiningValues(seed: String):
 	pass
 	
 func GenerateNaturalBlocks(seed:String):	
-	print("adgfdasg")
+	#print("adgfdasg")
 	var noise: FastNoiseLite = FastNoiseLite.new()
 	noise.seed = hash(seed)
 	
@@ -301,6 +297,24 @@ func GenerateNaturalBlocks(seed:String):
 			
 	pass
 	
+func ApplyChanges(saveData:SaveData):
+	for node in grid:
+		node.savingFlag = false
+		pass
+		
+	for change in saveData.worldChanges:
+		var node = GetNodeAt(change.x,change.y)
+		if !node.savingFlag:
+			node.savingFlag = true
+			if change.status == "":
+				continue
+			var block = Global.buildMenu.GetBlockReferenceByName(change.status).duplicate()
+			if block != null:
+				ForcePlaceBlock(block,change.x,change.y)
+		else:
+			change.outOfDate = true 
+	pass
+	
 #Saving
 func NewSessionWorldChange(x:int, y:int, status: String):
 	var new = SessionWorldChange.new()
@@ -313,23 +327,24 @@ func NewSessionWorldChange(x:int, y:int, status: String):
 func Save(saveData:SaveData):
 	
 	for node in grid:
-		node.saved = false
+		node.savingFlag = false
 		pass
 	
 	for change in sessionWorldChanges:
 		var node = GetNodeAt(change.x, change.y)
-		if !node.saved:
-			node.saved = true
+		if !node.savingFlag:
+			node.savingFlag = true
 			saveData.worldChanges.push_front(change)
 	
 	
 	pass
 	
 func Load(saveData:SaveData):
+	print("World manager loading...")
 	#Apply seed
 	SetMiningValues(saveData.seed)
 	GenerateNaturalBlocks(saveData.seed)
 	
 	#Apply changes
-	
+	ApplyChanges(saveData)
 	pass

@@ -6,6 +6,7 @@ class_name GameManager
 var rng: RandomNumberGenerator
 var gameActive: bool
 @onready var miningDebug: PackedScene = preload("res://MiscScenes/mining_debug.tscn")
+@onready var loadingScreen: Control = $CanvasLayer/LoadingScreen
 
 #game
 
@@ -29,7 +30,7 @@ func _process(delta):
 	
 	pass
 	
-func StartNewGame(seed: String):
+func StartNewGame(seed:String, slot: int):
 	if gameActive:
 		return
 	
@@ -38,10 +39,14 @@ func StartNewGame(seed: String):
 	if seed == "":
 		seed = str(randf_range(-100000.0, 100000.0))
 	
-	rng = RandomNumberGenerator.new()
-	rng.seed = hash(seed)
+	loadingScreen.visible = true
+	Global.mainMenu.visible = false
 	
-	Global.worldManager.LoadWorld(seed)
+	await  get_tree().create_timer(0.01).timeout
+	
+	Global.saveManager.StartNewGame(seed,slot)
+	print("loading done")
+	loadingScreen.visible = false
 	
 	Global.hud.OpenHUD()
 	pass
@@ -64,10 +69,29 @@ func StartInDevMode(seed: String):
 	pass
 
 func ReturnToMainMenu(): #OBS
+	loadingScreen.visible = true
+	Global.saveManager.SaveGame()
 	get_tree().reload_current_scene()
 	pass
 
-
+func LoadGame(slot:int):
+	if gameActive:
+		return
+	
+	gameActive = true	
+	
+	
+	loadingScreen.visible = true
+	Global.mainMenu.visible = false
+	
+	await  get_tree().create_timer(0.01).timeout
+	
+	Global.saveManager.LoadGame(slot)
+	print("loading done")
+	loadingScreen.visible = false
+	
+	Global.hud.OpenHUD()
+	pass
 	
 
 #UI

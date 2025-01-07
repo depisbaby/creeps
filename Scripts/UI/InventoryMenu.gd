@@ -12,6 +12,7 @@ func _enter_tree():
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	Global.saveManager.Subscribe(self)
 	InitializeGrid()
 	pass # Replace with function body.
 
@@ -74,4 +75,16 @@ func UpdateGrid():
 			grid[gridHead].amountLabel.text = str(collected.amount)
 		grid[gridHead].visible = true
 		gridHead = gridHead + 1
+
+func Save(save:SaveData):
+	save.playerInventory.clear()
+	
+	for collectedResource in collectedResources:
+		save.playerInventory.push_back(collectedResource)
+	pass
+	
+func Load(save:SaveData):
+	for collectedResource in save.playerInventory:
+		collectedResources.push_back(collectedResource)
+	pass
 	

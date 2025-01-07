@@ -6,6 +6,8 @@ var ySpeed:float
 
 func _enter_tree():
 	Global.player = self
+	
+	Global.saveManager.Subscribe(self)
 	pass
 
 func _physics_process(delta):
@@ -25,3 +27,11 @@ func _physics_process(delta):
 	global_position = global_position + Vector2(xSpeed* delta, ySpeed* delta)
 
 	move_and_slide()
+	
+func Save(save:SaveData):
+	save.playerPosition = global_position
+	pass
+	
+func Load(save:SaveData):
+	global_position = save.playerPosition
+	pass

@@ -29,7 +29,7 @@ func OnPlace():
 			neighbor.block.NeighborEntered(self)
 	placed = true
 
-func OnRemove(): #this doesnt mean that block is removed from the world just that its removed from this position
+func Remove(): #this doesnt mean that block is removed from the world just that its removed from this position
 	var neighbors: Array[GridNode] = Global.worldManager.GetNeighbors(xGridPos,yGridPos)
 	for neighbor in neighbors:
 		if neighbor.block != null:
@@ -41,9 +41,9 @@ func OnRemove(): #this doesnt mean that block is removed from the world just tha
 	placed = false
 	
 
-func OnDestroy():# removes block for good
+func Destroy():# removes block for good
 	Global.worldManager.RemoveBlock(xGridPos,yGridPos)
-	OnRemove()
+	Remove()
 	queue_free()
 	
 func CreepDamage(damage: int):
@@ -51,7 +51,7 @@ func CreepDamage(damage: int):
 	hp = hp - damage
 	
 	if hp < 0:
-		OnDestroy()
+		Destroy()
 	
 	pass
 
@@ -65,7 +65,7 @@ func ReceiveResource(resource: _Resource, source:Block):
 	
 		
 func NeighborEntered(neighbor: Block): 
-	print("bruh")
+	#print("bruh")
 	pass
 	
 func NeighborLeft(neighbor: Block):
