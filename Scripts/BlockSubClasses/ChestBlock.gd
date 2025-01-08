@@ -1,26 +1,32 @@
 extends Block
 class_name ChestBlock
 
-var collectedResources: Array[ResourceTuple]
+var blockInventory :BlockInventory
 
 func ReceiveResource(resource: _Resource, source:Block):
 	super.ReceiveResource(resource, source)
 	
-	for _resource in collectedResources:
-		if _resource.resourceName == resource.resourceName:
-			_resource.amount = _resource.amount + 1
-			Global.resourceManager.ReturnToPool(resource)
-			return
-	
-	var instance = ResourceTuple.new()
-	instance.resourceName = resource.resourceName
-	instance.amount = 1
-	instance.texture = resource.texture
-	collectedResources.push_back(instance)
-	
+	blockInventory.PushBack(resource.resourceName, 1)
 	Global.resourceManager.ReturnToPool(resource)
 	
+	
 func PlayerInteract():
-	Global.inventoryMenu.CollectResources(collectedResources)
-	collectedResources.clear()
+	Global.inventoryMenu.CollectResources(blockInventory.GetAsResourceTupleArray())
+	blockInventory.Clear()
+	pass
+	
+func OnPlace():
+	super.OnPlace()
+	blockInventory = BlockInventory.new()
+	blockInventory.xPosition = xGridPos
+	blockInventory.yPosition = yGridPos
+	Global.saveManager.Subscribe(self)
+	pass
+	
+func Save(save:SaveData):
+	save.blockInventories.push_back(blockInventory)
+	pass
+	
+func Load(save:SaveData):
+	
 	pass

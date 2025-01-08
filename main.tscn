@@ -426,6 +426,7 @@ offset_bottom = 40.0
 
 [node name="NinePatchRect2" type="NinePatchRect" parent="CanvasLayer/MainMenu/SaveSelect/Slot1"]
 texture_filter = 1
+layout_mode = 0
 offset_left = 611.0
 offset_top = 402.0
 offset_right = 656.0
@@ -552,6 +553,7 @@ offset_bottom = 40.0
 
 [node name="seed_input_field" type="NinePatchRect" parent="CanvasLayer/MainMenu/SaveSelect/Slot1/NewGameView"]
 texture_filter = 1
+layout_mode = 0
 offset_left = 632.0
 offset_top = 543.0
 offset_right = 668.0
@@ -1971,6 +1973,7 @@ stretch_mode = 1
 
 [node name="Label" type="Label" parent="CanvasLayer/LoadingScreen"]
 texture_filter = 1
+layout_mode = 0
 offset_left = 81.0001
 offset_top = 945.0
 offset_right = 145.0

@@ -57,6 +57,8 @@ func CollectResources(resources: Array[ResourceTuple]):
 		instance.resourceName = resource.resourceName
 		instance.amount = resource.amount
 		instance.texture = resource.texture
+		if resource.texture == null:
+			instance.texture = Global.resourceManager.GetResourceByName(resource.resourceName).texture
 		collectedResources.push_back(instance)
 	
 	Global.effectManager.DisplayStatusIcon(Global.player.global_position,10)

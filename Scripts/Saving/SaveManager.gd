@@ -37,6 +37,8 @@ func LoadGame(slot:int):
 	loadedSave = ResourceLoader.load(SAVE_GAME_SLOT_PATHS[slot])
 	for subscriber in subscribers:
 		subscriber.Load(loadedSave)
+		
+	LoadBlockInventories(loadedSave)
 	pass
 
 func DeleteGame(slot:int):
@@ -56,6 +58,8 @@ func DeleteGame(slot:int):
 	pass
 	
 func SaveGame():
+	loadedSave.blockInventories.clear()
+	
 	for subscriber in subscribers:
 		subscriber.Save(loadedSave)
 	ResourceSaver.save(loadedSave,SAVE_GAME_SLOT_PATHS[loadedSave.slotNumber])
@@ -69,3 +73,16 @@ func Subscribe(subscriber):
 	subscribers.push_back(subscriber)
 	
 	pass
+
+#===============SAVE HELPERS =========================
+#=====================================================
+#Block inventories
+func LoadBlockInventories(save:SaveData):
+	for blockInventory in save.blockInventories:
+		var inv = blockInventory as BlockInventory
+		var x = inv.xPosition 
+		var y = inv.yPosition
+		var node = Global.worldManager.GetNodeAt(x,y)
+		node.block.blockInventory = blockInventory
+		#print("sdgsdgsdg")
+		pass

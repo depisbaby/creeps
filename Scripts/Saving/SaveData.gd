@@ -10,3 +10,6 @@ class_name SaveData
 #player
 @export var playerPosition: Vector2
 @export var playerInventory: Array
+
+#block inventories
+@export var blockInventories: Array
