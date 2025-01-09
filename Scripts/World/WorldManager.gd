@@ -11,6 +11,8 @@ var grid: Array[GridNode]
 #placing blocks
 var placingBlock: bool
 var blockBeingPlaced: Block
+var selectedConfiguration
+var configurationHead: int
 
 #moving blocks
 var movingBlocks: bool
@@ -53,10 +55,24 @@ func _process(delta):
 		if Input.is_action_just_pressed("mouse1"):
 			
 			PlayerPlaceBlock()
-	
+			
+		if blockBeingPlaced.configurations.size() > 0: # has many configurations
+			
+			if Input.is_action_just_pressed("mouse_wheel_up"):
+				configurationHead = configurationHead - 1
+				if configurationHead < -1:
+					configurationHead = blockBeingPlaced.configurations.size()-1
+				UpdateConfiguration()
+				
+			if Input.is_action_just_pressed("mouse_wheel_down"):
+				configurationHead = configurationHead + 1
+				if configurationHead > blockBeingPlaced.configurations.size()-1:
+					configurationHead = -1
+				UpdateConfiguration()
+			
 	if movingBlocks:
 		
-		var array = WorldToGrid(Global.mouseManager.GetMousePosition())
+		var array = WorldToGrid(Global.mouseManager.GblocketMousePosition())
 		Global.gridSelect.global_position = GridToWorld(array[0], array[1])
 		
 		if Input.is_action_just_pressed("mouse2"):
@@ -103,9 +119,11 @@ func StartPlacingBlock(block: Block):
 	
 	placingBlock = true
 	blockBeingPlaced = block
+	configurationHead = -1
 	Global.gameManager.CloseAllWindows()
 	Global.hud.visible = false
-	Global.gridSelect.texture = Global.gridSelect.sprites[0]
+	Global.gridSelect.texture = blockBeingPlaced.menuIcon
+	Global.gridSelect.modulate = Color.AQUA
 	Global.gridSelect.visible = true
 	pass
 	
@@ -145,7 +163,7 @@ func PlayerPlaceBlock():
 		array.push_back(tuple)
 		i = i + 1
 		
-	if !Global.inventoryMenu.RequireResources(array, true):
+	if !Global.inventoryMenu.RequireResources(array, true) && !Global.gameManager.devMode:
 		Global.effectManager.DisplayStatusIcon(Global.player.global_position,11)
 		return
 	
@@ -154,6 +172,14 @@ func PlayerPlaceBlock():
 	
 	NewSessionWorldChange(gridPosition[0], gridPosition[1], block.blockName)
 	
+func UpdateConfiguration():
+	if configurationHead == -1: #select the base block
+		Global.gridSelect.texture = blockBeingPlaced.menuIcon
+		Global.gridSelect.modulate = Color.AQUA
+		return
+	
+	
+	pass
 	
 func PlaceBlock(block:Block, x:int, y:int):
 	

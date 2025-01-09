@@ -58,6 +58,9 @@ func DeleteGame(slot:int):
 	pass
 	
 func SaveGame():
+	if Global.gameManager.devMode:
+		return
+	
 	loadedSave.blockInventories.clear()
 	
 	for subscriber in subscribers:

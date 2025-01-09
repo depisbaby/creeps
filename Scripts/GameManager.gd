@@ -61,6 +61,8 @@ func StartInDevMode(seed: String):
 	
 	gameActive = true	
 	
+	devMode = true
+	
 	if seed == "":
 		seed = str(randf_range(-100000.0, 100000.0))
 	

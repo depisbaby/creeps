@@ -6,11 +6,11 @@ class_name Block
 @export var hp: int
 @export var menuIcon: Texture2D
 @export var canHoldResources: bool #can never hold resources
-@export var visualsNode: Node2D #used for shaking
 @export var immovable: bool
-@export var _tags: Array[String]
 @export var components: Array[String]
 @export var componentAmounts: Array[int]
+@export var configurations: Array[String] #Array containing the names of blocks to cycle through while placing this block. Used for example rotatiable blocks
+@export var _tags: Array[String]
 
 var placed:bool
 var xGridPos:int
@@ -71,13 +71,6 @@ func NeighborEntered(neighbor: Block):
 func NeighborLeft(neighbor: Block):
 	pass
 
-
-func Shake():
-	if visualsNode == null:
-		return
-	shakeMagnitude = 1.0
-	visualsNode.position = Vector2(randf_range(-5.0, 5.0), randf_range(-5.0, 5.0))
-	pass
 
 func PlayerInteract():
 	pass
