@@ -31,7 +31,7 @@ menuIcon = ExtResource("3_3rdlo")
 canHoldResources = true
 visualsNode = NodePath("AnimatedSprite2D")
 _tags = Array[String](["conveyor"])
-components = Array[String](["Conveyor kit"])
+components = Array[String](["Conveyor Kit"])
 componentAmounts = Array[int]([1])
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]

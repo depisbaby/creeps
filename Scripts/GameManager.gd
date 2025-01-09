@@ -45,6 +45,10 @@ func StartNewGame(seed:String, slot: int):
 	await  get_tree().create_timer(0.01).timeout
 	
 	Global.saveManager.StartNewGame(seed,slot)
+	
+	#starting items
+	GiveStartingItems()
+	
 	print("loading done")
 	loadingScreen.visible = false
 	
@@ -92,7 +96,28 @@ func LoadGame(slot:int):
 	
 	Global.hud.OpenHUD()
 	pass
+
+func GiveStartingItems():
+	#for chest block
+	Global.inventoryMenu.GiveResource("Log",5)
 	
+	#for tinkerer block
+	Global.inventoryMenu.GiveResource("Simple Circuit",10)
+	Global.inventoryMenu.GiveResource("Simple Motor",5)
+	Global.inventoryMenu.GiveResource("Simple Components",25)
+	
+	#for miner block
+	var amountOfMiners= 2
+	Global.inventoryMenu.GiveResource("Drill Bit",1*amountOfMiners)
+	Global.inventoryMenu.GiveResource("Simple Motor",15*amountOfMiners)
+	Global.inventoryMenu.GiveResource("Simple Components",25*amountOfMiners)
+	
+	#for conveyors
+	var amountOfConveyors= 5
+	Global.inventoryMenu.GiveResource("Conveyor Kit",1*amountOfConveyors)
+	
+	
+	pass
 
 #UI
 func CloseAllWindows():

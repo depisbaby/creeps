@@ -38,7 +38,7 @@ func StartShowingBlockTooltip(block:Block):
 		var text: String = ""
 		
 		for collected in Global.inventoryMenu.collectedResources:
-			if component == collected.resourceName && block.componentAmounts[i] >= collected.amount:
+			if component == collected.resourceName && block.componentAmounts[i] <= collected.amount:
 				text = str("[color=#008000]",block.componentAmounts[i], "x ", component,"[/color], ")
 				break
 		

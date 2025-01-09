@@ -15,7 +15,8 @@ var statusIcons: Array[Texture2D] = [
 	preload("res://Sprites/Icons/blocklevels/8.png"),#7
 	preload("res://Sprites/Icons/blocklevels/9.png"),#8
 	preload("res://Sprites/Icons/blocklevels/10.png"),#9
-	preload("res://Sprites/Icons/collected.png")#10
+	preload("res://Sprites/Icons/collected.png"),#10
+	preload("res://Sprites/Icons/missing_resources.png")#11
 	
 ]
 

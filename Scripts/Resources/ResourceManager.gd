@@ -23,6 +23,7 @@ var resourceLibrary:Array[ResourceTuple] = [
 	preload("res://Resources/Resources/simple_components.tres"),#7
 	preload("res://Resources/Resources/simple_circuit.tres"),#8
 	preload("res://Resources/Resources/simple_motor.tres"),#12
+	preload("res://Resources/Resources/log.tres"),#12
 	
 ]
 
@@ -116,6 +117,14 @@ func GetResourceByName(name:String)->ResourceTuple:
 		if resource.resourceName == name:
 			return resource
 	return null
+	
+func NewResourceTuple(resourceName:String, amount:int, withTexture:bool)->ResourceTuple:
+	var tuple = ResourceTuple.new()
+	tuple.resourceName = resourceName
+	tuple.amount = amount
+	if withTexture:
+		tuple.texture = GetResourceByName(resourceName).texture
+	return tuple
 
 	
 	

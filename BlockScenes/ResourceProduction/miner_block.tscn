@@ -17,8 +17,8 @@ hp = 10
 menuIcon = ExtResource("2_8sv0l")
 visualsNode = NodePath("Sprite2D")
 immovable = true
-components = Array[String](["Drill bit", "Normal motor", "Simple components"])
-componentAmounts = Array[int]([1, 1, 5])
+components = Array[String](["Drill Bit", "Simple Motor", "Simple Components"])
+componentAmounts = Array[int]([1, 15, 25])
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1

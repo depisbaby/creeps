@@ -32,7 +32,7 @@ hp = 10
 menuIcon = ExtResource("4_86ke6")
 canHoldResources = true
 visualsNode = NodePath("AnimatedSprite2D")
-components = Array[String](["Simple computer", "Conveyor kit"])
+components = Array[String](["Simple Computer", "Conveyor Kit"])
 componentAmounts = Array[int]([1, 1])
 
 [node name="indicator" type="Sprite2D" parent="."]

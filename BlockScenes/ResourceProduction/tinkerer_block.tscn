@@ -16,6 +16,8 @@ hp = 10
 menuIcon = ExtResource("3_to2v6")
 canHoldResources = true
 visualsNode = NodePath("Sprite2D")
+components = Array[String](["Simple Circuit", "Simple Components", "Simple Motor"])
+componentAmounts = Array[int]([10, 25, 5])
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1

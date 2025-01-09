@@ -130,8 +130,6 @@ func StopMovingBlocks():
 	
 func PlayerPlaceBlock():
 	
-	#TODO check if has resources!!!
-	
 	var mousePosition: Vector2 = Global.mouseManager.GetMousePosition()
 	
 	var gridPosition = WorldToGrid(mousePosition)
@@ -139,12 +137,23 @@ func PlayerPlaceBlock():
 	if node == null || node.block != null: #position already occupied
 		print("Already occupied or outside of the map")
 		return
+	
+	var i:int = 0 
+	var array: Array[ResourceTuple]
+	for component in blockBeingPlaced.components:
+		var tuple = Global.resourceManager.NewResourceTuple(component,blockBeingPlaced.componentAmounts[i],false)
+		array.push_back(tuple)
+		i = i + 1
+		
+	if !Global.inventoryMenu.RequireResources(array, true):
+		Global.effectManager.DisplayStatusIcon(Global.player.global_position,11)
+		return
+	
 	var block = blockBeingPlaced.duplicate()
 	PlaceBlock(block,gridPosition[0],gridPosition[1])
 	
 	NewSessionWorldChange(gridPosition[0], gridPosition[1], block.blockName)
 	
-	#TODO reduce resources from inventory
 	
 func PlaceBlock(block:Block, x:int, y:int):
 	

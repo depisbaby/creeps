@@ -65,6 +65,51 @@ func CollectResources(resources: Array[ResourceTuple]):
 	
 	pass
 	
+func GiveResource(resourceName:String, amount: int):
+	for collected in collectedResources:
+		if resourceName == collected.resourceName:
+			collected.amount = collected.amount + amount
+			return			
+	
+	collectedResources.push_back(Global.resourceManager.NewResourceTuple(resourceName,amount,true))
+				
+	pass
+	
+func TakeResource(resourceName:String, amount: int): 
+	var toRemove: ResourceTuple
+	for collected in collectedResources:
+		if resourceName == collected.resourceName && collected.amount >= amount:
+			collected.amount = collected.amount - amount
+			if collected.amount <= 0:
+				toRemove = collected
+	
+	if toRemove != null:
+		collectedResources.erase(toRemove)
+	
+	pass
+
+func RequireResources(requiredResources:Array[ResourceTuple], takeAfterCheck: bool)-> bool:
+	for required in requiredResources:
+		var has: bool = false
+		for collected in collectedResources:
+			if collected.resourceName == required.resourceName && collected.amount >= required.amount:
+				has = true
+				break
+		
+		if !has:
+			return false
+	
+	#has all required resources
+	if takeAfterCheck:
+		for required in requiredResources:
+			print(required.resourceName, " ", required.amount)
+			TakeResource(required.resourceName, required.amount)
+	
+	
+	return true
+	
+	pass
+	
 func UpdateGrid():
 	for panel in grid:
 		panel.visible = false
