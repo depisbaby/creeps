@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bj348ropw6lno"
-path="res://.godot/imported/1.png-370699109c3bbf548001d7a2655dd83a.ctex"
+uid="uid://bvu8wngf2pj77"
+path="res://.godot/imported/1.png-3a4c9826ec2eb8f91859cb3ab28941f5.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/Blocks/Conveyors/left/1.png"
-dest_files=["res://.godot/imported/1.png-370699109c3bbf548001d7a2655dd83a.ctex"]
+source_file="res://Sprites/Blocks/Conveyors/onedirectional/up/1.png"
+dest_files=["res://.godot/imported/1.png-3a4c9826ec2eb8f91859cb3ab28941f5.ctex"]
 
 [params]
 

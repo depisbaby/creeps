@@ -22,6 +22,9 @@ var blockLifted: Block
 var sessionWorldChanges: Array[SessionWorldChange]
 var worldChanges:Array[SessionWorldChange]
 
+#liquids and gases
+var simulatedToxicSludgeNodes: Array[GridNode]
+
 #other
 @onready var miningDebug: PackedScene = preload("res://MiscScenes/mining_debug.tscn")
 
@@ -57,8 +60,9 @@ func _process(delta):
 			PlayerPlaceBlock()
 			
 		if blockBeingPlaced.configurations.size() > 0: # has many configurations
-			
+			#print("gdfafa")
 			if Input.is_action_just_pressed("mouse_wheel_up"):
+				print("gdfafa")
 				configurationHead = configurationHead - 1
 				if configurationHead < -1:
 					configurationHead = blockBeingPlaced.configurations.size()-1
@@ -382,4 +386,23 @@ func Load(saveData:SaveData):
 	
 	#Apply changes
 	ApplyChanges(saveData)
+	pass
+
+#Gasses and liquids
+func AddToxicSludge(positionX: int, positionY: int, amount: float):
+	var node = GetNodeAt(positionX, positionY);
+	node.toxicSludge = node.toxicSludge + amount
+	if node.toxicSludge > 1.0:
+		simulatedToxicSludgeNodes.push_back(node)
+	pass
+	
+func SimulateToxicSludge():
+	for node in simulatedToxicSludgeNodes:
+		var neighbors = GetNeighbors(node.x, node.y)
+		for neighbor in neighbors:
+			if neighbor.block != null && neighbor.block.isSolid:
+				continue
+			
+			
+			
 	pass

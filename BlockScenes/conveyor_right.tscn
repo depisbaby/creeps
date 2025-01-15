@@ -1,8 +1,8 @@
 [gd_scene load_steps=6 format=3 uid="uid://3e4bealagdjy"]
 
 [ext_resource type="Script" path="res://Scripts/BlockSubClasses/ConveyorBlock.gd" id="1_jr3g8"]
-[ext_resource type="Texture2D" uid="uid://ctync27xm6jwv" path="res://Sprites/Blocks/Conveyors/right/1.png" id="3_cqf7c"]
-[ext_resource type="Texture2D" uid="uid://bt1ysj84vd5w7" path="res://Sprites/Blocks/Conveyors/right/2.png" id="4_5eg6u"]
+[ext_resource type="Texture2D" uid="uid://ctync27xm6jwv" path="res://Sprites/Blocks/Conveyors/onedirectional/right/1.png" id="3_cqf7c"]
+[ext_resource type="Texture2D" uid="uid://bt1ysj84vd5w7" path="res://Sprites/Blocks/Conveyors/onedirectional/right/2.png" id="4_5eg6u"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7q0kt"]
 size = Vector2(32, 32)
@@ -41,3 +41,4 @@ shape = SubResource("RectangleShape2D_7q0kt")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_b0jj4")
+autoplay = "default"

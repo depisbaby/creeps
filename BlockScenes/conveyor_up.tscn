@@ -1,8 +1,8 @@
 [gd_scene load_steps=6 format=3 uid="uid://bjerqqknvyt6h"]
 
 [ext_resource type="Script" path="res://Scripts/BlockSubClasses/ConveyorBlock.gd" id="1_21vbo"]
-[ext_resource type="Texture2D" uid="uid://bvu8wngf2pj77" path="res://Sprites/Blocks/Conveyors/up/1.png" id="2_5t0j4"]
-[ext_resource type="Texture2D" uid="uid://c11yk1s1e8oco" path="res://Sprites/Blocks/Conveyors/up/2.png" id="3_yob7s"]
+[ext_resource type="Texture2D" uid="uid://bvu8wngf2pj77" path="res://Sprites/Blocks/Conveyors/onedirectional/up/1.png" id="2_5t0j4"]
+[ext_resource type="Texture2D" uid="uid://c11yk1s1e8oco" path="res://Sprites/Blocks/Conveyors/onedirectional/up/2.png" id="3_yob7s"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_upqil"]
 size = Vector2(32, 32)

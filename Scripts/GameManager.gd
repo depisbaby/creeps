@@ -31,6 +31,7 @@ func _process(delta):
 	pass
 	
 func StartNewGame(seed:String, slot: int):
+	print("2afdasf")
 	if gameActive:
 		return
 	

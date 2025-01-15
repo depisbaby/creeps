@@ -1,8 +1,8 @@
 [gd_scene load_steps=6 format=3 uid="uid://dsutb1sy00j1g"]
 
 [ext_resource type="Script" path="res://Scripts/BlockSubClasses/ConveyorBlock.gd" id="1_aaxy1"]
-[ext_resource type="Texture2D" uid="uid://bj348ropw6lno" path="res://Sprites/Blocks/Conveyors/left/1.png" id="3_3rdlo"]
-[ext_resource type="Texture2D" uid="uid://48rcjse12ijp" path="res://Sprites/Blocks/Conveyors/left/2.png" id="4_jtocj"]
+[ext_resource type="Texture2D" uid="uid://bj348ropw6lno" path="res://Sprites/Blocks/Conveyors/onedirectional/left/1.png" id="3_3rdlo"]
+[ext_resource type="Texture2D" uid="uid://48rcjse12ijp" path="res://Sprites/Blocks/Conveyors/onedirectional/left/2.png" id="4_jtocj"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_4w34a"]
 animations = [{
@@ -37,6 +37,7 @@ componentAmounts = Array[int]([1])
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_4w34a")
+autoplay = "default"
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 

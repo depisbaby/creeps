@@ -7,6 +7,7 @@ class_name Block
 @export var menuIcon: Texture2D
 @export var canHoldResources: bool #can never hold resources
 @export var immovable: bool
+@export var isSolid: bool
 @export var components: Array[String]
 @export var componentAmounts: Array[int]
 @export var configurations: Array[String] #Array containing the names of blocks to cycle through while placing this block. Used for example rotatiable blocks

@@ -1,8 +1,8 @@
 [gd_scene load_steps=6 format=3 uid="uid://dfd4ym1qvpj26"]
 
 [ext_resource type="Script" path="res://Scripts/BlockSubClasses/ConveyorBlock.gd" id="1_rjhew"]
-[ext_resource type="Texture2D" uid="uid://dbumsy4pkvcp3" path="res://Sprites/Blocks/Conveyors/down/1.png" id="3_f71f0"]
-[ext_resource type="Texture2D" uid="uid://sj2yxvkvawc3" path="res://Sprites/Blocks/Conveyors/down/2.png" id="4_lrvvu"]
+[ext_resource type="Texture2D" uid="uid://dbumsy4pkvcp3" path="res://Sprites/Blocks/Conveyors/onedirectional/down/1.png" id="3_f71f0"]
+[ext_resource type="Texture2D" uid="uid://sj2yxvkvawc3" path="res://Sprites/Blocks/Conveyors/onedirectional/down/2.png" id="4_lrvvu"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_y1sxd"]
 size = Vector2(32, 32)
@@ -21,7 +21,7 @@ animations = [{
 "speed": 10.0
 }]
 
-[node name="ConveyorDown" type="Node2D" node_paths=PackedStringArray("visualsNode")]
+[node name="ConveyorDown" type="Node2D"]
 script = ExtResource("1_rjhew")
 directions = Array[int]([2])
 blockName = "Conveyor Block (down)"
@@ -29,7 +29,6 @@ desc = "One-directional conveyor block (Direction indicated by the yellow arrows
 hp = 10
 menuIcon = ExtResource("3_f71f0")
 canHoldResources = true
-visualsNode = NodePath("AnimatedSprite2D")
 components = Array[String](["Conveyor Kit"])
 componentAmounts = Array[int]([1])
 
@@ -41,4 +40,5 @@ shape = SubResource("RectangleShape2D_y1sxd")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_7bf7v")
+autoplay = "default"
 frame_progress = 0.869501
