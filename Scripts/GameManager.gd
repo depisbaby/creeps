@@ -42,12 +42,15 @@ func StartNewGame(seed:String, slot: int):
 	loadingScreen.visible = true
 	Global.mainMenu.visible = false
 	
-	await  get_tree().create_timer(0.01).timeout
+	await  get_tree().create_timer(0.1).timeout
 	
 	Global.saveManager.StartNewGame(seed,slot)
 	
-	#starting items
 	GiveStartingItems()
+	Global.buildMenu.UnlockBlock("Conveyor Block (up)")
+	Global.buildMenu.UnlockBlock("Miner Block")
+	Global.buildMenu.UnlockBlock("Tinkerer Block")
+	Global.buildMenu.UnlockBlock("Chest Block")
 	
 	print("loading done")
 	loadingScreen.visible = false
@@ -62,6 +65,7 @@ func StartInDevMode(seed: String):
 	gameActive = true	
 	
 	devMode = true
+	Global.buildMenu.EnterInDevMode()
 	
 	if seed == "":
 		seed = str(randf_range(-100000.0, 100000.0))
@@ -86,14 +90,19 @@ func LoadGame(slot:int):
 	
 	gameActive = true	
 	
-	
 	loadingScreen.visible = true
 	Global.mainMenu.visible = false
 	
-	await  get_tree().create_timer(0.01).timeout
+	await  get_tree().create_timer(0.1).timeout
 	
 	Global.saveManager.LoadGame(slot)
 	print("loading done")
+	
+	Global.buildMenu.UnlockBlock("Conveyor Block (up)")
+	Global.buildMenu.UnlockBlock("Miner Block")
+	Global.buildMenu.UnlockBlock("Tinkerer Block")
+	Global.buildMenu.UnlockBlock("Chest Block")
+	
 	loadingScreen.visible = false
 	
 	Global.hud.OpenHUD()
