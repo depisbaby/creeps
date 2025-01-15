@@ -27,9 +27,9 @@ func _process(delta: float) -> void:
 		global_position = lerp(global_position, holder.global_position+holderOffset,delta*5)
 	
 	if dropAnimTime > 0.0:
-		dropVelocity = dropVelocity + Vector2(0,0.05)
+		dropVelocity = dropVelocity + Vector2(0,7) * delta
 		global_position = global_position + dropVelocity
-		scale = clamp(scale - Vector2(0.01,0.01), Vector2.ZERO, Vector2.INF)
+		scale = clamp(scale - Vector2(1.5,1.5) * delta, Vector2.ZERO, Vector2.INF)
 		dropAnimTime = dropAnimTime - delta
 	elif dropped:
 		dropped = false

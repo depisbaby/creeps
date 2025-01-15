@@ -5,7 +5,7 @@ class_name BuildMenu
 var panelGrid: Array[BlockPanel]
 @onready var blockPanelPacked : PackedScene = preload("res://UIScenes/block_panel.tscn")
 
-
+var availableBlocks: Array[Block]
 
 var blockLibrary: Array[PackedScene] = [
 	preload("res://BlockScenes/conveyor_up.tscn"),
@@ -83,7 +83,7 @@ func OpenPage(pageNumb:int, tag:String):
 	var pageFirstIndex : int = pageNumb * 117
 	var pageLastIndex : int = pageNumb * 117 + 116
 	
-	for block in blockLibraryInstances:
+	for block in availableBlocks:
 		if block._tags.has(tag) || tag == "":
 			if blockLibraryHead >= pageFirstIndex && blockLibraryHead <= pageLastIndex:
 				var panel:BlockPanel = panelGrid[panelGridHead]
@@ -106,6 +106,20 @@ func GetBlockReferenceByName(name:String)->Block:
 			return block
 			
 	return null
+	pass
+	
+func UnlockBlock(blockName:String):
+	for block in blockLibraryInstances:
+		if block.blockName == blockName:
+			availableBlocks.push_back(block)
+	
+	OpenPage(0,"")
+
+func EnterInDevMode():
+	for block in blockLibraryInstances:
+		availableBlocks.push_back(block)
+		
+	OpenPage(0,"")
 	pass
 
 func _on_close_button_down():

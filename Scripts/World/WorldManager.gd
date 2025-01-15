@@ -22,9 +22,6 @@ var blockLifted: Block
 var sessionWorldChanges: Array[SessionWorldChange]
 var worldChanges:Array[SessionWorldChange]
 
-#liquids and gases
-var simulatedToxicSludgeNodes: Array[GridNode]
-
 #other
 @onready var miningDebug: PackedScene = preload("res://MiscScenes/mining_debug.tscn")
 
@@ -60,19 +57,23 @@ func _process(delta):
 			PlayerPlaceBlock()
 			
 		if blockBeingPlaced.configurations.size() > 0: # has many configurations
-			#print("gdfafa")
-			if Input.is_action_just_pressed("mouse_wheel_up"):
-				print("gdfafa")
-				configurationHead = configurationHead - 1
-				if configurationHead < -1:
-					configurationHead = blockBeingPlaced.configurations.size()-1
-				UpdateConfiguration()
-				
-			if Input.is_action_just_pressed("mouse_wheel_down"):
+			
+			if Input.is_action_just_pressed("reload"):
 				configurationHead = configurationHead + 1
 				if configurationHead > blockBeingPlaced.configurations.size()-1:
 					configurationHead = -1
 				UpdateConfiguration()
+			elif Input.is_action_just_pressed("mouse_wheel_up"):
+				configurationHead = configurationHead - 1
+				if configurationHead < -1:
+					configurationHead = blockBeingPlaced.configurations.size()-1
+				UpdateConfiguration()
+			elif Input.is_action_just_pressed("mouse_wheel_down"):
+				configurationHead = configurationHead + 1
+				if configurationHead > blockBeingPlaced.configurations.size()-1:
+					configurationHead = -1
+				UpdateConfiguration()
+				
 			
 	if movingBlocks:
 		
@@ -128,6 +129,7 @@ func StartPlacingBlock(block: Block):
 	Global.hud.visible = false
 	Global.gridSelect.texture = blockBeingPlaced.menuIcon
 	Global.gridSelect.modulate = Color.AQUA
+	Global.gridSelect.modulate.a = 0.75
 	Global.gridSelect.visible = true
 	pass
 	
@@ -152,6 +154,10 @@ func StopMovingBlocks():
 	
 func PlayerPlaceBlock():
 	
+	var finalBlock:Block = blockBeingPlaced
+	if configurationHead > -1:
+		finalBlock = Global.buildMenu.GetBlockReferenceByName(blockBeingPlaced.configurations[configurationHead])
+	
 	var mousePosition: Vector2 = Global.mouseManager.GetMousePosition()
 	
 	var gridPosition = WorldToGrid(mousePosition)
@@ -162,8 +168,8 @@ func PlayerPlaceBlock():
 	
 	var i:int = 0 
 	var array: Array[ResourceTuple]
-	for component in blockBeingPlaced.components:
-		var tuple = Global.resourceManager.NewResourceTuple(component,blockBeingPlaced.componentAmounts[i],false)
+	for component in finalBlock.components:
+		var tuple = Global.resourceManager.NewResourceTuple(component,finalBlock.componentAmounts[i],false)
 		array.push_back(tuple)
 		i = i + 1
 		
@@ -171,7 +177,7 @@ func PlayerPlaceBlock():
 		Global.effectManager.DisplayStatusIcon(Global.player.global_position,11)
 		return
 	
-	var block = blockBeingPlaced.duplicate()
+	var block = finalBlock.duplicate()
 	PlaceBlock(block,gridPosition[0],gridPosition[1])
 	
 	NewSessionWorldChange(gridPosition[0], gridPosition[1], block.blockName)
@@ -179,9 +185,9 @@ func PlayerPlaceBlock():
 func UpdateConfiguration():
 	if configurationHead == -1: #select the base block
 		Global.gridSelect.texture = blockBeingPlaced.menuIcon
-		Global.gridSelect.modulate = Color.AQUA
 		return
 	
+	Global.gridSelect.texture = Global.buildMenu.GetBlockReferenceByName(blockBeingPlaced.configurations[configurationHead]).menuIcon
 	
 	pass
 	
@@ -386,23 +392,4 @@ func Load(saveData:SaveData):
 	
 	#Apply changes
 	ApplyChanges(saveData)
-	pass
-
-#Gasses and liquids
-func AddToxicSludge(positionX: int, positionY: int, amount: float):
-	var node = GetNodeAt(positionX, positionY);
-	node.toxicSludge = node.toxicSludge + amount
-	if node.toxicSludge > 1.0:
-		simulatedToxicSludgeNodes.push_back(node)
-	pass
-	
-func SimulateToxicSludge():
-	for node in simulatedToxicSludgeNodes:
-		var neighbors = GetNeighbors(node.x, node.y)
-		for neighbor in neighbors:
-			if neighbor.block != null && neighbor.block.isSolid:
-				continue
-			
-			
-			
 	pass
