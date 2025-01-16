@@ -18,6 +18,14 @@ var blockLibrary: Array[PackedScene] = [
 	preload("res://BlockScenes/chest_block.tscn"),
 	preload("res://BlockScenes/NonDynamic/rock_block.tscn"),
 	preload("res://BlockScenes/ResourceProduction/tinkerer_block.tscn"),
+	preload("res://BlockScenes/Conveyors/splitter_down.tscn"),
+	preload("res://BlockScenes/Conveyors/splitter_left.tscn"),
+	preload("res://BlockScenes/Conveyors/splitter_right.tscn"),
+	preload("res://BlockScenes/Conveyors/splitter_up.tscn"),
+	preload("res://BlockScenes/NonDynamic/bedrock_block.tscn"),
+	#preload(),
+	#preload(),
+	#preload(),
 	#preload(),
 	#preload(),
 	#preload(),
@@ -109,6 +117,10 @@ func GetBlockReferenceByName(name:String)->Block:
 	pass
 	
 func UnlockBlock(blockName:String):
+	for block in availableBlocks:
+		if block.blockName == blockName:
+			return
+			
 	for block in blockLibraryInstances:
 		if block.blockName == blockName:
 			availableBlocks.push_back(block)

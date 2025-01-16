@@ -6,7 +6,7 @@ class_name Block
 @export var hp: int
 @export var menuIcon: Texture2D
 @export var canHoldResources: bool #can never hold resources
-@export var immovable: bool
+@export var immovable: bool #CANNOT BE DISASSEMBLED
 @export var isSolid: bool
 @export var components: Array[String]
 @export var componentAmounts: Array[int]
@@ -18,10 +18,17 @@ var xGridPos:int
 var yGridPos:int
 var resourcesHeld: Array[_Resource]
 var doesntAcceptResources: bool #can be turned on to prevent holding resources
+var collider: StaticBody2D
 
 #shake
 var shakeMagnitude: float
 
+func  _ready():
+	
+	collider = $StaticBody2D
+	if isSolid:
+		print(" asfasfasf sgdsdfg")
+		collider.collision_layer = 2
 
 func OnPlace():
 	var neighbors: Array[GridNode] = Global.worldManager.GetNeighbors(xGridPos,yGridPos)
@@ -29,11 +36,12 @@ func OnPlace():
 		if neighbor != null && neighbor.block != null:
 			neighbor.block.NeighborEntered(self)
 	placed = true
+	
 
 func Remove(): #this doesnt mean that block is removed from the world just that its removed from this position
 	var neighbors: Array[GridNode] = Global.worldManager.GetNeighbors(xGridPos,yGridPos)
 	for neighbor in neighbors:
-		if neighbor.block != null:
+		if neighbor != null && neighbor.block != null:
 			neighbor.block.NeighborLeft(self)
 			
 	for resource in resourcesHeld:

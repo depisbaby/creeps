@@ -21,9 +21,10 @@ animations = [{
 "speed": 10.0
 }]
 
-[node name="ConveyorDown" type="Node2D"]
+[node name="ConveyorDown" type="Node2D" node_paths=PackedStringArray("animatedSprite")]
 script = ExtResource("1_rjhew")
 directions = Array[int]([2])
+animatedSprite = NodePath("AnimatedSprite2D")
 blockName = "Conveyor Block (down)"
 desc = "One-directional conveyor block (Direction indicated by the yellow arrows). Resources put into this block are moved into the neighboring block at the end of the conveyor."
 hp = 10

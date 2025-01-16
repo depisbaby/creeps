@@ -53,10 +53,13 @@ func StartNewGame(seed:String, slot: int):
 	Global.buildMenu.UnlockBlock("Tinkerer Block")
 	Global.buildMenu.UnlockBlock("Chest Block")
 	
+	var node = Global.worldManager.GetEmpty(Global.worldManager.gridSize/2,Global.worldManager.gridSize/2)
+	Global.player.Teleport(Vector2(node.x*32, node.y*32))
 	print("loading done")
 	loadingScreen.visible = false
 	
 	Global.hud.OpenHUD()
+	
 	pass
 
 func StartInDevMode(seed: String):

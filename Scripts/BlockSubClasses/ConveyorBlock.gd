@@ -2,7 +2,7 @@ extends Block
 class_name ConveyorBlock
 
 @export var directions: Array[int] #0 up, 1 right, 
-@export var indicatorSprite: Sprite2D
+@export var animatedSprite: AnimatedSprite2D
 var connectedBlocks: Array[Block]
 var lastSource: Block
 var nextConnection: int
@@ -42,7 +42,8 @@ func OnPlace():
 		i = i +1	
 		
 	placed = true
-		
+	
+	
 
 func NeighborEntered(_neighbor:Block):
 	UpdateConnections()
@@ -118,10 +119,6 @@ func ReleaseResources():
 		nextReceiver.ReceiveResource(resourcesHeld.pop_front(),self)
 		nextConnection = nextConnection + 1
 		
-		if indicatorSprite != null:
-			if nextConnection > connectedBlocks.size()-1:
-				nextConnection = 0
-			indicatorSprite.look_at(connectedBlocks[nextConnection].global_position)
 		
 		break
 	

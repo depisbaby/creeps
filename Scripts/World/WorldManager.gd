@@ -75,36 +75,28 @@ func _process(delta):
 				UpdateConfiguration()
 				
 			
-	if movingBlocks:
+	if movingBlocks: #DISASSEMBLING
 		
-		var array = WorldToGrid(Global.mouseManager.GblocketMousePosition())
+		var array = WorldToGrid(Global.mouseManager.GetMousePosition())
 		Global.gridSelect.global_position = GridToWorld(array[0], array[1])
 		
 		if Input.is_action_just_pressed("mouse2"):
-			blockLifted = null
 			StopMovingBlocks()
 			
 		if Input.is_action_just_pressed("mouse1"):
-			if blockLifted == null:
-				var node: GridNode = GetNodeAt(array[0], array[1])
-				if node.block == null || node.block.immovable:
-					return
-				blockLifted = node.block
-				Global.gridSelect.texture = Global.gridSelect.sprites[2]
-				
-			else:
-				#moving block
-				var node: GridNode = GetNodeAt(array[0], array[1])
-				if node.block != null:
-					return
-				NewSessionWorldChange(blockLifted.xGridPos, blockLifted.yGridPos,"")
-				RemoveBlock(blockLifted.xGridPos, blockLifted.yGridPos)
-				blockLifted.Remove()
-				ForcePlaceBlock(blockLifted, array[0], array[1])
-				NewSessionWorldChange(array[0], array[1],blockLifted.blockName)
-				blockLifted = null
-				Global.gridSelect.texture = Global.gridSelect.sprites[1]
-				
+			
+			var node: GridNode = GetNodeAt(array[0], array[1])
+			if node.block == null || node.block.immovable:
+				return
+			blockLifted = node.block
+			
+			Global.inventoryMenu.GetResourcesFromDisassembledBlock(blockLifted)
+			
+			NewSessionWorldChange(blockLifted.xGridPos, blockLifted.yGridPos,"")
+			blockLifted.Destroy()
+			
+			blockLifted = null
+			#StopMovingBlocks()
 				
 		
 	if !movingBlocks && !placingBlock:
@@ -144,11 +136,12 @@ func StartMovingBlocks():
 	movingBlocks = true
 	Global.gameManager.CloseAllWindows()
 	Global.hud.visible = false
-	Global.gridSelect.texture = Global.gridSelect.sprites[1]
+	Global.gridSelect.texture = Global.gridSelect.sprites[3]
 	Global.gridSelect.visible = true
 
-func StopMovingBlocks():
+func StopMovingBlocks(): #START DISASSEMBLING
 	movingBlocks = false
+	#Global.gridSelect.texture = Global.gridSelect.sprites[3]
 	Global.hud.visible = true
 	Global.gridSelect.visible = false
 	
@@ -221,7 +214,6 @@ func RemoveBlock(x:int, y:int):
 	var node = GetNodeAt(x,y)
 	placedBlocks.erase(node.block)
 	node.block = null
-	
 
 #block grid
 func InitializeGrid():
@@ -275,6 +267,7 @@ func GridToWorld(x:int,y:int)-> Vector2:
 
 func GetNeighbors(x:int, y:int)-> Array[GridNode]:
 	
+	
 	var array: Array[GridNode]
 	array.resize(4)
 	
@@ -284,6 +277,25 @@ func GetNeighbors(x:int, y:int)-> Array[GridNode]:
 	array[3] = GetNodeAt(x-1,y)
 	
 	return array 
+
+func GetEmpty(x:int, y:int)->GridNode:
+	
+	var _x = randi_range(-1,1)
+	var _y = randi_range(-1,1)
+	
+	if _x+_y == 0:
+		_x = 1
+	
+	for i in 100:
+		var node = GetNodeAt(x+_x*i,y+_y*i)
+		if node == null:
+			return null
+		if node.block == null:
+			return node
+	
+	return null
+	
+	pass
 
 #World generation
 func SetMiningValues(seed: String):
@@ -330,6 +342,12 @@ func GenerateNaturalBlocks(seed:String):
 	
 	for y in gridSize:
 		for x in gridSize:
+			
+			if x == 0 || y == 0 || x == gridSize-1 || y == gridSize-1:
+				var block = Global.buildMenu.GetBlockReferenceByName("Bedrock Block").duplicate()
+				PlaceBlock(block, x, y)
+				continue
+			
 			var value1:float = noise.get_noise_2d(x*4, y*5) / 2
 			var value2:float = noise.get_noise_2d((x-1000)*5, (y-1000)*5) / 2
 			var value:float = value1 + value2
@@ -339,7 +357,7 @@ func GenerateNaturalBlocks(seed:String):
 				PlaceBlock(block, x, y)
 			
 			#await get_tree().create_timer(0.0).timeout
-			
+	
 	pass
 	
 func ApplyChanges(saveData:SaveData):

@@ -1,0 +1,25 @@
+[gd_scene load_steps=4 format=3 uid="uid://bwjbfuf0e8oek"]
+
+[ext_resource type="Script" path="res://Scripts/Block/Block.gd" id="1_jjso8"]
+[ext_resource type="Texture2D" uid="uid://cdvc5rkgv56jb" path="res://Sprites/Blocks/bedrock.png" id="2_a5p6u"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ep8se"]
+size = Vector2(32, 32)
+
+[node name="BedRockBlock" type="Node2D"]
+script = ExtResource("1_jjso8")
+blockName = "Bedrock Block"
+desc = "A rock."
+hp = 100000
+menuIcon = ExtResource("2_a5p6u")
+immovable = true
+isSolid = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+texture = ExtResource("2_a5p6u")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+shape = SubResource("RectangleShape2D_ep8se")

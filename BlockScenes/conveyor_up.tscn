@@ -41,3 +41,4 @@ shape = SubResource("RectangleShape2D_upqil")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_h7qsp")
+autoplay = "default"

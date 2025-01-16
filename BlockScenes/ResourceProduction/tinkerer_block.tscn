@@ -6,7 +6,7 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_45fbg"]
 size = Vector2(32, 32)
 
-[node name="TinkererBlock" type="Node2D" node_paths=PackedStringArray("visualsNode")]
+[node name="TinkererBlock" type="Node2D"]
 z_index = 1
 script = ExtResource("1_tjd3q")
 directions = Array[int]([0, 1, 2, 3])
@@ -15,7 +15,6 @@ desc = "Takes in any resources and combines them into a random low level resourc
 hp = 10
 menuIcon = ExtResource("3_to2v6")
 canHoldResources = true
-visualsNode = NodePath("Sprite2D")
 components = Array[String](["Simple Circuit", "Simple Components", "Simple Motor"])
 componentAmounts = Array[int]([10, 25, 5])
 

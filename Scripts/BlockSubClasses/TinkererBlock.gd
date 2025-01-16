@@ -8,6 +8,7 @@ func _init():
 	Global.constructionManual.CreateRecipe(["Any resource","Any resource","Any resource","Any resource","Any resource"],["Simple Circuit"],"Tinkerer Block")
 	Global.constructionManual.CreateRecipe(["Any resource","Any resource","Any resource","Any resource","Any resource"],["Simple Components"],"Tinkerer Block")
 	Global.constructionManual.CreateRecipe(["Any resource","Any resource","Any resource","Any resource","Any resource"],["Simple Motor"],"Tinkerer Block")
+	Global.buildMenu.UnlockBlock("Splitter Block (up)")
 	pass
 
 # Called when the node enters the scene tree for the first time.

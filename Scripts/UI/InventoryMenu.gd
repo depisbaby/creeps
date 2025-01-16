@@ -110,6 +110,13 @@ func RequireResources(requiredResources:Array[ResourceTuple], takeAfterCheck: bo
 	
 	pass
 	
+func GetResourcesFromDisassembledBlock(block: Block):
+	var i: int = 0
+	for resource in block.components:
+		GiveResource(resource, block.componentAmounts[i])
+		i = i +1
+	pass
+	
 func UpdateGrid():
 	for panel in grid:
 		panel.visible = false
