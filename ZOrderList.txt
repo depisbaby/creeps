@@ -5,7 +5,11 @@
 
 -5= ground
 0= blocks
-6= enemies
-7=player
-10= projectiles
-15= effects
+1= resource
+
+10= wiring
+
+19= enemies
+20=player
+25= projectiles
+30= effects

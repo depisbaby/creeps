@@ -23,8 +23,8 @@ var blockLibrary: Array[PackedScene] = [
 	preload("res://BlockScenes/Conveyors/splitter_right.tscn"),
 	preload("res://BlockScenes/Conveyors/splitter_up.tscn"),
 	preload("res://BlockScenes/NonDynamic/bedrock_block.tscn"),
-	#preload(),
-	#preload(),
+	preload("res://BlockScenes/Conveyors/drip_block.tscn"),
+	preload("res://BlockScenes/Wiring/button_block.tscn"),
 	#preload(),
 	#preload(),
 	#preload(),
@@ -136,4 +136,9 @@ func EnterInDevMode():
 
 func _on_close_button_down():
 	visible = false
+	pass # Replace with function body.
+
+func _on_wiring_button_down():
+	await get_tree().create_timer(0.1).timeout
+	Global.worldManager.StartWiring() 
 	pass # Replace with function body.

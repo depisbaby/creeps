@@ -1,0 +1,26 @@
+[gd_scene load_steps=4 format=3 uid="uid://irqyoekfqr8p"]
+
+[ext_resource type="Script" path="res://Scripts/BlockSubClasses/ButtonBlock.gd" id="1_e72ab"]
+[ext_resource type="Texture2D" uid="uid://whi5sl1vfv1v" path="res://Sprites/Blocks/Wiring/plug_up.png" id="2_xock4"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_y1sxd"]
+size = Vector2(32, 26)
+
+[node name="ButtonBlock" type="Node2D"]
+script = ExtResource("1_e72ab")
+blockName = "Plug Block (up)"
+desc = "When activated, it activates the wire on top of it."
+hp = 10
+menuIcon = ExtResource("2_xock4")
+components = Array[String](["Simple Circuit", "Simple Components", "Conductor Components"])
+componentAmounts = Array[int]([10, 10, 10])
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(0, -3)
+shape = SubResource("RectangleShape2D_y1sxd")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+texture = ExtResource("2_xock4")

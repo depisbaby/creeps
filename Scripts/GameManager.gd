@@ -144,3 +144,4 @@ func IsWindowOpen()->bool:
 		return true
 		
 	return false
+	

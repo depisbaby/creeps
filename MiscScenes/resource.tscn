@@ -4,7 +4,7 @@
 [ext_resource type="Script" path="res://Scripts/Resources/_Resource.gd" id="1_mhl8i"]
 
 [node name="Resource" type="Sprite2D"]
-z_index = 5
+z_index = 1
 texture_filter = 1
 texture = ExtResource("1_3yix1")
 script = ExtResource("1_mhl8i")

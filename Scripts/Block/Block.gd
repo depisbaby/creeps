@@ -23,11 +23,12 @@ var collider: StaticBody2D
 #shake
 var shakeMagnitude: float
 
+
 func  _ready():
 	
 	collider = $StaticBody2D
 	if isSolid:
-		print(" asfasfasf sgdsdfg")
+		#print(" asfasfasf sgdsdfg")
 		collider.collision_layer = 2
 
 func OnPlace():
@@ -82,4 +83,10 @@ func NeighborLeft(neighbor: Block):
 
 
 func PlayerInteract():
+	pass
+	
+func Activate():
+	pass
+	
+func CustomMessage(message: String):
 	pass

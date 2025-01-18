@@ -18,6 +18,33 @@ var configurationHead: int
 var movingBlocks: bool
 var blockLifted: Block
 
+#wiring
+@onready var wireScene: PackedScene = preload("res://MiscScenes/wire.tscn")
+var wiring:bool
+var wiringStart: Array[int] = [0,0]
+var wiringEnd: Array[int] = [0,0]
+var layingWire: bool
+var wireSprites : Array[Texture2D] = [
+	
+	preload("res://Sprites/Icons/block_demolish.png"),#0
+	preload("res://Sprites/Wiring/end_left.png"),#1
+	preload("res://Sprites/Wiring/end_down.png"),#2
+	preload("res://Sprites/Wiring/l_down.png"),#3
+	preload("res://Sprites/Wiring/end_right.png"),#4
+	preload("res://Sprites/Wiring/line_h.png"),#5
+	preload("res://Sprites/Wiring/l_right.png"),#6
+	preload("res://Sprites/Wiring/t_down.png"),#7
+	preload("res://Sprites/Wiring/end_up.png"),#8
+	preload("res://Sprites/Wiring/l_left.png"),#9
+	preload("res://Sprites/Wiring/line_v.png"),#10
+	preload("res://Sprites/Wiring/t_left.png"),#11
+	preload("res://Sprites/Wiring/l_up.png"),#12
+	preload("res://Sprites/Wiring/t_up.png"),#13
+	preload("res://Sprites/Wiring/t_right.png"),#14
+	preload("res://Sprites/Wiring/x.png"),#15
+	
+]
+
 #saving
 var sessionWorldChanges: Array[SessionWorldChange]
 var worldChanges:Array[SessionWorldChange]
@@ -42,7 +69,8 @@ func LoadDevMode(seed):
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	
-	#print(delta)
+	if layingWire:
+		UpdateLaidWire()
 	
 	if placingBlock:
 		
@@ -98,15 +126,31 @@ func _process(delta):
 			blockLifted = null
 			#StopMovingBlocks()
 				
+	if wiring:
+		var array = WorldToGrid(Global.mouseManager.GetMousePosition())
+		Global.gridSelect.global_position = GridToWorld(array[0], array[1])
 		
-	if !movingBlocks && !placingBlock:
+		if Input.is_action_just_pressed("mouse2"):
+			StopWiring()
+		
+		if Input.is_action_just_pressed("mouse1"):
+			layingWire = true
+			wiringStart = array
+			
+		if Input.is_action_just_released("mouse1"):
+			if !layingWire:
+				return
+			layingWire = false
+			PlayerPlaceWiring()
+			
+	if !movingBlocks && !placingBlock && !wiring:
 		
 		if Input.is_action_just_pressed("mouse2"):
 			var array = WorldToGrid(Global.mouseManager.GetMousePosition())
 			var node: GridNode = GetNodeAt(array[0], array[1])
 			if node != null && node.block != null:
 				node.block.PlayerInteract()
-			
+		
 	pass
 
 #placing blocks
@@ -296,6 +340,92 @@ func GetEmpty(x:int, y:int)->GridNode:
 	return null
 	
 	pass
+
+#Wiring
+func StartWiring():
+	if wiring:
+		return
+	wiring = true
+	Global.gameManager.CloseAllWindows()
+	Global.hud.visible = false
+	Global.gridSelect.texture = Global.gridSelect.sprites[0]
+	Global.gridSelect.visible = true
+
+func StopWiring():
+	if !wiring:
+		return
+	wiring = false
+	Global.hud.visible = true
+	Global.gridSelect.visible = false
+	
+func PlayerPlaceWiring():
+	
+	PlaceWiring(wiringStart, wiringEnd)
+	
+	pass
+
+func UpdateLaidWire():
+	
+		var cursor: Array[int] = WorldToGrid(Global.mouseManager.GetMousePosition())
+		if abs(cursor[0] - wiringStart[0]) > abs(cursor[1] - wiringStart[1]): #is more in x
+			wiringEnd[0] = cursor[0]
+			wiringEnd[1] = wiringStart[1]
+		else:# is more in y
+			wiringEnd[0] = wiringStart[0]
+			wiringEnd[1] = cursor[1]
+		
+		#TODO: update indicator	
+
+func PlaceWiring(start: Array[int], end: Array[int]):
+	if start == end:
+		return
+	
+	var step: Array[int] = [0,0]
+	step[0] = clamp(end[0]-start[0],-1,1)
+	step[1] = clamp(end[1]-start[1],-1,1)
+	#print(step[0], ",",step[1])
+	
+	var position: Array[int] = start
+	var lastOne: bool = false
+	var lastWire: Wire
+	var wiresEdited: Array[Wire]
+	while(true):
+		
+		if position[0] == end[0] && position[1] == end[1]:
+			lastOne = true
+		
+		var node:GridNode = GetNodeAt(position[0], position[1])
+		
+		if node.wire == null: #doesnt yet have wire
+			var instance:Wire = wireScene.instantiate()
+			add_child(instance)
+			instance.global_position = GridToWorld(position[0],position[1])
+			node.wire = instance
+			node.wire.connections = [null,null,null,null]
+			node.wire.connectedBlock = node.block
+			node.wire.x = node.x
+			node.wire.y = node.y
+		
+		wiresEdited.push_back(node.wire)
+		
+		if lastWire != null: #connect to last step wire
+			if !lastWire.connections.has(node.wire):
+				lastWire.Connect(node.wire)
+			if !node.wire.connections.has(lastWire):
+				node.wire.Connect(lastWire)
+			
+		if lastOne: #connect the last wire being placed to the wire before that
+			break
+		
+		lastWire = node.wire
+		position[0] = position[0] + step[0]
+		position[1] = position[1] + step[1]
+		
+	for wire in wiresEdited:
+		wire.UpdateVisuals()
+	
+	pass	
+
 
 #World generation
 func SetMiningValues(seed: String):

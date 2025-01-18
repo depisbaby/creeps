@@ -1,4 +1,4 @@
-[gd_scene load_steps=52 format=4 uid="uid://dymch6s50vt1a"]
+[gd_scene load_steps=53 format=4 uid="uid://dymch6s50vt1a"]
 
 [ext_resource type="Script" path="res://Scripts/GameManager.gd" id="1_irwr6"]
 [ext_resource type="Script" path="res://MainMenu.gd" id="2_hskbr"]
@@ -35,6 +35,7 @@
 [ext_resource type="PackedScene" uid="uid://fycfr5or2tfg" path="res://MiscScenes/resource.tscn" id="19_t0gox"]
 [ext_resource type="LabelSettings" uid="uid://67w0qhprsbdf" path="res://Font/light_outlined_font.tres" id="20_e8xyc"]
 [ext_resource type="Script" path="res://Scripts/Player.gd" id="21_qnh2x"]
+[ext_resource type="Texture2D" uid="uid://1iqo4porwmxx" path="res://Sprites/Wiring/x.png" id="22_dk4ex"]
 [ext_resource type="Texture2D" uid="uid://c4p66q5tqslq" path="res://Sprites/UI Elements/dots.png" id="25_ek6c6"]
 [ext_resource type="Texture2D" uid="uid://be2m436xdlup" path="res://Sprites/UI Elements/window6.png" id="25_j3byl"]
 [ext_resource type="Texture2D" uid="uid://1jvfbd8v385m" path="res://Sprites/UI Elements/constrcution_manual_resource_box.png" id="26_pphkp"]
@@ -82,7 +83,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"walk",
-"speed": 5.0
+"speed": 10.0
 }]
 
 [node name="main" type="Node2D"]
@@ -1089,10 +1090,10 @@ text = "close"
 
 [node name="gridstart" type="Control" parent="CanvasLayer/BuildMenu"]
 anchors_preset = 0
-offset_left = -695.0
-offset_top = -353.0
-offset_right = -655.0
-offset_bottom = -313.0
+offset_left = -682.0
+offset_top = -181.0
+offset_right = -642.0
+offset_bottom = -141.0
 
 [node name="Label" type="Label" parent="CanvasLayer/BuildMenu"]
 texture_filter = 1
@@ -1103,6 +1104,48 @@ offset_right = -656.0
 offset_bottom = -404.0
 scale = Vector2(3, 3)
 text = "Build Menu"
+label_settings = ExtResource("20_e8xyc")
+
+[node name="WiringButton" type="Button" parent="CanvasLayer/BuildMenu"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 0
+offset_left = -680.0
+offset_top = -359.0
+offset_right = -632.0
+offset_bottom = -312.0
+scale = Vector2(2, 2)
+text = "close"
+
+[node name="wire" type="TextureRect" parent="CanvasLayer/BuildMenu"]
+texture_filter = 1
+layout_mode = 0
+offset_left = -682.0
+offset_top = -363.0
+offset_right = -642.0
+offset_bottom = -323.0
+scale = Vector2(2.5, 2.5)
+mouse_filter = 2
+texture = ExtResource("22_dk4ex")
+
+[node name="wiring" type="Label" parent="CanvasLayer/BuildMenu"]
+texture_filter = 1
+layout_mode = 0
+offset_left = -645.0
+offset_top = -282.0
+offset_right = -583.0
+offset_bottom = -259.0
+text = "Build wiring"
+label_settings = ExtResource("20_e8xyc")
+
+[node name="blocks" type="Label" parent="CanvasLayer/BuildMenu"]
+texture_filter = 1
+layout_mode = 0
+offset_left = -707.0
+offset_top = -237.0
+offset_right = -652.0
+offset_bottom = -214.0
+scale = Vector2(2.5, 2.5)
+text = "Available blocks"
 label_settings = ExtResource("20_e8xyc")
 
 [node name="IntentoryMenu" type="Control" parent="CanvasLayer"]
@@ -2075,13 +2118,13 @@ position_smoothing_speed = 10.0
 script = ExtResource("14_ow38m")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Player"]
-z_index = 7
+z_index = 20
 texture_filter = 1
 position = Vector2(0, -17)
 sprite_frames = SubResource("SpriteFrames_oselp")
-animation = &"idle"
+animation = &"walk"
 autoplay = "walk"
-frame_progress = 0.919247
+frame_progress = 0.8846
 
 [connection signal="button_down" from="CanvasLayer/HUD/DisassebleBlock/MoveBlock_button" to="CanvasLayer/HUD" method="_on_move_block_button_down"]
 [connection signal="button_down" from="CanvasLayer/HUD/ExitGame/MoveBlock_button" to="CanvasLayer/HUD" method="_on_exit_button_down"]
@@ -2098,6 +2141,7 @@ frame_progress = 0.919247
 [connection signal="button_down" from="CanvasLayer/BuyMenu/BlockShop/reroll_button" to="CanvasLayer/BuyMenu" method="_on_reroll_button_button_down"]
 [connection signal="button_down" from="CanvasLayer/DevConsole/Button" to="CanvasLayer/DevConsole" method="_on_button_button_down"]
 [connection signal="button_down" from="CanvasLayer/BuildMenu/close" to="CanvasLayer/BuildMenu" method="_on_close_button_down"]
+[connection signal="button_down" from="CanvasLayer/BuildMenu/WiringButton" to="CanvasLayer/BuildMenu" method="_on_wiring_button_down"]
 [connection signal="button_down" from="CanvasLayer/IntentoryMenu/close" to="CanvasLayer/IntentoryMenu" method="_on_close_button_down"]
 [connection signal="button_down" from="CanvasLayer/ConstructionManual/close" to="CanvasLayer/ConstructionManual" method="_on_close_button_down"]
 [connection signal="button_down" from="CanvasLayer/ConstructionManual/RecipeWindow/next/next_button" to="CanvasLayer/ConstructionManual" method="_on_next_button_down"]
