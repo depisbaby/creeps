@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="ResourceTuple" load_steps=3 format=3 uid="uid://bbpqoecivebyj"]
+
+[ext_resource type="Script" path="res://Scripts/Resources/ResourceTuple.gd" id="1_re8ng"]
+[ext_resource type="Texture2D" uid="uid://cck1uf10lpu4a" path="res://Sprites/Resources/conductive_plating.png" id="2_f3kun"]
+
+[resource]
+script = ExtResource("1_re8ng")
+resourceName = "Conductive Plating"
+amount = 0
+texture = ExtResource("2_f3kun")

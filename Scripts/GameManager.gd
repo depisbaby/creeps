@@ -7,6 +7,7 @@ var rng: RandomNumberGenerator
 var gameActive: bool
 @onready var miningDebug: PackedScene = preload("res://MiscScenes/mining_debug.tscn")
 @onready var loadingScreen: Control = $CanvasLayer/LoadingScreen
+@onready var loadingScreenText: Label = $CanvasLayer/LoadingScreen/Label
 
 #game
 
@@ -45,17 +46,14 @@ func StartNewGame(seed:String, slot: int):
 	
 	await  get_tree().create_timer(0.1).timeout
 	
-	Global.saveManager.StartNewGame(seed,slot)
+	await Global.saveManager.StartNewGame(seed,slot)
 	
 	GiveStartingItems()
-	Global.buildMenu.UnlockBlock("Conveyor Block (up)")
-	Global.buildMenu.UnlockBlock("Miner Block")
-	Global.buildMenu.UnlockBlock("Tinkerer Block")
-	Global.buildMenu.UnlockBlock("Chest Block")
+	Global.constructionManual.LoadRecipes()
 	
 	var node = Global.worldManager.GetEmpty(Global.worldManager.gridSize/2,Global.worldManager.gridSize/2)
 	Global.player.Teleport(Vector2(node.x*32, node.y*32))
-	print("loading done")
+	
 	loadingScreen.visible = false
 	
 	Global.hud.OpenHUD()
@@ -78,6 +76,7 @@ func StartInDevMode(seed: String):
 	rng.seed = hash(seed)
 	
 	Global.worldManager.LoadDevMode(seed)
+	Global.constructionManual.LoadRecipes()
 	
 	Global.hud.OpenHUD()
 	pass
@@ -99,13 +98,10 @@ func LoadGame(slot:int):
 	
 	await  get_tree().create_timer(0.1).timeout
 	
-	Global.saveManager.LoadGame(slot)
-	print("loading done")
+	await Global.saveManager.LoadGame(slot,"")
 	
-	Global.buildMenu.UnlockBlock("Conveyor Block (up)")
-	Global.buildMenu.UnlockBlock("Miner Block")
-	Global.buildMenu.UnlockBlock("Tinkerer Block")
-	Global.buildMenu.UnlockBlock("Chest Block")
+	Global.buildMenu.GetUnlockedBlocks()
+	Global.constructionManual.LoadRecipes()
 	
 	loadingScreen.visible = false
 	
@@ -113,6 +109,12 @@ func LoadGame(slot:int):
 	pass
 
 func GiveStartingItems():
+	
+	Global.buildMenu.UnlockBlock("Conveyor Block (up)")
+	Global.buildMenu.UnlockBlock("Miner Block")
+	Global.buildMenu.UnlockBlock("Tinkerer Block")
+	Global.buildMenu.UnlockBlock("Chest Block")
+	
 	#for chest block
 	Global.inventoryMenu.GiveResource("Log",5)
 	
@@ -122,7 +124,7 @@ func GiveStartingItems():
 	Global.inventoryMenu.GiveResource("Simple Components",25)
 	
 	#for miner block
-	var amountOfMiners= 2
+	var amountOfMiners= 5
 	Global.inventoryMenu.GiveResource("Drill Bit",1*amountOfMiners)
 	Global.inventoryMenu.GiveResource("Simple Motor",15*amountOfMiners)
 	Global.inventoryMenu.GiveResource("Simple Components",25*amountOfMiners)
@@ -144,4 +146,7 @@ func IsWindowOpen()->bool:
 		return true
 		
 	return false
-	
+
+func SetLoadingScreenText(text:String):
+	loadingScreenText.text = text
+	pass

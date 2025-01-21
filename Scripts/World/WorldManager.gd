@@ -7,6 +7,8 @@ var placedBlocks: Array[Block]
 @export var gridSize: int
 @export var blockSize: int
 var grid: Array[GridNode]
+var directionMappingX: Array[int] = [0,1,0,-1]
+var directionMappingY: Array[int] = [-1,0,1,0]
 
 #placing blocks
 var placingBlock: bool
@@ -26,7 +28,7 @@ var wiringEnd: Array[int] = [0,0]
 var layingWire: bool
 var wireSprites : Array[Texture2D] = [
 	
-	preload("res://Sprites/Icons/block_demolish.png"),#0
+	preload("res://Sprites/Wiring/disconnected.png"),#0
 	preload("res://Sprites/Wiring/end_left.png"),#1
 	preload("res://Sprites/Wiring/end_down.png"),#2
 	preload("res://Sprites/Wiring/l_down.png"),#3
@@ -114,13 +116,18 @@ func _process(delta):
 		if Input.is_action_just_pressed("mouse1"):
 			
 			var node: GridNode = GetNodeAt(array[0], array[1])
+			
+			if node.wire != null:
+				PlayerRemoveWiring(node.wire)
+				return
+			
 			if node.block == null || node.block.immovable:
 				return
 			blockLifted = node.block
 			
 			Global.inventoryMenu.GetResourcesFromDisassembledBlock(blockLifted)
-			
-			NewSessionWorldChange(blockLifted.xGridPos, blockLifted.yGridPos,"")
+			var wiring: Array[bool]
+			NewSessionWorldChange(blockLifted.xGridPos, blockLifted.yGridPos,null,wiring)
 			blockLifted.Destroy()
 			
 			blockLifted = null
@@ -203,21 +210,26 @@ func PlayerPlaceBlock():
 		print("Already occupied or outside of the map")
 		return
 	
-	var i:int = 0 
-	var array: Array[ResourceTuple]
-	for component in finalBlock.components:
-		var tuple = Global.resourceManager.NewResourceTuple(component,finalBlock.componentAmounts[i],false)
-		array.push_back(tuple)
-		i = i + 1
-		
-	if !Global.inventoryMenu.RequireResources(array, true) && !Global.gameManager.devMode:
-		Global.effectManager.DisplayStatusIcon(Global.player.global_position,11)
-		return
+	if finalBlock.components.size()!= 0:
+		var i:int = 0 
+		var array: Array[ResourceTuple]
+		for component in finalBlock.components:
+			var tuple = Global.resourceManager.NewResourceTuple(component,finalBlock.componentAmounts[i],false)
+			array.push_back(tuple)
+			i = i + 1
+			
+		if !Global.inventoryMenu.RequireResources(array, true) && !Global.gameManager.devMode:
+			Global.effectManager.DisplayStatusIcon(Global.player.global_position,11)
+			return
 	
 	var block = finalBlock.duplicate()
 	PlaceBlock(block,gridPosition[0],gridPosition[1])
 	
-	NewSessionWorldChange(gridPosition[0], gridPosition[1], block.blockName)
+	var wiring: Array[bool]
+	if node.wire != null:
+		wiring = node.wire.GetConnectionStatus()
+	
+	NewSessionWorldChange(gridPosition[0], gridPosition[1], block,wiring)
 	
 func UpdateConfiguration():
 	if configurationHead == -1: #select the base block
@@ -360,7 +372,7 @@ func StopWiring():
 	
 func PlayerPlaceWiring():
 	
-	PlaceWiring(wiringStart, wiringEnd)
+	PlaceWiringFromTo(wiringStart, wiringEnd)
 	
 	pass
 
@@ -376,7 +388,7 @@ func UpdateLaidWire():
 		
 		#TODO: update indicator	
 
-func PlaceWiring(start: Array[int], end: Array[int]):
+func PlaceWiringFromTo(start: Array[int], end: Array[int]):
 	if start == end:
 		return
 	
@@ -402,7 +414,9 @@ func PlaceWiring(start: Array[int], end: Array[int]):
 			instance.global_position = GridToWorld(position[0],position[1])
 			node.wire = instance
 			node.wire.connections = [null,null,null,null]
-			node.wire.connectedBlock = node.block
+			if node.block != null && node.block is ConductionBlock && node.block.isWireTerminal:
+				node.wire.connectedBlock = node.block
+				node.block.connectedWire = node.wire
 			node.wire.x = node.x
 			node.wire.y = node.y
 		
@@ -423,8 +437,60 @@ func PlaceWiring(start: Array[int], end: Array[int]):
 		
 	for wire in wiresEdited:
 		wire.UpdateVisuals()
+		var node: GridNode = GetNodeAt(wire.x,wire.y)
+		NewSessionWorldChange(wire.x, wire.y, node.block, node.wire.GetConnectionStatus())
+		
 	
 	pass	
+
+func ForcePlaceWiring(xPos: int, yPos:int, connections :Array[bool]):
+	var node:GridNode = GetNodeAt(xPos, yPos)
+	var instance:Wire = wireScene.instantiate()
+	add_child(instance)
+	instance.global_position = GridToWorld(xPos,yPos)
+	node.wire = instance
+	node.wire.connections = [null,null,null,null]
+	node.wire.x = xPos
+	node.wire.y = yPos
+	
+	if node.block != null && node.block is ConductionBlock && node.block.isWireTerminal:
+		node.wire.connectedBlock = node.block
+		node.block.connectedWire = node.wire
+	
+	var i :int
+	for connection in connections:
+		if connection == true:
+			var neighbor:GridNode = GetNodeAt(xPos+directionMappingX[i], yPos+directionMappingY[i])
+			if neighbor.wire != null:
+				node.wire.connections[i] = neighbor.wire
+				neighbor.wire.Connect(node.wire)
+				neighbor.wire.UpdateVisuals()
+		i=i+1
+	
+	node.wire.UpdateVisuals()
+	
+	pass
+
+func PlayerRemoveWiring(wire:Wire):
+	var x:int = wire.x
+	var y:int = wire.y
+	
+	if wire.connectedBlock != null:
+		wire.connectedBlock.connectedWire == null
+		
+	var neighbors:Array[GridNode] = GetNeighbors(x,y)
+	for neighbor in neighbors:
+		if neighbor.wire != null:
+			neighbor.wire.Disconnect(wire)
+			neighbor.wire.UpdateVisuals()
+			
+			NewSessionWorldChange(neighbor.x, neighbor.y, neighbor.block, neighbor.wire.GetConnectionStatus())
+			
+	var node: GridNode = GetNodeAt(x,y)
+	var wiring: Array[bool]
+	NewSessionWorldChange(x, y, node.block, wiring)
+	
+	wire.queue_free()
 
 
 #World generation
@@ -490,7 +556,8 @@ func GenerateNaturalBlocks(seed:String):
 	
 	pass
 	
-func ApplyChanges(saveData:SaveData):
+func ApplyChanges(saveData):
+	
 	for node in grid:
 		node.savingFlag = false
 		pass
@@ -499,25 +566,39 @@ func ApplyChanges(saveData:SaveData):
 		var node = GetNodeAt(change.x,change.y)
 		if !node.savingFlag:
 			node.savingFlag = true
-			if change.status == "":
-				continue
-			var block = Global.buildMenu.GetBlockReferenceByName(change.status).duplicate()
-			if block != null:
-				ForcePlaceBlock(block,change.x,change.y)
+			
+			if change.blockStatus != "":
+				var block = Global.buildMenu.GetBlockReferenceByName(change.blockStatus).duplicate()
+				if block != null:
+					ForcePlaceBlock(block,change.x,change.y)
+			
+			if change.wiring.size() != 0:
+				ForcePlaceWiring(change.x,change.y,change.wiring)
+			
 		else:
 			change.outOfDate = true 
 	pass
 	
 #Saving
-func NewSessionWorldChange(x:int, y:int, status: String):
+func NewSessionWorldChange(x:int, y:int, blockStatus: Block, wiring:Array[bool]):
+	var _blockStatus: String
+	if blockStatus == null:
+		_blockStatus = ""
+	else:
+		_blockStatus = blockStatus.blockName
+	
 	var new = SessionWorldChange.new()
 	new.x = x
 	new.y = y
-	new.status = status
+	new.blockStatus = _blockStatus
+	new.wiring = wiring
+	print(wiring)
 	sessionWorldChanges.push_front(new)
 	pass
 	
-func Save(saveData:SaveData):
+func Save():
+	
+	var saveData = Global.saveManager.loadedWorldData
 	
 	for node in grid:
 		node.savingFlag = false
@@ -532,12 +613,21 @@ func Save(saveData:SaveData):
 	
 	pass
 	
-func Load(saveData:SaveData):
-	print("World manager loading...")
+func Load():
+	
+	var saveData = Global.saveManager.loadedWorldData
+	#print("World manager loading...")
 	#Apply seed
+	Global.gameManager.SetLoadingScreenText("Setting mining values...")
+	await get_tree().create_timer(0.1).timeout
 	SetMiningValues(saveData.seed)
+	
+	Global.gameManager.SetLoadingScreenText("Generating world from seed...")
+	await get_tree().create_timer(0.1).timeout
 	GenerateNaturalBlocks(saveData.seed)
 	
 	#Apply changes
+	Global.gameManager.SetLoadingScreenText("Applying world changes...")
+	await get_tree().create_timer(0.1).timeout
 	ApplyChanges(saveData)
 	pass

@@ -130,14 +130,15 @@ func UpdateGrid():
 		grid[gridHead].visible = true
 		gridHead = gridHead + 1
 
-func Save(save:SaveData):
-	save.playerInventory.clear()
+func Save():
+	var save = Global.saveManager.loadedCharacterData
 	
 	for collectedResource in collectedResources:
 		save.playerInventory.push_back(collectedResource)
 	pass
 	
-func Load(save:SaveData):
+func Load():
+	var save = Global.saveManager.loadedCharacterData
 	for collectedResource in save.playerInventory:
 		collectedResources.push_back(collectedResource)
 	pass

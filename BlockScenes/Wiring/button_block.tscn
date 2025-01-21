@@ -12,8 +12,6 @@ blockName = "Button Block"
 desc = "Activates blocks directly next to it"
 hp = 10
 menuIcon = ExtResource("2_5fwkv")
-components = Array[String](["Simple Circuit"])
-componentAmounts = Array[int]([10])
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 

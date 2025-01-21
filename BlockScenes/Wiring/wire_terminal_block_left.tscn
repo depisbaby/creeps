@@ -1,0 +1,34 @@
+[gd_scene load_steps=6 format=3 uid="uid://bjtdcck540kmj"]
+
+[ext_resource type="Script" path="res://Scripts/BlockSubClasses/ConductionBlock.gd" id="1_1j8vm"]
+[ext_resource type="Texture2D" uid="uid://bmifsqi00iqok" path="res://Sprites/BlockIcons/wire_terminal_left_icon.png" id="2_pqiwt"]
+[ext_resource type="Texture2D" uid="uid://b24nbd8ysgxkh" path="res://Sprites/Blocks/Wiring/wire_terminal_left.png" id="3_icsse"]
+[ext_resource type="Texture2D" uid="uid://1v2yta54vj25" path="res://Sprites/Blocks/Wiring/wire_terminal_cap.png" id="4_l1pfd"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_y1sxd"]
+size = Vector2(32, 32)
+
+[node name="Wire Terminal Block" type="Node2D"]
+script = ExtResource("1_1j8vm")
+outputDirections = Array[int]([3])
+isWireTerminal = true
+blockName = "Wire Terminal Block (left)"
+desc = "When activated or power is conducted, it sends a wire signal to the wire on top. When it receives a wire signal, it activates the neighboring block and conducts power."
+hp = 10
+menuIcon = ExtResource("2_pqiwt")
+components = Array[String](["Simple Circuit", "Simple Components", "Conductor Components"])
+componentAmounts = Array[int]([10, 10, 10])
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+shape = SubResource("RectangleShape2D_y1sxd")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+texture = ExtResource("3_icsse")
+
+[node name="cap" type="Sprite2D" parent="Sprite2D"]
+z_index = 11
+texture_filter = 1
+texture = ExtResource("4_l1pfd")

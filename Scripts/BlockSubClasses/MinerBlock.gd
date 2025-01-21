@@ -6,17 +6,6 @@ class_name MinerBlock
 var produceName: String
 var spriteId:int
 
-func _init():
-	Global.constructionManual.CreateRecipe([],["Element-VK"],"Miner Block")
-	Global.constructionManual.CreateRecipe([],["Mean Looking Crystals"],"Miner Block")
-	Global.constructionManual.CreateRecipe([],["Pseudo Iron"],"Miner Block")
-	Global.constructionManual.CreateRecipe([],["Purplutide"],"Miner Block")
-	Global.constructionManual.CreateRecipe([],["Smooth Stuff"],"Miner Block")
-	Global.constructionManual.CreateRecipe([],["Volcanite"],"Miner Block")
-	Global.constructionManual.CreateRecipe([],["Wonksten"],"Miner Block")
-	Global.constructionManual.CreateRecipe([],["Oil"],"Miner Block")
-	
-	
 
 func _process(delta: float) -> void:
 	pass
@@ -62,6 +51,7 @@ func OnPlace():
 	else:
 		#debug.modulate = Color.GREEN
 		SetProducedResource("Wonksten", 7)
+	
 	
 func SetProducedResource(name:String, _spriteId):
 	produceName = name

@@ -16,3 +16,7 @@ func Drip():
 func PlayerInteract():
 	Drip()
 	pass
+	
+func Activate():
+	Drip()
+	pass

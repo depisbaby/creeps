@@ -2,7 +2,9 @@ extends Node
 class_name SaveManager
 
 var subscribers : Array
-var loadedSave: SaveData
+var loadedCharacterData: CharacterSaveData
+var loadedWorldData: WorldSaveData
+
 
 const SAVE_GAME_SLOT_PATHS:Array[String] =["user://save_slot1.tres","user://save_slot2.tres","user://save_slot3.tres"]
 
@@ -23,26 +25,60 @@ func _process(delta):
 	
 func StartNewGame(seed:String, slot: int):
 	#create default values
-	loadedSave = SaveData.new()
-	loadedSave.slotNumber = slot
-	loadedSave.seed = seed
+	loadedCharacterData = CharacterSaveData.new()
+	loadedCharacterData.slotNumber = slot
+	
+	loadedWorldData = WorldSaveData.new()
+	loadedWorldData.slotNumber = slot
+	loadedWorldData.seed = seed
+	
+	loadedCharacterData.currentWorldPath = str("user://slot",slot,"_world",1,".tres")
+	loadedCharacterData.worldPaths.push_back(loadedCharacterData.currentWorldPath)
 	
 	#load stuff
 	for subscriber in subscribers:
-		subscriber.Load(loadedSave)
+		await subscriber.Load()
 	
 	pass
 
-func LoadGame(slot:int):
-	loadedSave = ResourceLoader.load(SAVE_GAME_SLOT_PATHS[slot])
+func LoadGame(slot:int, worldPath: String):
+	loadedCharacterData = ResourceLoader.load(SAVE_GAME_SLOT_PATHS[slot])
+	if worldPath == "":
+		loadedWorldData = ResourceLoader.load(loadedCharacterData.currentWorldPath)
+	else:
+		loadedWorldData = ResourceLoader.load(worldPath)
+	
 	for subscriber in subscribers:
-		subscriber.Load(loadedSave)
+		await subscriber.Load()
 		
-	LoadBlockInventories(loadedSave)
+	LoadBlockInventories()
 	pass
 
 func DeleteGame(slot:int):
+	var data: CharacterSaveData = ResourceLoader.load(SAVE_GAME_SLOT_PATHS[slot])
+	for world in data.worldPaths:
+		DeleteWorld(world)
+	DeleteSave(slot)
+	pass
+
+func DeleteSave(slot:int):
 	var file_path = SAVE_GAME_SLOT_PATHS[slot]
+	if FileAccess.file_exists(file_path):
+		var dir = DirAccess.open(file_path.get_base_dir())
+		if dir:
+			var err = dir.remove(file_path)
+			if err == OK:
+				return true
+			else:
+				print("Failed to delete file. Error code: ", err)
+				return false
+	else:
+		print("File does not exist at path: ", file_path)
+		return false
+	pass
+	
+func DeleteWorld(path: String):
+	var file_path = path
 	if FileAccess.file_exists(file_path):
 		var dir = DirAccess.open(file_path.get_base_dir())
 		if dir:
@@ -61,11 +97,14 @@ func SaveGame():
 	if Global.gameManager.devMode:
 		return
 	
-	loadedSave.blockInventories.clear()
+	loadedWorldData.blockInventories.clear()
 	
 	for subscriber in subscribers:
-		subscriber.Save(loadedSave)
-	ResourceSaver.save(loadedSave,SAVE_GAME_SLOT_PATHS[loadedSave.slotNumber])
+		await subscriber.Save()
+	
+	ResourceSaver.save(loadedWorldData,loadedCharacterData.currentWorldPath)
+	ResourceSaver.save(loadedCharacterData,SAVE_GAME_SLOT_PATHS[loadedCharacterData.slotNumber])
+	
 	pass
 	
 	
@@ -80,8 +119,8 @@ func Subscribe(subscriber):
 #===============SAVE HELPERS =========================
 #=====================================================
 #Block inventories
-func LoadBlockInventories(save:SaveData):
-	for blockInventory in save.blockInventories:
+func LoadBlockInventories():
+	for blockInventory in loadedWorldData.blockInventories:
 		var inv = blockInventory as BlockInventory
 		var x = inv.xPosition 
 		var y = inv.yPosition

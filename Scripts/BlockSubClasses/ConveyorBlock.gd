@@ -35,7 +35,7 @@ func OnPlace():
 			if neighbor.block.canHoldResources:
 				if directions.has(i):
 					connectedBlocks.push_back(neighbor.block)
-					print("connected")
+					#print("connected")
 					i = i +1
 					continue
 		
@@ -61,7 +61,7 @@ func UpdateConnections():
 			if neighbor.block.canHoldResources:
 				if directions.has(i):
 					connectedBlocks.push_back(neighbor.block)
-					print("connected")
+					#print("connected")
 					i = i +1
 					continue
 		

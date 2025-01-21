@@ -32,11 +32,13 @@ func _physics_process(delta):
 	move_and_slide()
 	Animations()
 	
-func Save(save:SaveData):
+func Save():
+	var save = Global.saveManager.loadedWorldData
 	save.playerPosition = global_position
 	pass
 	
-func Load(save:SaveData):
+func Load():
+	var save = Global.saveManager.loadedWorldData
 	global_position = save.playerPosition
 	pass
 	

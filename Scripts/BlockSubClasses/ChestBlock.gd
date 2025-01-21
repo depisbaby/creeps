@@ -23,10 +23,10 @@ func OnPlace():
 	Global.saveManager.Subscribe(self)
 	pass
 	
-func Save(save:SaveData):
+func Save():
+	var save = Global.saveManager.loadedWorldData
 	save.blockInventories.push_back(blockInventory)
 	pass
 	
-func Load(save:SaveData):
-	
+func Load():
 	pass

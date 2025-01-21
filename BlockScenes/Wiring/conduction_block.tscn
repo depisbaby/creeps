@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=3 uid="uid://c3vyoqugp8c2f"]
+
+[ext_resource type="Script" path="res://Scripts/BlockSubClasses/ConductionBlock.gd" id="1_gftea"]
+[ext_resource type="Texture2D" uid="uid://h6ubdgs6demn" path="res://Sprites/Blocks/Wiring/conduction_block.png" id="2_jk5c7"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_y1sxd"]
+size = Vector2(32, 26)
+
+[node name="ConductionBlock" type="Node2D"]
+script = ExtResource("1_gftea")
+outputDirections = Array[int]([0, 1, 2, 3])
+blockName = "Conduction Block"
+desc = "When activated, it activates neighboring blocks and conducts power to other conduction blocks. Those conduction blocks then do the same. The strength of conduction tapers of quickly"
+hp = 10
+menuIcon = ExtResource("2_jk5c7")
+components = Array[String](["Simple Circuit", "Simple Components", "Conductor Components"])
+componentAmounts = Array[int]([10, 10, 10])
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(0, -3)
+shape = SubResource("RectangleShape2D_y1sxd")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+texture = ExtResource("2_jk5c7")

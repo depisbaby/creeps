@@ -2,7 +2,6 @@ extends Block
 
 var neighbors: Array[Block]
 
-
 func OnPlace():
 	neighbors.clear()
 	var _neighbors: Array[GridNode] = Global.worldManager.GetNeighbors(xGridPos,yGridPos)
@@ -20,7 +19,6 @@ func NeighborEntered(neighbor: Block):
 func NeighborLeft(neighbor: Block):
 	neighbors.erase(neighbor)
 	pass
-
 
 func PlayerInteract():
 	for neighbor in neighbors:

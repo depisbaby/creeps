@@ -1,0 +1,33 @@
+[gd_scene load_steps=6 format=3 uid="uid://irqyoekfqr8p"]
+
+[ext_resource type="Script" path="res://Scripts/BlockSubClasses/ConductionBlock.gd" id="1_mshaj"]
+[ext_resource type="Texture2D" uid="uid://x7ypxsj4u1h0" path="res://Sprites/BlockIcons/wire_terminal_up-icon.png" id="2_ka7r4"]
+[ext_resource type="Texture2D" uid="uid://bmmpdy6hm3q5k" path="res://Sprites/Blocks/Wiring/wire_terminal_up.png" id="3_xlckl"]
+[ext_resource type="Texture2D" uid="uid://1v2yta54vj25" path="res://Sprites/Blocks/Wiring/wire_terminal_cap.png" id="4_37i0l"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_y1sxd"]
+size = Vector2(32, 32)
+
+[node name="Wire Terminal Block" type="Node2D"]
+script = ExtResource("1_mshaj")
+outputDirections = Array[int]([0])
+isWireTerminal = true
+blockName = "Wire Terminal Block (up)"
+desc = "When activated or power is conducted, it sends a wire signal to the wire on top. When it receives a wire signal, it activates the neighboring block and conducts power."
+hp = 10
+menuIcon = ExtResource("2_ka7r4")
+configurations = Array[String](["Wire Terminal Block (right)", "Wire Terminal Block (down)", "Wire Terminal Block (left)"])
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+shape = SubResource("RectangleShape2D_y1sxd")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+texture = ExtResource("3_xlckl")
+
+[node name="cap" type="Sprite2D" parent="Sprite2D"]
+z_index = 11
+texture_filter = 1
+texture = ExtResource("4_37i0l")

@@ -7,9 +7,10 @@ class_name ResourceManager
 var initialized: bool
 var pool: Array[_Resource]
 var allInstances: Array[_Resource]
-
+var notDefinedTu
 
 var resourceLibrary:Array[ResourceTuple] = [
+	preload("res://Resources/Resources/error.tres"),
 	preload("res://Resources/Resources/element_vk.tres"),#2
 	preload("res://Resources/Resources/mean_looking_crystals.tres"),#3
 	preload("res://Resources/Resources/pseudo_iron.tres"),#5
@@ -24,6 +25,10 @@ var resourceLibrary:Array[ResourceTuple] = [
 	preload("res://Resources/Resources/simple_circuit.tres"),#8
 	preload("res://Resources/Resources/simple_motor.tres"),#12
 	preload("res://Resources/Resources/log.tres"),#12
+	preload("res://Resources/Resources/mess.tres"),
+	preload("res://Resources/Resources/wire.tres"),
+	preload("res://Resources/Resources/conductive_plating.tres"),
+	
 	
 ]
 
@@ -116,7 +121,8 @@ func GetResourceByName(name:String)->ResourceTuple:
 	for resource in resourceLibrary:
 		if resource.resourceName == name:
 			return resource
-	return null
+			
+	return resourceLibrary[0]
 	
 func NewResourceTuple(resourceName:String, amount:int, withTexture:bool)->ResourceTuple:
 	var tuple = ResourceTuple.new()

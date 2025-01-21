@@ -20,6 +20,7 @@ var resourcesHeld: Array[_Resource]
 var doesntAcceptResources: bool #can be turned on to prevent holding resources
 var collider: StaticBody2D
 
+
 #shake
 var shakeMagnitude: float
 
@@ -80,7 +81,6 @@ func NeighborEntered(neighbor: Block):
 	
 func NeighborLeft(neighbor: Block):
 	pass
-
 
 func PlayerInteract():
 	pass

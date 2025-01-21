@@ -10,6 +10,10 @@ var grid : Array[ResourcePanel]
 var recipes: Array[ConstructionRecipe] = [
 	preload("res://Resources/ConstructionRecipes/blank_recipe.tres"),
 ]
+var nonAbstractRecipes:Array[ConstructionRecipe] = [
+	
+]
+
 var relevantRecipes: Array[ConstructionRecipe]
 @onready var inputIcons: Array[TextureRect] = [
 	$RecipeWindow/input_base/input_box1/input_resource1,
@@ -133,13 +137,40 @@ func ResourcePanelClicked(resourceName:String):
 	OpenRecipesWithOutput(resourceName)
 	pass
 	
-func CreateRecipe(inputResources:Array[String], outputResources:Array[String], constructorBlock:String):
+func CreateRecipe(abstract:bool,inputResources:Array[String], outputResources:Array[String], constructorBlock:String):
+
 	var recipe = ConstructionRecipe.new()
 	recipe.inputResources = inputResources
 	recipe.outputResources = outputResources
 	recipe.constructorBlock = constructorBlock
 	recipes.push_back(recipe)
+	if !abstract:
+		nonAbstractRecipes.push_back(recipe)
 	pass
+
+func LoadRecipes():
+	
+	#Miner
+	Global.constructionManual.CreateRecipe(true,[],["Element-VK"],"Miner Block")
+	Global.constructionManual.CreateRecipe(true,[],["Mean Looking Crystals"],"Miner Block")
+	Global.constructionManual.CreateRecipe(true,[],["Pseudo Iron"],"Miner Block")
+	Global.constructionManual.CreateRecipe(true,[],["Purplutide"],"Miner Block")
+	Global.constructionManual.CreateRecipe(true,[],["Smooth Stuff"],"Miner Block")
+	Global.constructionManual.CreateRecipe(true,[],["Volcanite"],"Miner Block")
+	Global.constructionManual.CreateRecipe(true,[],["Wonksten"],"Miner Block")
+	Global.constructionManual.CreateRecipe(true,[],["Oil"],"Miner Block")
+	
+	#Tinkerer
+	Global.constructionManual.CreateRecipe(true,["Any resource","Any resource","Any resource","Any resource","Any resource"],["Drill Bit"],"Tinkerer Block")
+	Global.constructionManual.CreateRecipe(true,["Any resource","Any resource","Any resource","Any resource","Any resource"],["Conveyor Kit"],"Tinkerer Block")
+	Global.constructionManual.CreateRecipe(true,["Any resource","Any resource","Any resource","Any resource","Any resource"],["Simple Circuit"],"Tinkerer Block")
+	Global.constructionManual.CreateRecipe(true,["Any resource","Any resource","Any resource","Any resource","Any resource"],["Simple Components"],"Tinkerer Block")
+	Global.constructionManual.CreateRecipe(true,["Any resource","Any resource","Any resource","Any resource","Any resource"],["Simple Motor"],"Tinkerer Block")
+	
+	#Simple constructor
+	Global.constructionManual.CreateRecipe(false,["Pseudo Iron","Smooth Stuff"],["Conductive Plating"],"Simple Constructor Block")
+	Global.constructionManual.CreateRecipe(false,["Conductive Plating","Element-VK"],["Wire"],"Simple Constructor Block")
+	
 	
 func SearchRecipesWithOutput(output:String)->Array[ConstructionRecipe]:
 	var result: Array[ConstructionRecipe]
@@ -187,7 +218,7 @@ func DisplayRecipe(recipe: ConstructionRecipe):
 	for resource in recipe.inputResources:
 		inputArrows[i].visible = true
 		var _resource : ResourceTuple = Global.resourceManager.GetResourceByName(resource)
-		if _resource == null:
+		if _resource.resourceName == "Error":
 			inputLabels[i].text = resource
 			inputLabels[i].visible = true
 		else: 

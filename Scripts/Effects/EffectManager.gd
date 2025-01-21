@@ -40,6 +40,7 @@ func DisplayStatusIcon(position: Vector2, statusIconId: int):
 	if icon == null:
 		ScaleUpStatusIconPool(100)
 		DisplayStatusIcon(position, statusIconId)
+		return
 	icon.texture = statusIcons[statusIconId]
 	icon.global_position = position
 	icon.Play()

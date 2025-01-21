@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="ResourceTuple" load_steps=3 format=3 uid="uid://bujjt28juwg08"]
+
+[ext_resource type="Script" path="res://Scripts/Resources/ResourceTuple.gd" id="1_hstcv"]
+[ext_resource type="Texture2D" uid="uid://p1mw3g67imn3" path="res://Sprites/Icons/error.png" id="2_hdaj3"]
+
+[resource]
+script = ExtResource("1_hstcv")
+resourceName = "Error"
+amount = 0
+texture = ExtResource("2_hdaj3")

@@ -1,5 +1,5 @@
 extends Resource
-class_name SaveData
+class_name WorldSaveData
 
 @export var slotNumber: int
 @export var seed: String
@@ -9,7 +9,6 @@ class_name SaveData
 
 #player
 @export var playerPosition: Vector2
-@export var playerInventory: Array
 
 #block inventories
 @export var blockInventories: Array

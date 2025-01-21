@@ -25,6 +25,14 @@ var blockLibrary: Array[PackedScene] = [
 	preload("res://BlockScenes/NonDynamic/bedrock_block.tscn"),
 	preload("res://BlockScenes/Conveyors/drip_block.tscn"),
 	preload("res://BlockScenes/Wiring/button_block.tscn"),
+	preload("res://BlockScenes/Wiring/conduction_block.tscn"),
+	preload("res://BlockScenes/Wiring/wire_terminal_block_up.tscn"),
+	preload("res://BlockScenes/Wiring/wire_terminal_block_right.tscn"),
+	preload("res://BlockScenes/Wiring/wire_terminal_block_down.tscn"),
+	preload("res://BlockScenes/Wiring/wire_terminal_block_left.tscn"),
+	preload("res://BlockScenes/ResourceProduction/simple_constructor_block.tscn"),
+	#preload(),
+	#preload(),
 	#preload(),
 	#preload(),
 	#preload(),
@@ -117,15 +125,28 @@ func GetBlockReferenceByName(name:String)->Block:
 	pass
 	
 func UnlockBlock(blockName:String):
-	for block in availableBlocks:
-		if block.blockName == blockName:
-			return
+	if Global.gameManager.devMode:
+		return
+	
+	if Global.saveManager.loadedCharacterData.unlockedBlocks.has(blockName):
+		return
+	Global.saveManager.loadedCharacterData.unlockedBlocks.push_back(blockName)
+	
+	SetBlockAvailable(blockName)
+		
+	
+func SetBlockAvailable(blockName:String):
 			
 	for block in blockLibraryInstances:
 		if block.blockName == blockName:
 			availableBlocks.push_back(block)
 	
 	OpenPage(0,"")
+
+func GetUnlockedBlocks():
+	for block in Global.saveManager.loadedCharacterData.unlockedBlocks:
+		SetBlockAvailable(block)
+
 
 func EnterInDevMode():
 	for block in blockLibraryInstances:

@@ -2,21 +2,10 @@ extends ConveyorBlock
 
 var amountOfResources: int
 
-func _init():
-	Global.constructionManual.CreateRecipe(["Any resource","Any resource","Any resource","Any resource","Any resource"],["Drill Bit"],"Tinkerer Block")
-	Global.constructionManual.CreateRecipe(["Any resource","Any resource","Any resource","Any resource","Any resource"],["Conveyor Kit"],"Tinkerer Block")
-	Global.constructionManual.CreateRecipe(["Any resource","Any resource","Any resource","Any resource","Any resource"],["Simple Circuit"],"Tinkerer Block")
-	Global.constructionManual.CreateRecipe(["Any resource","Any resource","Any resource","Any resource","Any resource"],["Simple Components"],"Tinkerer Block")
-	Global.constructionManual.CreateRecipe(["Any resource","Any resource","Any resource","Any resource","Any resource"],["Simple Motor"],"Tinkerer Block")
-	Global.buildMenu.UnlockBlock("Splitter Block (up)")
-	pass
-
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func OnPlace():
+	super.OnPlace()
+	Global.buildMenu.UnlockBlock("Drip Block")
+	Global.buildMenu.UnlockBlock("Constructor Block")
 	pass
 	
 func ReceiveResource(_resource: _Resource, source:Block):
