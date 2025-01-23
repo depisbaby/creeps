@@ -18,6 +18,9 @@ func _physics_process(delta: float) -> void:
 	#print(Global.gameManager.tick)
 	#print(connectedBlocks.size())
 	#print("wave: ",Global.gameManager.waveInProgress)
+	if resourcesHeld.size() >= 5:
+		return
+	
 	if Global.gameManager.tick % (60*5) == 0 && connectedBlocks.size()!= 0:
 		CreateResource(produceName)
 

@@ -73,6 +73,9 @@ func ReceiveResource(resource:_Resource, source: Block):
 	super.ReceiveResource(resource, source)
 	lastSource = source
 	hasResources = true
+	
+	if resourcesHeld.size() == 5:
+		doesntAcceptResources = true
 
 func CreateResource(resourceName :String):
 	
@@ -95,7 +98,7 @@ func ReleaseResources():
 	if connectedBlocks.size() == 1:
 		if !connectedBlocks[0].doesntAcceptResources:
 			connectedBlocks[0].ReceiveResource(resourcesHeld.pop_front(),self)
-		
+			doesntAcceptResources = false
 		return
 	
 	#multi directional
@@ -122,6 +125,7 @@ func ReleaseResources():
 		
 		break
 	
+	doesntAcceptResources = false
 	
 	
 	

@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://bcmnojl5q4vj6"]
+
+[ext_resource type="Script" path="res://Scripts/BlockSubClasses/ResourceSensorBlock.gd" id="1_us2ql"]
+[ext_resource type="Texture2D" uid="uid://spqgbknngkmv" path="res://Sprites/Blocks/Logic/ResourceSensorBlock/left.png" id="2_qeacm"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3e3f0"]
+size = Vector2(32, 32)
+
+[node name="ResourceSensorBlockLeft" type="Node2D"]
+script = ExtResource("1_us2ql")
+directionX = -1
+blockName = "Resource Sensor Block (left)"
+hp = 10
+menuIcon = ExtResource("2_qeacm")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+texture = ExtResource("2_qeacm")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+shape = SubResource("RectangleShape2D_3e3f0")

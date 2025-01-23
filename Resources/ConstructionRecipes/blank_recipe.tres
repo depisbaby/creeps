@@ -4,6 +4,7 @@
 
 [resource]
 script = ExtResource("1_0f7ly")
+recipeName = ""
 inputResources = Array[String]([])
 outputResources = Array[String]([])
 constructorBlock = ""
