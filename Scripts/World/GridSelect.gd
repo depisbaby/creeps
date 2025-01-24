@@ -1,6 +1,8 @@
 extends Sprite2D
 class_name GridSelect
 
+@onready var label:Label = $Label
+
 var sprites : Array[Texture2D] = [
 	preload("res://Sprites/Icons/grid_select.png"),
 	preload("res://Sprites/Icons/block_lift.png"),

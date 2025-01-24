@@ -13,9 +13,11 @@ script = ExtResource("1_mshaj")
 outputDirections = Array[int]([0])
 isWireTerminal = true
 blockName = "Wire Terminal Block (up)"
-desc = "When activated or power is conducted, it sends a wire signal to the wire on top. When it receives a wire signal, it activates the neighboring block and conducts power."
+desc = "When activated, it sends a wire signal to the wire on top. When it receives a wire signal, it activates the neighboring block (on the side with the fins)."
 hp = 10
 menuIcon = ExtResource("2_ka7r4")
+components = Array[String](["Simple Circuit", "Simple Components", "Conductive Plating"])
+componentAmounts = Array[int]([1, 1, 3])
 configurations = Array[String](["Wire Terminal Block (right)", "Wire Terminal Block (down)", "Wire Terminal Block (left)"])
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]

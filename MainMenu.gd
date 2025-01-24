@@ -77,3 +77,9 @@ func _on_slot_new_button_down(extra_arg_0):
 func _on_slot_delete_button_down(extra_arg_0):
 	DeleteSave(extra_arg_0)
 	pass # Replace with function body.
+
+
+func _on_save_select_close_pressed() -> void:
+	
+	saveSelect.visible = false
+	pass # Replace with function body.

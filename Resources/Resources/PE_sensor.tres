@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="ResourceTuple" load_steps=3 format=3 uid="uid://cbjqtumv38mte"]
+
+[ext_resource type="Script" path="res://Scripts/Resources/ResourceTuple.gd" id="1_if0p1"]
+[ext_resource type="Texture2D" uid="uid://q6xhqxchofyj" path="res://Sprites/Resources/PE-Sensor.png" id="2_86s24"]
+
+[resource]
+script = ExtResource("1_if0p1")
+resourceName = "PE-Sensor"
+amount = 0
+texture = ExtResource("2_86s24")

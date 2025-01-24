@@ -1,4 +1,4 @@
-[gd_scene load_steps=53 format=4 uid="uid://dymch6s50vt1a"]
+[gd_scene load_steps=54 format=4 uid="uid://dymch6s50vt1a"]
 
 [ext_resource type="Script" path="res://Scripts/GameManager.gd" id="1_irwr6"]
 [ext_resource type="Script" path="res://MainMenu.gd" id="2_hskbr"]
@@ -45,6 +45,7 @@
 [ext_resource type="Texture2D" uid="uid://bs34equtrlenq" path="res://Sprites/Blocks/chest_block.png" id="29_war65"]
 [ext_resource type="Script" path="res://Scripts/World/WorldManager.gd" id="37_drphn"]
 [ext_resource type="Script" path="res://Scripts/Saving/SaveManager.gd" id="38_yyfdg"]
+[ext_resource type="PackedScene" uid="uid://ngyguv3q2ugg" path="res://MiscScenes/text_message.tscn" id="39_gkgus"]
 [ext_resource type="Texture2D" uid="uid://bk6a83saxm5kp" path="res://Sprites/Player/Sprite-0004.png" id="45_g1noa"]
 [ext_resource type="Texture2D" uid="uid://ci8rpkscyp22h" path="res://Sprites/Player/Sprite-0005.png" id="46_c7nd6"]
 [ext_resource type="Texture2D" uid="uid://1j5ak34476lv" path="res://Sprites/Player/Sprite-0007.png" id="47_yaare"]
@@ -141,7 +142,6 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="ExitGame" type="Control" parent="CanvasLayer/HUD"]
-visible = false
 anchors_preset = 0
 offset_top = 258.0
 offset_right = 40.0
@@ -279,7 +279,7 @@ offset_left = -210.0
 offset_top = 212.0
 offset_right = -15.0
 offset_bottom = 286.0
-text = "Construction manual"
+text = "Engineer's manual"
 
 [node name="NinePatchRect" type="NinePatchRect" parent="CanvasLayer/HUD/ConstructionMenu"]
 texture_filter = 1
@@ -304,7 +304,7 @@ offset_top = 213.0
 offset_right = -135.0
 offset_bottom = 237.0
 scale = Vector2(2.7, 2.7)
-text = "Construction
+text = "Engineer's
 Manual"
 label_settings = ExtResource("20_e8xyc")
 horizontal_alignment = 1
@@ -340,6 +340,28 @@ patch_margin_left = 10
 patch_margin_top = 10
 patch_margin_right = 10
 patch_margin_bottom = 10
+
+[node name="Label" type="Label" parent="CanvasLayer/MainMenu"]
+texture_filter = 1
+layout_mode = 0
+offset_left = 712.0
+offset_top = 325.0
+offset_right = 797.0
+offset_bottom = 348.0
+scale = Vector2(3, 3)
+text = "Hazard Duty Pay"
+label_settings = ExtResource("20_e8xyc")
+
+[node name="Label2" type="Label" parent="CanvasLayer/MainMenu"]
+texture_filter = 1
+layout_mode = 0
+offset_left = 978.0
+offset_top = 642.0
+offset_right = 1063.0
+offset_bottom = 665.0
+scale = Vector2(3, 3)
+text = "v.0.0.0.0.0.0.0.1"
+label_settings = ExtResource("20_e8xyc")
 
 [node name="PlayButton" type="Control" parent="CanvasLayer/MainMenu"]
 layout_mode = 3
@@ -654,6 +676,14 @@ text = "New game"
 label_settings = ExtResource("20_e8xyc")
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="close" type="Button" parent="CanvasLayer/MainMenu/SaveSelect"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 0
+offset_left = 1538.0
+offset_top = 317.0
+offset_right = 1578.0
+offset_bottom = 367.0
 
 [node name="BuyMenu" type="Control" parent="CanvasLayer"]
 visible = false
@@ -1343,21 +1373,33 @@ stretch_mode = 1
 [node name="Label" type="Label" parent="CanvasLayer/ConstructionManual"]
 texture_filter = 1
 layout_mode = 0
-offset_left = -669.0
-offset_top = -395.0
-offset_right = -565.0
-offset_bottom = -372.0
+offset_left = -667.0
+offset_top = -241.0
+offset_right = -414.0
+offset_bottom = -218.0
+scale = Vector2(2, 2)
+text = "Click a resource icon to see how it can be produced.
+"
+label_settings = ExtResource("20_e8xyc")
+
+[node name="Label2" type="Label" parent="CanvasLayer/ConstructionManual"]
+texture_filter = 1
+layout_mode = 0
+offset_left = -667.0
+offset_top = -391.0
+offset_right = -414.0
+offset_bottom = -368.0
 scale = Vector2(3, 3)
-text = "Construction Manual
+text = "Engineer's Manual
 "
 label_settings = ExtResource("20_e8xyc")
 
 [node name="gridStart" type="Control" parent="CanvasLayer/ConstructionManual"]
 anchors_preset = 0
 offset_left = -650.0
-offset_top = -320.0
+offset_top = -196.0
 offset_right = -610.0
-offset_bottom = -280.0
+offset_bottom = -156.0
 
 [node name="close" type="Button" parent="CanvasLayer/ConstructionManual"]
 modulate = Color(1, 1, 1, 0)
@@ -2078,6 +2120,7 @@ poolSize = 100
 [node name="EffectManager" type="Node2D" parent="Managers"]
 script = ExtResource("16_f7f3s")
 statusIconPackedScene = ExtResource("17_2hv86")
+textMessagePackedScene = ExtResource("39_gkgus")
 
 [node name="WorldManager" type="Node" parent="Managers"]
 script = ExtResource("37_drphn")
@@ -2091,10 +2134,20 @@ script = ExtResource("38_yyfdg")
 
 [node name="GridSelect" type="Sprite2D" parent="."]
 visible = false
-z_index = 10
+z_index = 30
 texture_filter = 1
 texture = ExtResource("15_y11kx")
 script = ExtResource("15_bhvh3")
+
+[node name="Label" type="Label" parent="GridSelect"]
+z_index = 30
+offset_left = -16.0
+offset_top = -16.0
+offset_right = 16.0
+offset_bottom = 16.0
+label_settings = ExtResource("20_e8xyc")
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="Ground" type="TileMapLayer" parent="."]
 texture_filter = 1
@@ -2137,6 +2190,7 @@ frame_progress = 0.8846
 [connection signal="button_down" from="CanvasLayer/MainMenu/SaveSelect/Slot1/LoadView/playbutton/slot1_load" to="CanvasLayer/MainMenu" method="_on_slot_load_button_down" binds= [0]]
 [connection signal="button_down" from="CanvasLayer/MainMenu/SaveSelect/Slot1/LoadView/deletebutton/slot1_load" to="CanvasLayer/MainMenu" method="_on_slot_delete_button_down" binds= [0]]
 [connection signal="button_down" from="CanvasLayer/MainMenu/SaveSelect/Slot1/NewGameView/PlayButton/slot1_new" to="CanvasLayer/MainMenu" method="_on_slot_new_button_down" binds= [0]]
+[connection signal="pressed" from="CanvasLayer/MainMenu/SaveSelect/close" to="CanvasLayer/MainMenu" method="_on_save_select_close_pressed"]
 [connection signal="button_down" from="CanvasLayer/BuyMenu/UtilityShop/utility_shop_close" to="CanvasLayer/BuyMenu" method="_on_utility_shop_close_button_down"]
 [connection signal="button_down" from="CanvasLayer/BuyMenu/BlockShop/blockShop_close" to="CanvasLayer/BuyMenu" method="_on_block_shop_close_button_down"]
 [connection signal="button_down" from="CanvasLayer/BuyMenu/BlockShop/reroll_button" to="CanvasLayer/BuyMenu" method="_on_reroll_button_button_down"]

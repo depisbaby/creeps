@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="ResourceTuple" load_steps=3 format=3 uid="uid://c00ynrd2g27mc"]
+
+[ext_resource type="Script" path="res://Scripts/Resources/ResourceTuple.gd" id="1_301mc"]
+[ext_resource type="Texture2D" uid="uid://cv4flm24slxlp" path="res://Sprites/Resources/tinkerer_kit.png" id="2_1mggu"]
+
+[resource]
+script = ExtResource("1_301mc")
+resourceName = "Tinkerer Kit"
+amount = 0
+texture = ExtResource("2_1mggu")

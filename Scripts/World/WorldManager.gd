@@ -117,6 +117,9 @@ func _process(delta):
 			
 			var node: GridNode = GetNodeAt(array[0], array[1])
 			
+			if node == null:
+				return
+			
 			if node.wire != null:
 				PlayerRemoveWiring(node.wire)
 				return
@@ -171,6 +174,7 @@ func StartPlacingBlock(block: Block):
 	Global.gameManager.CloseAllWindows()
 	Global.hud.visible = false
 	Global.gridSelect.texture = blockBeingPlaced.menuIcon
+	Global.gridSelect.label.text = "Click"
 	Global.gridSelect.modulate = Color.AQUA
 	Global.gridSelect.modulate.a = 0.75
 	Global.gridSelect.visible = true
@@ -187,6 +191,8 @@ func StartMovingBlocks():
 	movingBlocks = true
 	Global.gameManager.CloseAllWindows()
 	Global.hud.visible = false
+	Global.gridSelect.modulate = Color.WHITE
+	Global.gridSelect.label.text = "Click"
 	Global.gridSelect.texture = Global.gridSelect.sprites[3]
 	Global.gridSelect.visible = true
 
@@ -207,6 +213,7 @@ func PlayerPlaceBlock():
 	var gridPosition = WorldToGrid(mousePosition)
 	var node = GetNodeAt(gridPosition[0], gridPosition[1])
 	if node == null || node.block != null: #position already occupied
+		Global.effectManager.DisplayText(Global.player.global_position, "Can't do that!")
 		print("Already occupied or outside of the map")
 		return
 	
@@ -219,7 +226,7 @@ func PlayerPlaceBlock():
 			i = i + 1
 			
 		if !Global.inventoryMenu.RequireResources(array, true) && !Global.gameManager.devMode:
-			Global.effectManager.DisplayStatusIcon(Global.player.global_position,11)
+			Global.effectManager.DisplayText(Global.player.global_position,"I'm missing resources!")
 			return
 	
 	var block = finalBlock.duplicate()
@@ -361,6 +368,8 @@ func StartWiring():
 	Global.gameManager.CloseAllWindows()
 	Global.hud.visible = false
 	Global.gridSelect.texture = Global.gridSelect.sprites[0]
+	Global.gridSelect.modulate = Color.WHITE
+	Global.gridSelect.label.text = "Drag"
 	Global.gridSelect.visible = true
 
 func StopWiring():
@@ -372,6 +381,16 @@ func StopWiring():
 	
 func PlayerPlaceWiring():
 	
+	var a = Vector2(wiringStart[0], wiringStart[1])
+	var b = Vector2(wiringEnd[0], wiringEnd[1])
+	var length : int = (b-a).length()
+	var tuple = ResourceTuple.new()
+	tuple.resource_name = "Wire"
+	tuple.amount = length
+	var array: Array[ResourceTuple] = [tuple]
+	if !Global.inventoryMenu.RequireResources(array, true):
+		Global.effectManager.DisplayText(Global.player.global_position,"I'm missing wire!")
+		return
 	PlaceWiringFromTo(wiringStart, wiringEnd)
 	
 	pass

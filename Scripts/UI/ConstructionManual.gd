@@ -78,6 +78,8 @@ var relevantRecipes: Array[ConstructionRecipe]
 @onready var recipeNameLabel: Label = $RecipeWindow/recipeName
 @onready var inputBase: Control = $RecipeWindow/input_base
 @onready var outputBase: Control = $RecipeWindow/output_base
+@onready var nextButton: Control = $RecipeWindow/next
+@onready var previousButton: Control = $RecipeWindow/prev
 var basesDefaultHeight: float
 var recipeHead: int
 
@@ -169,7 +171,19 @@ func LoadRecipes():
 	
 	#Simple constructor
 	Global.constructionManual.CreateRecipe(false,["Pseudo Iron","Smooth Stuff"],["Conductive Plating"],"Simple Constructor Block")
-	Global.constructionManual.CreateRecipe(false,["Conductive Plating","Element-VK"],["Wire"],"Simple Constructor Block")
+	Global.constructionManual.CreateRecipe(false,["Pseudo Iron","Smooth Stuff","Purplutide","Element-VK"],["Simple Components"],"Simple Constructor Block")
+	Global.constructionManual.CreateRecipe(false,["Pseudo Iron","Simple Components","Wire","Wire","Wire"],["Simple Motor"],"Simple Constructor Block")
+	Global.constructionManual.CreateRecipe(false,["Smooth Stuff","Pseudo Iron","Smooth Stuff","Pseudo Iron","Smooth Stuff"],["Drill Bit"],"Simple Constructor Block")
+	Global.constructionManual.CreateRecipe(false,["Conductive Plating","Simple Components","Purplutide"],["Simple Circuit"],"Simple Constructor Block")
+	Global.constructionManual.CreateRecipe(false,["Simple Components","Simple Motor","Element-VK"],["Conveyor Kit"],"Simple Constructor Block")
+	Global.constructionManual.CreateRecipe(false,["Purplutide","Smooth Stuff", "Purplutide", "Simple Circuit","Wire"],["PE-Sensor"],"Simple Constructor Block")
+	Global.constructionManual.CreateRecipe(false,["Conductive Plating", "Element-VK"],["Wire"],"Simple Constructor Block")
+	#Global.constructionManual.CreateRecipe(false,[],[],"Simple Constructor Block")
+	#Global.constructionManual.CreateRecipe(false,[],[],"Simple Constructor Block")
+	#Global.constructionManual.CreateRecipe(false,[],[],"Simple Constructor Block")
+	#Global.constructionManual.CreateRecipe(false,[],[],"Simple Constructor Block")
+	#Global.constructionManual.CreateRecipe(false,[],[],"Simple Constructor Block")
+	
 	
 	
 func SearchRecipesWithOutput(output:String)->Array[ConstructionRecipe]:
@@ -188,9 +202,16 @@ func OpenRecipesWithOutput(output:String):
 	relevantRecipes.clear()
 	relevantRecipes = SearchRecipesWithOutput(output)
 	recipeHead = 0
-	if(relevantRecipes.size() == 0):
-		
+	if(relevantRecipes.size() == 0):	
 		return
+		
+	if(relevantRecipes.size() > 1):
+		nextButton.visible = true
+		previousButton.visible = true
+	else:
+		nextButton.visible = false
+		previousButton.visible = false
+		
 	DisplayRecipe(relevantRecipes[recipeHead])
 		
 func DisplayRecipe(recipe: ConstructionRecipe):

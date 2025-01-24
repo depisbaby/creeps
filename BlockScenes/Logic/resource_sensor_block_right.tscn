@@ -12,6 +12,8 @@ directionX = 1
 blockName = "Resource Sensor Block (right)"
 hp = 10
 menuIcon = ExtResource("3_yvfls")
+components = Array[String](["PE-Sensor", "Simple Circuit", "Wire", "Simple Components"])
+componentAmounts = Array[int]([1, 2, 2, 2])
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1

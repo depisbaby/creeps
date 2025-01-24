@@ -6,14 +6,13 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ep8se"]
 size = Vector2(32, 32)
 
-[node name="ChestBlock" type="Node2D" node_paths=PackedStringArray("visualsNode")]
+[node name="ChestBlock" type="Node2D"]
 script = ExtResource("1_p3mor")
 blockName = "Chest Block"
-desc = "Allows the player to collect the resources put into this block by interacting with it."
+desc = "Interact to collect resources stored via conveyor blocks."
 hp = 10
 menuIcon = ExtResource("3_p5byy")
 canHoldResources = true
-visualsNode = NodePath("Sprite2D")
 components = Array[String](["Log"])
 componentAmounts = Array[int]([5])
 

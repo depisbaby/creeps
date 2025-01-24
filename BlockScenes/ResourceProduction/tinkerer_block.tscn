@@ -15,8 +15,8 @@ desc = "Takes in any resources and combines them into a random low level resourc
 hp = 10
 menuIcon = ExtResource("3_to2v6")
 canHoldResources = true
-components = Array[String](["Simple Circuit", "Simple Components", "Simple Motor"])
-componentAmounts = Array[int]([10, 25, 5])
+components = Array[String](["Tinkerer Kit"])
+componentAmounts = Array[int]([1])
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1

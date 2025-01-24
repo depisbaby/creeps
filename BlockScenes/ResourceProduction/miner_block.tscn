@@ -32,7 +32,7 @@ desc = "Produces the resource indicated in the LCD display."
 hp = 10
 menuIcon = ExtResource("2_8sv0l")
 components = Array[String](["Drill Bit", "Simple Motor", "Simple Components"])
-componentAmounts = Array[int]([1, 15, 25])
+componentAmounts = Array[int]([1, 5, 4])
 
 [node name="Sprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1

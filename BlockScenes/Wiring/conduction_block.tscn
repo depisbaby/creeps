@@ -10,11 +10,11 @@ size = Vector2(32, 26)
 script = ExtResource("1_gftea")
 outputDirections = Array[int]([0, 1, 2, 3])
 blockName = "Conduction Block"
-desc = "When activated, it activates neighboring blocks and conducts power to other conduction blocks. Those conduction blocks then do the same. The strength of conduction tapers of quickly"
+desc = "When activated, it activates neighboring blocks and conducts power to other conduction blocks. Those conduction blocks then do the same. The strength of conduction tapers off quickly."
 hp = 10
 menuIcon = ExtResource("2_jk5c7")
-components = Array[String](["Simple Circuit", "Simple Components", "Conductor Components"])
-componentAmounts = Array[int]([10, 10, 10])
+components = Array[String](["Conductive Plating", "Simple Components"])
+componentAmounts = Array[int]([4, 1])
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 

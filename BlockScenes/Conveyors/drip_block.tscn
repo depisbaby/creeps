@@ -10,12 +10,12 @@ size = Vector2(32, 32)
 script = ExtResource("1_qwk78")
 directions = Array[int]([0, 1, 2, 3])
 blockName = "Drip Block"
-desc = "When activated/interacted with it releases one held resource."
+desc = "When activated or interacted with it releases one held resource."
 hp = 10
 menuIcon = ExtResource("3_lwr8j")
 canHoldResources = true
 components = Array[String](["Simple Circuit", "Simple Components"])
-componentAmounts = Array[int]([5, 5])
+componentAmounts = Array[int]([2, 3])
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1

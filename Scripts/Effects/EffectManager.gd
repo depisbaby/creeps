@@ -2,6 +2,8 @@ extends Node2D
 class_name EffectManager
 
 @export var statusIconPackedScene : PackedScene
+@export var textMessagePackedScene : PackedScene
+
 var statusIconPool: Array[StatusIcon]
 var statusIcons: Array[Texture2D] = [
 	#blocklevels
@@ -54,4 +56,12 @@ func ScaleUpStatusIconPool(amount: int):
 		instance.visible = false
 		statusIconPool.push_back(instance)
 	
+	pass
+	
+func DisplayText(position: Vector2, message: String):
+	var label: Label = textMessagePackedScene.instantiate()
+	add_child(label)
+	label.global_position = position
+	label.text = message
+	label.Play()
 	pass

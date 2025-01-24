@@ -119,15 +119,13 @@ func GiveStartingItems():
 	Global.inventoryMenu.GiveResource("Log",5)
 	
 	#for tinkerer block
-	Global.inventoryMenu.GiveResource("Simple Circuit",10)
-	Global.inventoryMenu.GiveResource("Simple Motor",5)
-	Global.inventoryMenu.GiveResource("Simple Components",25)
+	Global.inventoryMenu.GiveResource("Tinkerer Kit",1)
 	
 	#for miner block
 	var amountOfMiners= 5
 	Global.inventoryMenu.GiveResource("Drill Bit",1*amountOfMiners)
-	Global.inventoryMenu.GiveResource("Simple Motor",15*amountOfMiners)
-	Global.inventoryMenu.GiveResource("Simple Components",25*amountOfMiners)
+	Global.inventoryMenu.GiveResource("Simple Motor",5*amountOfMiners)
+	Global.inventoryMenu.GiveResource("Simple Components",4*amountOfMiners)
 	
 	#for conveyors
 	var amountOfConveyors= 5

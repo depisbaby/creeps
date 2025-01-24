@@ -16,8 +16,8 @@ blockName = "Wire Terminal Block (right)"
 desc = "When activated or power is conducted, it sends a wire signal to the wire on top. When it receives a wire signal, it activates the neighboring block and conducts power."
 hp = 10
 menuIcon = ExtResource("2_ym1c7")
-components = Array[String](["Simple Circuit", "Simple Components", "Conductor Components"])
-componentAmounts = Array[int]([10, 10, 10])
+components = Array[String](["Simple Circuit", "Simple Components", "Conductive Plating"])
+componentAmounts = Array[int]([1, 1, 3])
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 

@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://d2msm66f3mx82"]
+[gd_scene load_steps=4 format=3 uid="uid://d2msm66f3mx82"]
 
 [ext_resource type="Texture2D" uid="uid://b3dljmrvj76xe" path="res://Sprites/Blocks/block_default.png" id="1_36gyy"]
 [ext_resource type="Script" path="res://Scripts/UI/BlockPanel.gd" id="1_phocu"]
+[ext_resource type="LabelSettings" uid="uid://67w0qhprsbdf" path="res://Font/light_outlined_font.tres" id="3_mg8va"]
 
 [node name="BlockPanel" type="Control"]
 layout_mode = 3
@@ -11,6 +12,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(2, 2)
+mouse_filter = 2
 script = ExtResource("1_phocu")
 
 [node name="TextureRect" type="TextureRect" parent="."]
@@ -26,6 +28,17 @@ modulate = Color(1, 1, 1, 0)
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 39.0
+
+[node name="new" type="Label" parent="."]
+modulate = Color(1, 1, 0, 1)
+texture_filter = 1
+layout_mode = 0
+offset_right = 38.0
+offset_bottom = 38.0
+text = "New"
+label_settings = ExtResource("3_mg8va")
+horizontal_alignment = 2
+vertical_alignment = 2
 
 [connection signal="button_down" from="Button" to="." method="_on_button_button_down"]
 [connection signal="mouse_entered" from="Button" to="." method="_on_button_mouse_entered"]

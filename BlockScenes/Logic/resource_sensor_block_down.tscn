@@ -10,8 +10,11 @@ size = Vector2(32, 32)
 script = ExtResource("1_i8rnr")
 directionY = 1
 blockName = "Resource Sensor Block (down)"
+desc = "When facing a conveyor block, it will other activate neighboring block when that conveyor block receives or releases a resource."
 hp = 10
 menuIcon = ExtResource("2_c5bh7")
+components = Array[String](["PE-Sensor", "Simple Circuit", "Wire", "Simple Components"])
+componentAmounts = Array[int]([1, 2, 2, 2])
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1

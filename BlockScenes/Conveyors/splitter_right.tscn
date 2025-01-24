@@ -21,16 +21,17 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lykm4"]
 size = Vector2(32, 32)
 
-[node name="SplitterRight" type="Node2D"]
+[node name="SplitterRight" type="Node2D" node_paths=PackedStringArray("animatedSprite")]
 script = ExtResource("1_wk5e6")
 directions = Array[int]([0, 1, 2])
+animatedSprite = NodePath("AnimatedSprite2D")
 blockName = "Splitter Block (right)"
 desc = "Splitter block has a one input side and three output sides. Items placed here will be spit out of the output sides in a \"marry-go-round\" order."
 hp = 10
 menuIcon = ExtResource("3_38gfn")
 canHoldResources = true
-components = Array[String](["Simple Circuit", "Conveyor Kit"])
-componentAmounts = Array[int]([1, 1])
+components = Array[String](["Simple Circuit", "Simple Components", "Conveyor Kit"])
+componentAmounts = Array[int]([2, 2, 1])
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1

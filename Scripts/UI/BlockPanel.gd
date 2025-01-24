@@ -1,6 +1,7 @@
 extends Control
 class_name BlockPanel
 @onready var icon : TextureRect = $TextureRect
+@onready var new : Label = $new
 var parent 
 var block: Block
 

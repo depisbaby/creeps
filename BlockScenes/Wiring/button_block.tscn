@@ -9,9 +9,11 @@ size = Vector2(32, 32)
 [node name="ButtonBlock" type="Node2D"]
 script = ExtResource("1_brfjd")
 blockName = "Button Block"
-desc = "Activates blocks directly next to it"
+desc = "Activates neighboring blocks when interacted with."
 hp = 10
 menuIcon = ExtResource("2_5fwkv")
+components = Array[String](["Simple Circuit", "Simple Components"])
+componentAmounts = Array[int]([1, 1])
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 

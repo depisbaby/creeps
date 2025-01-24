@@ -49,7 +49,7 @@ var blockLibrary: Array[PackedScene] = [
 	
 ]
 var blockLibraryInstances: Array[Block]
-
+var newBlocks: Array[String]
 
 func _enter_tree():
 	Global.buildMenu = self
@@ -75,6 +75,7 @@ func _process(delta):
 	
 func OpenView():
 	visible = true
+	OpenPage(0,"")
 	
 func InitializeGrid():
 	
@@ -107,6 +108,11 @@ func OpenPage(pageNumb:int, tag:String):
 				panel.visible = true
 				panel.block = block
 				
+				if newBlocks.has(block.blockName):
+					panel.new.visible = true
+				else :
+					panel.new.visible = false
+				
 				panelGridHead = panelGridHead + 1
 				blockLibraryHead = blockLibraryHead + 1
 		
@@ -114,6 +120,8 @@ func OpenPage(pageNumb:int, tag:String):
 
 func SelectBlock(block: Block):
 	Global.worldManager.StartPlacingBlock(block)
+	if newBlocks.has(block.blockName):
+		newBlocks.erase(block.blockName)
 	pass
 
 func GetBlockReferenceByName(name:String)->Block:
@@ -131,7 +139,8 @@ func UnlockBlock(blockName:String):
 	if Global.saveManager.loadedCharacterData.unlockedBlocks.has(blockName):
 		return
 	Global.saveManager.loadedCharacterData.unlockedBlocks.push_back(blockName)
-	
+	newBlocks.push_back(blockName)
+	Global.effectManager.DisplayText(Global.player.global_position,"New blocks unlocked!")
 	SetBlockAvailable(blockName)
 		
 	
