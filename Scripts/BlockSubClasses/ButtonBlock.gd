@@ -1,5 +1,5 @@
 extends Block
-
+@export var anim: AnimatedSprite2D
 var neighbors: Array[Block]
 
 func OnPlace():
@@ -21,6 +21,7 @@ func NeighborLeft(neighbor: Block):
 	pass
 
 func PlayerInteract():
+	anim.play("default")
 	for neighbor in neighbors:
 		neighbor.Activate()
 	pass

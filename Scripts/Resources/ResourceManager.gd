@@ -7,7 +7,6 @@ class_name ResourceManager
 var initialized: bool
 var pool: Array[_Resource]
 var allInstances: Array[_Resource]
-var notDefinedTu
 
 var resourceLibrary:Array[ResourceTuple] = [
 	preload("res://Resources/Resources/error.tres"),
@@ -56,6 +55,8 @@ var resourceLibrary:Array[ResourceTuple] = [
 	
 ]
 
+var debugHead:int
+
 func _enter_tree() -> void:
 	Global.resourceManager = self
 	pass
@@ -72,26 +73,23 @@ func _process(delta: float) -> void:
 	
 func InitializePool():
 	
-	for i in poolSize:
-		var instance: _Resource = baseScene.instantiate()
-		add_child(instance)
-		instance.name = baseScene._bundled.get("names")[0]
-		instance.visible = false
-		allInstances.push_back(instance)
-		ReturnToPool(instance)
-		pass
+	ScaleUpThePool()
 	
 	initialized = true
 	
 	pass
 
 func ReturnToPool(instance:_Resource):
-	instance.outOfPool = false
+	
+	#reset values
 	instance.visible = false
+	instance.global_position = Vector2.ZERO
+	
 	instance.holder = null
+	instance.holderOffset = Vector2.ZERO
+	instance.outOfPool = false
 	instance.movingCooldown = 0
-	instance.dropped = false
-	instance.dropAnimTime = 0.0
+	
 
 	pool.push_back(instance)
 	
@@ -119,6 +117,7 @@ func PopFromPoolWithName(name: String)->_Resource:
 		ScaleUpThePool()
 		return PopFromPoolWithName(name)
 	
+	
 	var result: ResourceTuple = GetResourceByName(name)
 	
 	if result == null:
@@ -132,13 +131,15 @@ func PopFromPoolWithName(name: String)->_Resource:
 	pass
 	
 func ScaleUpThePool():
-	for i in 100:
+	for i in poolSize:
 		var instance: _Resource = baseScene.instantiate()
 		add_child(instance)
-		instance.name = baseScene._bundled.get("names")[0]
+		instance.name = str("resource_",debugHead)
+		instance.debug.text = str(debugHead)
 		instance.visible = false
 		allInstances.push_back(instance)
 		ReturnToPool(instance)
+		debugHead = debugHead +1
 		pass
 		
 func GetResourceByName(name:String)->ResourceTuple:
@@ -156,5 +157,31 @@ func NewResourceTuple(resourceName:String, amount:int, withTexture:bool)->Resour
 		tuple.texture = GetResourceByName(resourceName).texture
 	return tuple
 
+func Save():
+	var loadedData = Global.saveManager.loadedWorldData
+	loadedData.outOfPoolResources.clear()
+	for resource in allInstances:
+		if pool.has(resource):
+			continue
+		
+		var rSD :ResourceSaveData = ResourceSaveData.new()
+		rSD.x = resource.holder.xGridPos
+		rSD.y = resource.holder.yGridPos
+		rSD.resourceName =resource.resourceName
+		loadedData.outOfPoolResources.push_back(rSD)
+		
+			
+	pass
+	
+func Load():
+	var loadedData = Global.saveManager.loadedWorldData
+	
+	for rSD in loadedData.outOfPoolResources:
+		var block:Block = Global.worldManager.GetNodeAt(rSD.x, rSD.y).block
+		var resource: _Resource = PopFromPoolWithName(rSD.resourceName)
+		resource.global_position = Global.worldManager.GridToWorld(rSD.x, rSD.y)
+		block.ReceiveResource(resource,null)
+	
+	pass
 	
 	

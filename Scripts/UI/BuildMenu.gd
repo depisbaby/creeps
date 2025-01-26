@@ -35,7 +35,7 @@ var blockLibrary: Array[PackedScene] = [
 	preload("res://BlockScenes/Logic/resource_sensor_block_right.tscn"),
 	preload("res://BlockScenes/Logic/resource_sensor_block_down.tscn"),
 	preload("res://BlockScenes/Logic/resource_sensor_block_left.tscn"),
-	#preload(),
+	preload("res://BlockScenes/c4_block.tscn"),
 	#preload(),
 	#preload(),
 	#preload(),

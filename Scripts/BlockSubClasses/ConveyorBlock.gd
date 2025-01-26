@@ -4,7 +4,7 @@ class_name ConveyorBlock
 @export var directions: Array[int] #0 up, 1 right, 
 @export var animatedSprite: AnimatedSprite2D
 var connectedBlocks: Array[Block]
-var lastSource: Block
+var inputBlocks: Array[Block]
 var nextConnection: int
 var hasResources:bool
 
@@ -27,6 +27,7 @@ func _physics_process(delta):
 	
 func OnPlace():
 	connectedBlocks.clear()
+	inputBlocks.clear()
 	var neighbors: Array[GridNode] = Global.worldManager.GetNeighbors(xGridPos,yGridPos)
 	var i: int
 	for neighbor in neighbors:
@@ -54,6 +55,7 @@ func NeighborLeft(_neighbor:Block):
 	
 func UpdateConnections():
 	connectedBlocks.clear()
+	inputBlocks.clear()
 	var neighbors: Array[GridNode] = Global.worldManager.GetNeighbors(xGridPos,yGridPos)
 	var i: int
 	for neighbor in neighbors:
@@ -70,11 +72,15 @@ func UpdateConnections():
 	
 	
 func ReceiveResource(resource:_Resource, source: Block):
-	super.ReceiveResource(resource, source)
-	lastSource = source
+	resource.ChangeHolder(self)
+	resourcesHeld.push_back(resource)
+	
+	if !inputBlocks.has(source) && source != self:
+		inputBlocks.push_back(source)
+	
 	hasResources = true
 	
-	if resourcesHeld.size() == 5:
+	if resourcesHeld.size() >= 5:
 		doesntAcceptResources = true
 
 func CreateResource(resourceName :String):
@@ -82,11 +88,9 @@ func CreateResource(resourceName :String):
 	var resource = Global.resourceManager.PopFromPoolWithName(resourceName)
 	resource.global_position = global_position
 	
-	if resourcesHeld.size() >= 10:
-		resource.Drop()
-		return
 	resource.ChangeHolder(self)
 	resourcesHeld.push_back(resource)
+	
 	hasResources = true
 
 func ReleaseResources():
@@ -105,12 +109,12 @@ func ReleaseResources():
 	var i=0
 	while(i<connectedBlocks.size()):
 		
-		if nextConnection > connectedBlocks.size()-1:
+		if nextConnection > connectedBlocks.size()-1: #wrap
 			nextConnection = 0
 		
 		var nextReceiver:Block = connectedBlocks[nextConnection]
 		
-		if nextReceiver == lastSource:
+		if inputBlocks.has(nextReceiver):
 			nextConnection = nextConnection + 1
 			i = i + 1
 			continue
@@ -121,11 +125,9 @@ func ReleaseResources():
 		
 		nextReceiver.ReceiveResource(resourcesHeld.pop_front(),self)
 		nextConnection = nextConnection + 1
-		
-		
+		doesntAcceptResources = false
 		break
 	
-	doesntAcceptResources = false
 	
 	
 	

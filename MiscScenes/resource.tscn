@@ -1,8 +1,20 @@
-[gd_scene load_steps=2 format=3 uid="uid://fycfr5or2tfg"]
+[gd_scene load_steps=4 format=3 uid="uid://fycfr5or2tfg"]
 
 [ext_resource type="Script" path="res://Scripts/Resources/_Resource.gd" id="1_mhl8i"]
+[ext_resource type="Texture2D" uid="uid://p1mw3g67imn3" path="res://Sprites/Icons/error.png" id="1_oyghv"]
+[ext_resource type="LabelSettings" uid="uid://67w0qhprsbdf" path="res://Font/light_outlined_font.tres" id="3_1s088"]
 
 [node name="Resource" type="Sprite2D"]
 z_index = 1
 texture_filter = 1
+texture = ExtResource("1_oyghv")
 script = ExtResource("1_mhl8i")
+
+[node name="Label" type="Label" parent="."]
+offset_left = -6.0
+offset_top = -4.0
+offset_right = 51.0
+offset_bottom = 19.0
+scale = Vector2(0.5, 0.5)
+text = "9999"
+label_settings = ExtResource("3_1s088")

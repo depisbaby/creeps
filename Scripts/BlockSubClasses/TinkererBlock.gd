@@ -10,25 +10,25 @@ func OnPlace():
 	pass
 	
 func ReceiveResource(_resource: _Resource, source:Block):
+	inputBlocks.push_back(source)
+	Global.resourceManager.ReturnToPool(_resource)
 	
-	lastSource = source
 	amountOfResources = amountOfResources + 1
+	
 	if amountOfResources == 5:
 		amountOfResources = 0
 		Tinker()
-	Global.resourceManager.ReturnToPool(_resource)
 	
 
 func Tinker():
 	
 	var random: int = randi_range(0,3)
-	
+	animatedSprite.play("tinker")
 	match random:
 		0:
 			CreateResource("Conveyor Kit")
 			
 			return
-		
 		1:
 			CreateResource("Simple Motor")
 			

@@ -2,7 +2,6 @@ extends ConveyorBlock
 class_name ConstructorBlock
 
 var resourcesInputed: Array[String]
-var resourcesOutputed: Array[String]
 var recipes: Array[ConstructionRecipe]
 
 func OnPlace():
@@ -14,18 +13,26 @@ func OnPlace():
 	
 
 func ReceiveResource(_resource: _Resource, source:Block):
-	lastSource = source
+	
+	Global.resourceManager.ReturnToPool(_resource)
+	
+	if !inputBlocks.has(source) && source != self:
+		inputBlocks.push_back(source)
 	
 	resourcesInputed.push_back(_resource.resourceName)
 	
-	if resourcesInputed.size() == 5:
+	if resourcesInputed.size() >= 5:
 		doesntAcceptResources = true
 	
-	Global.resourceManager.ReturnToPool(_resource)
 
 
 func Activate():
+	animatedSprite.play("default")
 	if resourcesInputed.size() == 0:
+		return
+	
+	if resourcesInputed.has("Mess"):
+		Global.worldManager.CreateExplosion(xGridPos,yGridPos, 12, 4)
 		return
 	
 	var list :Array[ConstructionRecipe]
@@ -33,9 +40,9 @@ func Activate():
 		if recipe.inputResources[0] == resourcesInputed[0]:
 			list.push_back(recipe)
 	if list.size() == 0:
+		doesntAcceptResources = false
 		CreateResource("Mess")
 		resourcesInputed.clear()
-		doesntAcceptResources = false
 		return
 	
 	for recipe in list:
@@ -53,14 +60,14 @@ func Activate():
 		
 		if matching:
 			for output in recipe.outputResources:
+				doesntAcceptResources = false
 				CreateResource(output)
 				resourcesInputed.clear()
-				doesntAcceptResources = false
 				return
-			
+				
+	doesntAcceptResources = false
 	CreateResource("Mess")
 	resourcesInputed.clear()
-	doesntAcceptResources = false
 			
 	
 		

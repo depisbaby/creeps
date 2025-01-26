@@ -12,3 +12,6 @@ class_name WorldSaveData
 
 #block inventories
 @export var blockInventories: Array
+
+#out of pool resources
+@export var outOfPoolResources: Array

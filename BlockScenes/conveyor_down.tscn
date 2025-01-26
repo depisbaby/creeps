@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://dfd4ym1qvpj26"]
+[gd_scene load_steps=7 format=3 uid="uid://dfd4ym1qvpj26"]
 
 [ext_resource type="Script" path="res://Scripts/BlockSubClasses/ConveyorBlock.gd" id="1_rjhew"]
 [ext_resource type="Texture2D" uid="uid://dbumsy4pkvcp3" path="res://Sprites/Blocks/Conveyors/onedirectional/down/1.png" id="3_f71f0"]
+[ext_resource type="LabelSettings" uid="uid://67w0qhprsbdf" path="res://Font/light_outlined_font.tres" id="4_f4w3g"]
 [ext_resource type="Texture2D" uid="uid://sj2yxvkvawc3" path="res://Sprites/Blocks/Conveyors/onedirectional/down/2.png" id="4_lrvvu"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_y1sxd"]
@@ -43,3 +44,12 @@ texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_7bf7v")
 autoplay = "default"
 frame_progress = 0.869501
+
+[node name="Label" type="Label" parent="."]
+offset_left = -6.0
+offset_top = -4.0
+offset_right = 51.0
+offset_bottom = 19.0
+scale = Vector2(0.5, 0.5)
+text = "9999"
+label_settings = ExtResource("4_f4w3g")

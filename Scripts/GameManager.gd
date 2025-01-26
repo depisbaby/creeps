@@ -19,6 +19,7 @@ func _enter_tree():
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	Input.set_mouse_mode(Input.MOUSE_MODE_CONFINED_HIDDEN)
 	pass # Replace with function body.
 
 func _physics_process(delta: float) -> void:
@@ -109,6 +110,8 @@ func LoadGame(slot:int):
 	pass
 
 func GiveStartingItems():
+	
+	
 	
 	Global.buildMenu.UnlockBlock("Conveyor Block (up)")
 	Global.buildMenu.UnlockBlock("Miner Block")

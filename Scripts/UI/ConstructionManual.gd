@@ -1,6 +1,8 @@
 extends Control
 class_name ConstructionManual
 
+@export var guideBookPages: Array[Control]
+
 @onready var resourcePanel: PackedScene = preload("res://UIScenes/resource_panel.tscn")
 @onready var gridStart: Control = $gridStart
 var grid : Array[ResourcePanel]

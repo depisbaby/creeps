@@ -13,6 +13,7 @@ func _enter_tree():
 	Global.saveManager = self
 	
 	Subscribe($"../WorldManager")
+	Subscribe($"../ResourceManager")
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

@@ -1,4 +1,4 @@
-[gd_scene load_steps=3 format=3 uid="uid://jwfw7tb0r5dp"]
+[gd_scene load_steps=3 format=3 uid="uid://dmmxe2myxi620"]
 
 [ext_resource type="Texture2D" uid="uid://1iqo4porwmxx" path="res://Sprites/Wiring/x.png" id="1_f486w"]
 [ext_resource type="Script" path="res://Scripts/Wiring/Wire.gd" id="1_ilhed"]

@@ -21,8 +21,8 @@ var doesntAcceptResources: bool #can be turned on to prevent holding resources
 var collider: StaticBody2D
 
 
-#shake
-var shakeMagnitude: float
+#debug
+@onready var debugNumber: Label = $Label
 
 
 func  _ready():
@@ -47,7 +47,7 @@ func Remove(): #this doesnt mean that block is removed from the world just that 
 			neighbor.block.NeighborLeft(self)
 			
 	for resource in resourcesHeld:
-		resource.Drop()
+		Global.resourceManager.ReturnToPool(resource)
 	
 	placed = false
 	
@@ -67,9 +67,6 @@ func CreepDamage(damage: int):
 	pass
 
 func ReceiveResource(resource: _Resource, source:Block):
-	if resourcesHeld.size() >= 10:
-		resource.Drop()
-		return
 	
 	resource.ChangeHolder(self)
 	resourcesHeld.push_back(resource)

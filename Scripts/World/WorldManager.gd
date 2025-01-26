@@ -53,7 +53,12 @@ var worldChanges:Array[SessionWorldChange]
 
 #other
 @onready var miningDebug: PackedScene = preload("res://MiscScenes/mining_debug.tscn")
+@onready var hudMessage: Label = %HUDMessage
+var debugSerializationHead:int
 
+#explosions
+@onready var explosionPackedScene: PackedScene = preload("res://MiscScenes/explosion.tscn")
+var explosionPool: Array[Explosion]
 
 func _enter_tree():
 	Global.worldManager = self
@@ -61,6 +66,7 @@ func _enter_tree():
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	InitializeGrid()
+	ScaleUpExplosionPool()
 	#Global.saveManager.Subscribe(self)
 	pass # Replace with function body.
 
@@ -174,7 +180,8 @@ func StartPlacingBlock(block: Block):
 	Global.gameManager.CloseAllWindows()
 	Global.hud.visible = false
 	Global.gridSelect.texture = blockBeingPlaced.menuIcon
-	Global.gridSelect.label.text = "Click"
+	Global.cursor.visible = false
+	hudMessage.text = "Left click to place a block. Scroll/R to rotate block. Right click to escape."
 	Global.gridSelect.modulate = Color.AQUA
 	Global.gridSelect.modulate.a = 0.75
 	Global.gridSelect.visible = true
@@ -183,7 +190,9 @@ func StartPlacingBlock(block: Block):
 func StopPlacingBlock():
 	placingBlock = false
 	Global.hud.visible = true
+	hudMessage.text = ""
 	Global.gridSelect.visible = false
+	Global.cursor.visible = true
 
 func StartMovingBlocks():
 	if movingBlocks == true:
@@ -192,15 +201,19 @@ func StartMovingBlocks():
 	Global.gameManager.CloseAllWindows()
 	Global.hud.visible = false
 	Global.gridSelect.modulate = Color.WHITE
-	Global.gridSelect.label.text = "Click"
+	#Global.gridSelect.label.text = "Click"
+	hudMessage.text = "Left click to dissemble block. Right click to escape."
 	Global.gridSelect.texture = Global.gridSelect.sprites[3]
 	Global.gridSelect.visible = true
+	Global.cursor.visible = false
 
 func StopMovingBlocks(): #START DISASSEMBLING
 	movingBlocks = false
 	#Global.gridSelect.texture = Global.gridSelect.sprites[3]
 	Global.hud.visible = true
+	hudMessage.text = ""
 	Global.gridSelect.visible = false
+	Global.cursor.visible = true
 	
 func PlayerPlaceBlock():
 	
@@ -229,8 +242,13 @@ func PlayerPlaceBlock():
 			Global.effectManager.DisplayText(Global.player.global_position,"I'm missing resources!")
 			return
 	
-	var block = finalBlock.duplicate()
+	var block:Block = finalBlock.duplicate()
 	PlaceBlock(block,gridPosition[0],gridPosition[1])
+	
+	if block.debugNumber != null:
+		block.debugNumber.text = str(debugSerializationHead)
+		block.name = str("block_", debugSerializationHead)
+		debugSerializationHead = debugSerializationHead + 1
 	
 	var wiring: Array[bool]
 	if node.wire != null:
@@ -369,7 +387,8 @@ func StartWiring():
 	Global.hud.visible = false
 	Global.gridSelect.texture = Global.gridSelect.sprites[0]
 	Global.gridSelect.modulate = Color.WHITE
-	Global.gridSelect.label.text = "Drag"
+	hudMessage.text = "Drag left click to lay wire. Right click to escape."
+	Global.cursor.visible = false
 	Global.gridSelect.visible = true
 
 func StopWiring():
@@ -377,7 +396,9 @@ func StopWiring():
 		return
 	wiring = false
 	Global.hud.visible = true
+	hudMessage.text = ""
 	Global.gridSelect.visible = false
+	Global.cursor.visible = true
 	
 func PlayerPlaceWiring():
 	
@@ -388,9 +409,10 @@ func PlayerPlaceWiring():
 	tuple.resource_name = "Wire"
 	tuple.amount = length
 	var array: Array[ResourceTuple] = [tuple]
-	if !Global.inventoryMenu.RequireResources(array, true):
+	if !Global.inventoryMenu.RequireResources(array, true) && !Global.gameManager.devMode:
 		Global.effectManager.DisplayText(Global.player.global_position,"I'm missing wire!")
 		return
+		
 	PlaceWiringFromTo(wiringStart, wiringEnd)
 	
 	pass
@@ -649,4 +671,70 @@ func Load():
 	Global.gameManager.SetLoadingScreenText("Applying world changes...")
 	await get_tree().create_timer(0.1).timeout
 	ApplyChanges(saveData)
+	pass
+
+#Explosion
+func CreateExplosion(x:int, y:int, damagingPower:int, destroyingPower:int):
+	var openNodes: Array[GridNode]
+	var closedNodes: Array[GridNode]
+	openNodes.push_back(GetNodeAt(x,y))
+	
+	while openNodes.size() > 0:
+		print("bruh")
+		var node: GridNode = openNodes.pop_front()
+		var neighbors:Array[GridNode] = GetNeighbors(node.x, node.y)
+		closedNodes.push_back(node)	
+		
+		for neighbor in neighbors:
+			if openNodes.has(neighbor):
+				continue
+			if closedNodes.has(neighbor):
+				continue
+			if neighbor.block != null && neighbor.block.isSolid && destroyingPower <= 0:
+				continue
+			openNodes.push_back(neighbor)
+			damagingPower = damagingPower - 1
+			destroyingPower = destroyingPower - 1
+		
+		if damagingPower < 0:
+			for _node in openNodes:
+				closedNodes.push_back(_node)
+			break
+			
+	for node in closedNodes:
+		if node.block != null:
+			node.block.Destroy()
+		PlaceExplosionObject(node.x, node.y)
+		
+	pass
+	
+func PlaceExplosionObject(x:int, y:int):
+	var instance:Explosion = PopFromExplosionPool()
+	instance.global_position = GridToWorld(x,y)
+	instance.visible = true
+	instance.tick = 30
+	instance.play("default")
+	pass
+
+func PopFromExplosionPool()-> Explosion:
+	if explosionPool.size() <= 0:
+		ScaleUpExplosionPool()
+		return PopFromExplosionPool()
+	
+	return explosionPool.pop_front()
+	
+
+func ScaleUpExplosionPool():
+	for i in 100:
+		var instance: Explosion = explosionPackedScene.instantiate()
+		add_child(instance)
+		instance.visible = false
+		instance.global_position = Vector2(-1000, 1000)
+		explosionPool.push_back(instance)
+		pass
+		
+func ReturnToExplosionPool(instance: Explosion):
+	instance.visible = false
+	instance.global_position = Vector2(-1000, 1000)
+	explosionPool.push_back(instance)
 	pass

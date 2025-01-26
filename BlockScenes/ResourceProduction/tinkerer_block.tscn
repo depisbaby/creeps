@@ -1,15 +1,35 @@
-[gd_scene load_steps=4 format=3 uid="uid://cc5vvwlbnq2u5"]
+[gd_scene load_steps=7 format=3 uid="uid://cc5vvwlbnq2u5"]
 
 [ext_resource type="Script" path="res://Scripts/BlockSubClasses/TinkererBlock.gd" id="1_tjd3q"]
+[ext_resource type="Texture2D" uid="uid://dpaybxbu0mahh" path="res://Sprites/Blocks/TinkererBlock/tinkerer_block.png" id="3_2ljcd"]
 [ext_resource type="Texture2D" uid="uid://dcjhjwpjvphp7" path="res://Sprites/Blocks/tinkerer_block.png" id="3_to2v6"]
+[ext_resource type="Texture2D" uid="uid://egr2kjsslie" path="res://Sprites/Blocks/TinkererBlock/tinkerer_block1.png" id="4_1bn3p"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_v1tyx"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_2ljcd")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_1bn3p")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_2ljcd")
+}],
+"loop": false,
+"name": &"tinker",
+"speed": 5.0
+}]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_45fbg"]
 size = Vector2(32, 32)
 
-[node name="TinkererBlock" type="Node2D"]
+[node name="TinkererBlock" type="Node2D" node_paths=PackedStringArray("animatedSprite")]
 z_index = 1
 script = ExtResource("1_tjd3q")
 directions = Array[int]([0, 1, 2, 3])
+animatedSprite = NodePath("Sprite2D")
 blockName = "Tinkerer Block"
 desc = "Takes in any resources and combines them into a random low level resources.isplay."
 hp = 10
@@ -18,9 +38,10 @@ canHoldResources = true
 components = Array[String](["Tinkerer Kit"])
 componentAmounts = Array[int]([1])
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
-texture = ExtResource("3_to2v6")
+sprite_frames = SubResource("SpriteFrames_v1tyx")
+animation = &"tinker"
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 

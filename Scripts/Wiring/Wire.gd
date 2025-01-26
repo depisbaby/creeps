@@ -66,7 +66,7 @@ func Disconnect(wire:Wire):
 func Activate():
 	power = 10
 	activatedThisFrame = true
-	Global.effectManager.DisplayStatusIcon(global_position, 0)
+	#Global.effectManager.DisplayStatusIcon(global_position, 0)
 	if connectedBlock != null:
 		connectedBlock.Activate()
 	pass

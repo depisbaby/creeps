@@ -1,0 +1,2 @@
+2=solid block
+3=explosion
