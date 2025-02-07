@@ -25,6 +25,7 @@ func _on_move_block_button_down():
 	if !UsabilityCheck():
 		return
 	await get_tree().create_timer(0.1).timeout
+	Global.soundManager.PlayClick()
 	Global.worldManager.StartMovingBlocks()
 	pass # Replace with function body.
 
@@ -37,6 +38,7 @@ func _on_build_menu_button_down():
 	if !UsabilityCheck():
 		return
 	await get_tree().create_timer(0.1).timeout
+	Global.soundManager.PlayClick()
 	Global.buildMenu.OpenView()
 	pass # Replace with function body.
 
@@ -45,6 +47,7 @@ func _on_inventory_button_down():
 	if !UsabilityCheck():
 		return
 	await get_tree().create_timer(0.1).timeout
+	Global.soundManager.PlayClick()
 	Global.inventoryMenu.OpenView()
 	pass # Replace with function body.
 
@@ -53,10 +56,12 @@ func _on_construction_manual_button_down():
 	if !UsabilityCheck():
 		return
 	await get_tree().create_timer(0.1).timeout	
+	Global.soundManager.PlayClick()
 	Global.constructionManual.OpenView()
 	pass # Replace with function body.
 
 
 func _on_exit_button_down():
+	Global.soundManager.PlayClick()
 	Global.gameManager.ReturnToMainMenu()
 	pass # Replace with function body.

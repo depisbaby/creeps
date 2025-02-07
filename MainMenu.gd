@@ -54,32 +54,37 @@ func UpdateSavesSelection():
 func _on_play_button_down():
 	UpdateSavesSelection()
 	saveSelect.visible = true
+	Global.soundManager.PlayClick()
 	
 	pass # Replace with function body.
 
 
 func _on_dev_mode_button_down():
 	visible = false
+	Global.soundManager.PlayClick()
 	Global.gameManager.StartInDevMode("")
 	pass # Replace with function body.
 
 
 func _on_slot_load_button_down(extra_arg_0): 
+	Global.soundManager.PlayClick()
 	LoadSave(extra_arg_0)
 	pass # Replace with function body.
 
 
 func _on_slot_new_button_down(extra_arg_0):
+	Global.soundManager.PlayClick()
 	NewSave(extra_arg_0)
 	pass # Replace with function body.
 
 
 func _on_slot_delete_button_down(extra_arg_0):
+	Global.soundManager.PlayClick()
 	DeleteSave(extra_arg_0)
 	pass # Replace with function body.
 
 
 func _on_save_select_close_pressed() -> void:
-	
+	Global.soundManager.PlayClick()
 	saveSelect.visible = false
 	pass # Replace with function body.

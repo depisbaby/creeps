@@ -1,9 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://dnq0dgc200n3s"]
+[gd_scene load_steps=9 format=3 uid="uid://dnq0dgc200n3s"]
 
 [ext_resource type="Script" path="res://Scripts/BlockSubClasses/MinerBlock.gd" id="1_m7ei7"]
 [ext_resource type="Texture2D" uid="uid://b3igr32cqbq8o" path="res://Sprites/Blocks/mine.png" id="2_8sv0l"]
+[ext_resource type="Texture2D" uid="uid://du1us3ljpjqi8" path="res://Sprites/Colors/black.png" id="3_815e2"]
 [ext_resource type="Texture2D" uid="uid://ctft8ywbrmh0v" path="res://Sprites/Blocks/Mine/mine1.png" id="3_vj4qu"]
 [ext_resource type="Texture2D" uid="uid://pupdja68xcll" path="res://Sprites/Blocks/Mine/mine.png" id="4_jw6o1"]
+[ext_resource type="Texture2D" uid="uid://35n5ltxhnw1m" path="res://Sprites/Colors/red.png" id="4_whjtw"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_yju1u"]
 animations = [{
@@ -31,8 +33,19 @@ blockName = "Miner Block"
 desc = "Produces the resource indicated in the LCD display."
 hp = 10
 menuIcon = ExtResource("2_8sv0l")
+canHoldResources = true
 components = Array[String](["Drill Bit", "Simple Motor", "Simple Components"])
 componentAmounts = Array[int]([1, 5, 4])
+
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(-4, -5)
+texture = ExtResource("3_815e2")
+
+[node name="fill" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(-2, 8)
+texture = ExtResource("4_whjtw")
 
 [node name="Sprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1

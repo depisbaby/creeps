@@ -119,6 +119,7 @@ func OpenPage(pageNumb:int, tag:String):
 	pass
 
 func SelectBlock(block: Block):
+	Global.soundManager.PlayClick()
 	Global.worldManager.StartPlacingBlock(block)
 	if newBlocks.has(block.blockName):
 		newBlocks.erase(block.blockName)
@@ -166,9 +167,11 @@ func EnterInDevMode():
 
 func _on_close_button_down():
 	visible = false
+	Global.soundManager.PlayClick()
 	pass # Replace with function body.
 
 func _on_wiring_button_down():
 	await get_tree().create_timer(0.1).timeout
 	Global.worldManager.StartWiring() 
+	Global.soundManager.PlayClick()
 	pass # Replace with function body.

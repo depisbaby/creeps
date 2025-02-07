@@ -17,3 +17,4 @@ var constructionManual : ConstructionManual
 var worldManager: WorldManager
 var saveManager: SaveManager
 var cursor: Cursor
+var soundManager: SoundManager

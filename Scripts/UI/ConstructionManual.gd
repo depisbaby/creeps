@@ -274,11 +274,12 @@ func DisplayRecipe(recipe: ConstructionRecipe):
 
 func _on_recipe_window_close_button_down():
 	recipeWindow.visible = false
+	Global.soundManager.PlayClick()
 	pass # Replace with function body.
 
 
 func _on_next_button_down():
-	
+	Global.soundManager.PlayClick()
 	recipeHead = recipeHead + 1
 	if recipeHead > relevantRecipes.size()-1:
 		recipeHead = 0
@@ -287,8 +288,13 @@ func _on_next_button_down():
 
 
 func _on_prev_button_down():
+	Global.soundManager.PlayClick()
 	recipeHead = recipeHead - 1
 	if recipeHead == -1:
 		recipeHead = relevantRecipes.size()-1
 	DisplayRecipe(relevantRecipes[recipeHead])
+	pass # Replace with function body.
+
+
+func _on_page_button_pressed(extra_arg_0):
 	pass # Replace with function body.

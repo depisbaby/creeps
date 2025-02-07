@@ -27,6 +27,7 @@ func OpenView():
 
 func _on_close_button_down():
 	visible = false
+	Global.soundManager.PlayClick()
 	pass # Replace with function body.
 	
 func InitializeGrid():

@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://ch2n6ryydpfew"]
+[gd_scene load_steps=7 format=3 uid="uid://cvgx0wo8akhee"]
 
 [ext_resource type="Script" path="res://Scripts/BlockSubClasses/ConstructorBlock.gd" id="1_xolsp"]
 [ext_resource type="Texture2D" uid="uid://d4iy0bngljwbv" path="res://Sprites/Blocks/simple_constructor.png" id="3_g8bsq"]

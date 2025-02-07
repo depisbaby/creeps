@@ -24,4 +24,5 @@ func PlayerInteract():
 	anim.play("default")
 	for neighbor in neighbors:
 		neighbor.Activate()
+	Global.soundManager.PlayClick()
 	pass

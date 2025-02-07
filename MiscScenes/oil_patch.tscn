@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://dlt26smvvu3mb"]
+
+[ext_resource type="Texture2D" uid="uid://b6776rbsoe8c8" path="res://Sprites/Blocks/oil_sand.png" id="1_nu6y0"]
+
+[node name="OilPatch" type="Sprite2D"]
+z_index = -10
+texture_filter = 1
+texture = ExtResource("1_nu6y0")

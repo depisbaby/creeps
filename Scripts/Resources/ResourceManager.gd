@@ -29,7 +29,7 @@ var resourceLibrary:Array[ResourceTuple] = [
 	preload("res://Resources/Resources/conductive_plating.tres"),
 	preload("res://Resources/Resources/PE_sensor.tres"),
 	preload("res://Resources/Resources/tinkerer_kit.tres"),
-	#preload(),
+	preload("res://Resources/Resources/rock.tres"),
 	#preload(),
 	#preload(),
 	#preload(),
@@ -135,7 +135,7 @@ func ScaleUpThePool():
 		var instance: _Resource = baseScene.instantiate()
 		add_child(instance)
 		instance.name = str("resource_",debugHead)
-		instance.debug.text = str(debugHead)
+		#instance.debug.text = str(debugHead)
 		instance.visible = false
 		allInstances.push_back(instance)
 		ReturnToPool(instance)

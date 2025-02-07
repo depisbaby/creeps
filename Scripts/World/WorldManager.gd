@@ -53,6 +53,8 @@ var worldChanges:Array[SessionWorldChange]
 
 #other
 @onready var miningDebug: PackedScene = preload("res://MiscScenes/mining_debug.tscn")
+@onready var oilTile: PackedScene = preload("res://MiscScenes/oil_patch.tscn")
+@onready var mineralTile: PackedScene = preload("res://MiscScenes/mineral_patch.tscn")
 @onready var hudMessage: Label = %HUDMessage
 var debugSerializationHead:int
 
@@ -137,6 +139,7 @@ func _process(delta):
 			Global.inventoryMenu.GetResourcesFromDisassembledBlock(blockLifted)
 			var wiring: Array[bool]
 			NewSessionWorldChange(blockLifted.xGridPos, blockLifted.yGridPos,null,wiring)
+			Global.soundManager.PlayAssemble()
 			blockLifted.Destroy()
 			
 			blockLifted = null
@@ -180,7 +183,7 @@ func StartPlacingBlock(block: Block):
 	Global.gameManager.CloseAllWindows()
 	Global.hud.visible = false
 	Global.gridSelect.texture = blockBeingPlaced.menuIcon
-	Global.cursor.visible = false
+	#Global.cursor.visible = false
 	hudMessage.text = "Left click to place a block. Scroll/R to rotate block. Right click to escape."
 	Global.gridSelect.modulate = Color.AQUA
 	Global.gridSelect.modulate.a = 0.75
@@ -205,7 +208,7 @@ func StartMovingBlocks():
 	hudMessage.text = "Left click to dissemble block. Right click to escape."
 	Global.gridSelect.texture = Global.gridSelect.sprites[3]
 	Global.gridSelect.visible = true
-	Global.cursor.visible = false
+	#Global.cursor.visible = false
 
 func StopMovingBlocks(): #START DISASSEMBLING
 	movingBlocks = false
@@ -244,16 +247,17 @@ func PlayerPlaceBlock():
 	
 	var block:Block = finalBlock.duplicate()
 	PlaceBlock(block,gridPosition[0],gridPosition[1])
-	
+	##DEBUG NUMBERS
 	if block.debugNumber != null:
-		block.debugNumber.text = str(debugSerializationHead)
-		block.name = str("block_", debugSerializationHead)
-		debugSerializationHead = debugSerializationHead + 1
+		block.debugNumber.visible = false
+	#	block.debugNumber.text = str(debugSerializationHead)
+	#	block.name = str("block_", debugSerializationHead)
+	#	debugSerializationHead = debugSerializationHead + 1
 	
 	var wiring: Array[bool]
 	if node.wire != null:
 		wiring = node.wire.GetConnectionStatus()
-	
+	Global.soundManager.PlayAssemble()
 	NewSessionWorldChange(gridPosition[0], gridPosition[1], block,wiring)
 	
 func UpdateConfiguration():
@@ -388,7 +392,7 @@ func StartWiring():
 	Global.gridSelect.texture = Global.gridSelect.sprites[0]
 	Global.gridSelect.modulate = Color.WHITE
 	hudMessage.text = "Drag left click to lay wire. Right click to escape."
-	Global.cursor.visible = false
+	#Global.cursor.visible = false
 	Global.gridSelect.visible = true
 
 func StopWiring():
@@ -414,7 +418,7 @@ func PlayerPlaceWiring():
 		return
 		
 	PlaceWiringFromTo(wiringStart, wiringEnd)
-	
+	Global.soundManager.PlayAssemble()
 	pass
 
 func UpdateLaidWire():
@@ -530,7 +534,7 @@ func PlayerRemoveWiring(wire:Wire):
 	var node: GridNode = GetNodeAt(x,y)
 	var wiring: Array[bool]
 	NewSessionWorldChange(x, y, node.block, wiring)
-	
+	Global.soundManager.PlayAssemble()
 	wire.queue_free()
 
 
@@ -541,31 +545,55 @@ func SetMiningValues(seed: String):
 	for y in gridSize:
 		for x in gridSize:
 			var i = x + y*gridSize
-			var value1:float = miningNoise.get_noise_2d(x*4, y*5) / 2
-			var value2:float = miningNoise.get_noise_2d((x+1000)*5, (y+1000)*5) / 2
-			var value:float = value1 + value2
+			
+			var oil:float = miningNoise.get_noise_2d(x*5-1000, y*5-1000) #oil
+			if oil > 0.4:
+				oil = 3.0
+				var _oil:Node2D = oilTile.instantiate()
+				add_child(_oil)
+				_oil.global_position = GridToWorld(x,y)
+				grid[i].miningValue = 3.0
+				continue
+			
+			var stencil:float = miningNoise.get_noise_2d(x*5, y*5) #stencil
+			if stencil > 0.30:
+				stencil = 0.0
+				var mineral:Node2D = mineralTile.instantiate()
+				add_child(mineral)
+				mineral.global_position = GridToWorld(x,y)
+			else:
+				stencil = -10.0
+			
+			var ores:float = miningNoise.get_noise_2d((x+1000)*5, (y+1000)*5)
+			
+			var value = ores + stencil
 			
 			var _debug = false
 			if _debug:
 				var debug:Node2D = miningDebug.instantiate()
 				add_child(debug)
 				debug.global_position = GridToWorld(x,y)
-				if value < -0.30:
+				
+				if value < -0.40:
 					debug.modulate = Color.BLACK
-				elif value < -0.20:
+				
+				elif value < -0.25:
 					debug.modulate = Color.GREEN
 				elif value < -0.10:
 					debug.modulate = Color.TAN
-				elif value < 0.0:
-					debug.modulate = Color.PURPLE
+				elif value < -0.00:
+					debug.modulate = Color.WEB_GRAY
+				elif value < 0.05:
+					debug.modulate = Color.CORAL
 				elif value < 0.10:
-					debug.modulate = Color.SKY_BLUE
-				elif value < 0.20:
 					debug.modulate = Color.RED
-				elif value < 0.30:
-					debug.modulate = Color.ORANGE
+				elif value < 0.25:
+					debug.modulate = Color.CYAN
 				else:
-					debug.modulate = Color.BLUE
+					debug.modulate = Color.PURPLE
+				
+				if oil == 3.0:
+					debug.modulate = Color.DARK_GREEN
 				
 			grid[i].miningValue = value
 	
@@ -705,7 +733,7 @@ func CreateExplosion(x:int, y:int, damagingPower:int, destroyingPower:int):
 		if node.block != null:
 			node.block.Destroy()
 		PlaceExplosionObject(node.x, node.y)
-		
+	Global.soundManager.PlayExplosion()
 	pass
 	
 func PlaceExplosionObject(x:int, y:int):

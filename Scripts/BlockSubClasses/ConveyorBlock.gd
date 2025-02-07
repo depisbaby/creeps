@@ -8,6 +8,7 @@ var inputBlocks: Array[Block]
 var nextConnection: int
 var hasResources:bool
 
+
 func _physics_process(delta):
 	
 	if !placed:

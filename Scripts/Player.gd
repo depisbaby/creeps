@@ -7,6 +7,8 @@ var speed:float = 200
 var xSpeed:float
 var ySpeed:float
 
+var tick:int
+
 func _enter_tree():
 	Global.player = self
 	
@@ -14,6 +16,9 @@ func _enter_tree():
 	pass
 
 func _physics_process(delta):
+	tick = tick + 1
+	if tick % 15 == 0 && (xSpeed != 0 || ySpeed != 0):
+		Global.soundManager.PlayFootSteps()
 	
 	xSpeed = 0
 	ySpeed = 0
@@ -44,6 +49,7 @@ func Load():
 	
 func Animations():
 	if (xSpeed != 0 || ySpeed != 0):
+		
 		if anim.animation != "walk":
 			anim.play("walk")
 	else :
